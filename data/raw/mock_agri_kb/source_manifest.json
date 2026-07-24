@@ -1,0 +1,95 @@
+{
+  "manifest_name": "AgriSense v5 reviewed public Tier 0 source registry",
+  "version": "1.1.0",
+  "reviewed_on": "2026-07-24",
+  "sources": [
+    {
+      "source_id": "barc_frg_2024_en",
+      "title": "Fertilizer Recommendation Guide-2024",
+      "publisher": "Bangladesh Agricultural Research Council",
+      "publication_year": 2024,
+      "url": "https://apps.barc.gov.bd/fertilizer_recommendation/FRG%20English%2030.10.2024.pdf",
+      "coverage_crops": ["rice_boro", "wheat", "maize"],
+      "coverage_topics": ["fertilizer policy", "soil-test/AEZ fallback", "application timing"],
+      "trust_tier": "A",
+      "status": "active"
+    },
+    {
+      "source_id": "bamis_boro_crop_weather",
+      "title": "Crop Weather Guidance: Boro Rice",
+      "publisher": "Bangladesh Agro-Meteorological Information Service, Department of Agricultural Extension",
+      "publication_year": "n.d.",
+      "url": "https://www.bamis.gov.bd/crops/view/75",
+      "coverage_crops": ["rice_boro"],
+      "coverage_topics": ["temperature", "water", "weather suitability", "crop duration"],
+      "trust_tier": "A",
+      "status": "active"
+    },
+    {
+      "source_id": "ais_boro_cultivation_timing",
+      "title": "ধান উৎপাদনে বোরো আবাদে করণীয়",
+      "publisher": "Agricultural Information Service, Ministry of Agriculture",
+      "publication_year": "n.d.",
+      "url": "https://ais.gov.bd/pages/krishi-kotha/ধান-উৎপাদনে-বোরো-আবাদে-করণীয়-92caef-6922d93ddbfbab28ce04a019",
+      "coverage_crops": ["rice_boro"],
+      "coverage_topics": ["transplanting window", "cultivation timing"],
+      "trust_tier": "A",
+      "status": "active"
+    },
+    {
+      "source_id": "bamis_wheat_thresholds",
+      "title": "Crop Weather Thresholds: Wheat",
+      "publisher": "Bangladesh Agro-Meteorological Information Service, Department of Agricultural Extension",
+      "publication_year": "n.d.",
+      "url": "https://www.bamis.gov.bd/thresholds/1/all/9",
+      "coverage_crops": ["wheat"],
+      "coverage_topics": ["temperature", "water", "weather suitability"],
+      "trust_tier": "A",
+      "status": "active"
+    },
+    {
+      "source_id": "bwmri_wheat31",
+      "title": "BARI Wheat-31 Variety Information",
+      "publisher": "Bangladesh Wheat and Maize Research Institute",
+      "publication_year": "n.d.",
+      "url": "https://bwmri.gov.bd/pages/static-pages/6922dcd2933eb65569e123f6",
+      "coverage_crops": ["wheat"],
+      "coverage_topics": ["sowing window", "crop duration"],
+      "trust_tier": "A",
+      "status": "active"
+    },
+    {
+      "source_id": "ais_wheat_modern_cultivation",
+      "title": "পরিবেশবান্ধব গমের আধুনিক চাষাবাদ ও বীজ সংরক্ষণ পদ্ধতি",
+      "publisher": "Agricultural Information Service, Ministry of Agriculture",
+      "publication_year": "n.d.",
+      "url": "https://ais.gov.bd/pages/krishi-kotha/পরিবেশবান্ধব-গমের-আধুনিক-চাষাবাদ-ও-বীজ-সংরক্ষণ-পদ্ধতি-a8ac43-6922d94adbfbab28ce04ae0a",
+      "coverage_crops": ["wheat"],
+      "coverage_topics": ["production guidance", "sowing period", "risk controls"],
+      "trust_tier": "A",
+      "status": "active"
+    },
+    {
+      "source_id": "bamis_maize_thresholds",
+      "title": "Crop Weather Thresholds: Maize",
+      "publisher": "Bangladesh Agro-Meteorological Information Service, Department of Agricultural Extension",
+      "publication_year": "n.d.",
+      "url": "https://www.bamis.gov.bd/thresholds/1/all/8",
+      "coverage_crops": ["maize"],
+      "coverage_topics": ["temperature", "rainfall", "excess-water risk"],
+      "trust_tier": "A",
+      "status": "active"
+    },
+    {
+      "source_id": "ais_maize_eagriculture",
+      "title": "ভুট্টা",
+      "publisher": "Agricultural Information Service, Ministry of Agriculture",
+      "publication_year": 2026,
+      "url": "https://ais.gov.bd/pages/ekrishi/ভুট্টা-xq5d9r-6975d4840243b752c3c31b3b",
+      "coverage_crops": ["maize"],
+      "coverage_topics": ["soil", "Rabi sowing window", "variety duration", "production guidance"],
+      "trust_tier": "A",
+      "status": "active"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "mock_input_prices_bdt": {
+    "urea_kg": 27,
+    "tsp_kg": 35,
+    "mop_kg": 30,
+    "gypsum_kg": 14,
+    "zinc_sulphate_kg": 180,
+    "boric_acid_kg": 220,
+    "labor_day": 650,
+    "diesel_liter": 115,
+    "irrigation_event_per_acre_low": 650,
+    "irrigation_event_per_acre_high": 1200,
+    "compost_kg": 8,
+    "vermicompost_kg": 22,
+    "scouting_visit": 450,
+    "pheromone_trap_each": 180,
+    "sanitation_labor_day": 650
+  },
+  "note": "Synthetic prices for demo only. The agent should allow farmer/admin override."
+}

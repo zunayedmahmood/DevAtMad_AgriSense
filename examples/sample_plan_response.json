@@ -1,0 +1,2657 @@
+{
+  "session_id": "ff64a7ec-8286-4853-9379-2cba977f2d94",
+  "trace_id": "712d9855-ba5d-4aaa-b5f7-5f1af57d7fd3",
+  "status": "plan_ready",
+  "message": "The dated Mungbean plan is ready from 2026-09-10 to 2026-11-24. Mock projected cost is BDT 32,200.00, mock net profit is BDT 93,800.00, and ROI is 291.3%. Future tasks beyond the returned weather horizon are marked for refresh.",
+  "missing_fields": [],
+  "follow_up_questions": [],
+  "profile": {
+    "location_text": "Moulvibazar",
+    "district": "Moulvibazar",
+    "upazila": null,
+    "latitude": 22.99,
+    "longitude": 91.552,
+    "geocode_source": "generated_mock_geocode",
+    "geocode_confidence": 0.0,
+    "farm_size_acre": 2.0,
+    "farm_size_input": "2 acres",
+    "soil_type": "sandy_loam",
+    "water_availability": "limited",
+    "water_details": null,
+    "water_capacity_confirmed": null,
+    "budget_bdt": 80000.0,
+    "target_season": "rabi",
+    "target_month": null,
+    "target_year": null,
+    "chosen_crop_id": "mungbean",
+    "previous_crop": null,
+    "risk_tolerance": null,
+    "language": "en"
+  },
+  "recommendations": [
+    {
+      "rank": 1,
+      "crop_id": "mungbean",
+      "crop_name": "Mungbean",
+      "suitability_score": 94.1,
+      "suitability_label": "strong",
+      "water_need": "low",
+      "risk_level": "low",
+      "estimated_total_cost_bdt": 32200.0,
+      "estimated_revenue_bdt": 126000.0,
+      "estimated_net_profit_bdt": 93800.0,
+      "roi_percent": 291.3,
+      "budget_fit": "comfortable",
+      "reasons": [
+        "Season fit: target rabi matches crop profile kharif_or_rabi.",
+        "Soil match: sandy_loam is listed in the supplied mock crop profile.",
+        "Water fit: limited access can cover the crop's low mock irrigation need.",
+        "No target month was supplied, so month-window scoring was not applied.",
+        "No immediate high-impact rain/water mismatch was detected in the live forecast window.",
+        "Live mean temperature 28.13 C falls inside the supplied district profile range 25-35 C.",
+        "Provided source-derived location suitability score is 50.6/100, contributing +0.1 points.",
+        "Budget covers the mock total cost with at least a 10% buffer.",
+        "Mock expected projection is profitable: BDT 93,800.00 net, ROI 291.3%."
+      ],
+      "warnings": [],
+      "evidence": [
+        {
+          "document_id": "spas::mungbean::moulvibazar",
+          "title": "Mungbean agronomy in Moulvibazar",
+          "source": "spas_dataset_bd",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.671296,
+          "snippet": "Source-derived district agronomy record for Mungbean in Moulvibazar. Season: Kharif 2. Planting or transplanting period: February; growth period: March to May; harvest period: May. Temperature profile: average 30 C, minimum 25 C, maximum 35 C. Relative humidity normalized range 60 to 80 percent. Cultivated area 11 acres, production 3 metric tonnes, yield 0.2727272727 metric tonnes per acre.",
+          "metadata": {
+            "traceability": {
+              "source_file": "SPAS-Dataset-BD.csv",
+              "source_row_number": 3239,
+              "source_dataset_record_id": "spas::mungbean::moulvibazar"
+            },
+            "quality": {
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "mungbean"
+            ],
+            "profile_id": "mungbean",
+            "zone_id": null
+          }
+        },
+        {
+          "document_id": "barc_zone::mungbean_blackgram::moulvibazar::barlekha",
+          "title": "Mungbean / Black gram suitability in Barlekha, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.630747,
+          "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Barlekha, Moulvibazar. Weighted suitability score: 49.535256 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 51.730769 percent; moderately suitable or better: 59.294872 percent. Class shares: {\"very_suitable\": 27.820513, \"suitable\": 23.910256, \"moderately_suitable\": 7.564103, \"marginally_suitable\": 0.0, \"not_suitable\": 40.705128}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Mung-zone.xls",
+              "source_row_number": 449,
+              "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::barlekha"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 39292.0,
+                "total_area_difference": 0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "mungbean",
+              "black_gram"
+            ],
+            "profile_id": null,
+            "zone_id": "mungbean_blackgram"
+          }
+        },
+        {
+          "document_id": "barc_zone::mungbean_blackgram::moulvibazar::kamalganj",
+          "title": "Mungbean / Black gram suitability in Kamalganj, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.621072,
+          "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Kamalganj, Moulvibazar. Weighted suitability score: 54.209622 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 58.18412 percent; moderately suitable or better: 61.385422 percent. Class shares: {\"very_suitable\": 35.883523, \"suitable\": 22.300597, \"moderately_suitable\": 3.201302, \"marginally_suitable\": 0.0, \"not_suitable\": 38.614578}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Mung-zone.xls",
+              "source_row_number": 279,
+              "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::kamalganj"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 30580.0,
+                "total_area_difference": -0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "mungbean",
+              "black_gram"
+            ],
+            "profile_id": null,
+            "zone_id": "mungbean_blackgram"
+          }
+        },
+        {
+          "document_id": "barc_zone::mungbean_blackgram::moulvibazar::kulaura",
+          "title": "Mungbean / Black gram suitability in Kulaura, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.620664,
+          "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Kulaura, Moulvibazar. Weighted suitability score: 67.831005 out of 100. Dominant classes: very_suitable. Very suitable or suitable share: 66.799734 percent; moderately suitable or better: 71.922821 percent. Class shares: {\"very_suitable\": 60.678643, \"suitable\": 6.121091, \"moderately_suitable\": 5.123087, \"marginally_suitable\": 0.0, \"not_suitable\": 28.077179}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Mung-zone.xls",
+              "source_row_number": 280,
+              "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::kulaura"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 43700.0000000001,
+                "total_area_difference": 1e-10,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "mungbean",
+              "black_gram"
+            ],
+            "profile_id": null,
+            "zone_id": "mungbean_blackgram"
+          }
+        }
+      ],
+      "data_status": "mixed_real_and_mock"
+    },
+    {
+      "rank": 2,
+      "crop_id": "mustard",
+      "crop_name": "Mustard",
+      "suitability_score": 92.9,
+      "suitability_label": "strong",
+      "water_need": "low",
+      "risk_level": "low",
+      "estimated_total_cost_bdt": 37800.0,
+      "estimated_revenue_bdt": 101400.0,
+      "estimated_net_profit_bdt": 63600.0,
+      "roi_percent": 168.25,
+      "budget_fit": "comfortable",
+      "reasons": [
+        "Season fit: target rabi matches crop profile rabi.",
+        "Soil match: sandy_loam is listed in the supplied mock crop profile.",
+        "Water fit: limited access can cover the crop's low mock irrigation need.",
+        "No target month was supplied, so month-window scoring was not applied.",
+        "No immediate high-impact rain/water mismatch was detected in the live forecast window.",
+        "Live mean temperature 28.13 C falls inside the supplied district profile range 15-30 C.",
+        "Provided source-derived location suitability score is 40.9/100, contributing -1.1 points.",
+        "Budget covers the mock total cost with at least a 10% buffer.",
+        "Mock expected projection is profitable: BDT 63,600.00 net, ROI 168.2%."
+      ],
+      "warnings": [],
+      "evidence": [
+        {
+          "document_id": "barc_zone::mustard::moulvibazar::moulvi_bazar",
+          "title": "Mustard suitability in Moulvi Bazar, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.688293,
+          "snippet": "Source-derived crop suitability record for Mustard in Moulvi Bazar, Moulvibazar. Weighted suitability score: 42.364191 out of 100. Dominant classes: suitable. Very suitable or suitable share: 34.562084 percent; moderately suitable or better: 66.740576 percent. Class shares: {\"very_suitable\": 1.080931, \"suitable\": 33.481153, \"moderately_suitable\": 32.178492, \"marginally_suitable\": 0.332594, \"not_suitable\": 32.926829}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Mustard-zone.xls",
+              "source_row_number": 291,
+              "source_dataset_record_id": "barc_zone::mustard::moulvibazar::moulvi_bazar"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 27179.0,
+                "total_area_difference": 0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "mustard"
+            ],
+            "profile_id": null,
+            "zone_id": "mustard"
+          }
+        },
+        {
+          "document_id": "spas::rapeseed_and_mustard::moulvibazar",
+          "title": "Mustard / Rapeseed agronomy in Moulvibazar",
+          "source": "spas_dataset_bd",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.668295,
+          "snippet": "Source-derived district agronomy record for Mustard / Rapeseed in Moulvibazar. Season: Kharif 2. Planting or transplanting period: October; growth period: November to February; harvest period: February to April. Temperature profile: average 22.5 C, minimum 15 C, maximum 30 C. Relative humidity normalized range 65 to 85 percent. Cultivated area 736 acres, production 357 metric tonnes, yield 0.4850543478 metric tonnes per acre.",
+          "metadata": {
+            "traceability": {
+              "source_file": "SPAS-Dataset-BD.csv",
+              "source_row_number": 3943,
+              "source_dataset_record_id": "spas::rapeseed_and_mustard::moulvibazar"
+            },
+            "quality": {
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "mustard"
+            ],
+            "profile_id": "rapeseed_and_mustard",
+            "zone_id": null
+          }
+        },
+        {
+          "document_id": "barc_zone::mustard::moulvibazar::kulaura",
+          "title": "Mustard suitability in Kulaura, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.66549,
+          "snippet": "Source-derived crop suitability record for Mustard in Kulaura, Moulvibazar. Weighted suitability score: 52.042582 out of 100. Dominant classes: suitable. Very suitable or suitable share: 61.74318 percent; moderately suitable or better: 71.922821 percent. Class shares: {\"very_suitable\": 1.849634, \"suitable\": 59.893546, \"moderately_suitable\": 10.179641, \"marginally_suitable\": 0.73187, \"not_suitable\": 27.345309}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Mustard-zone.xls",
+              "source_row_number": 290,
+              "source_dataset_record_id": "barc_zone::mustard::moulvibazar::kulaura"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 43700.0,
+                "total_area_difference": 0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "mustard"
+            ],
+            "profile_id": null,
+            "zone_id": "mustard"
+          }
+        },
+        {
+          "document_id": "barc_zone::mustard::moulvibazar::srimangal",
+          "title": "Mustard suitability in Srimangal, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.663504,
+          "snippet": "Source-derived crop suitability record for Mustard in Srimangal, Moulvibazar. Weighted suitability score: 30.308051 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 36.10702 percent; moderately suitable or better: 37.776141 percent. Class shares: {\"very_suitable\": 1.939126, \"suitable\": 34.167894, \"moderately_suitable\": 1.669121, \"marginally_suitable\": 7.633775, \"not_suitable\": 54.590083}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Mustard-zone.xls",
+              "source_row_number": 450,
+              "source_dataset_record_id": "barc_zone::mustard::moulvibazar::srimangal"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 32632.0,
+                "total_area_difference": -0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "mustard"
+            ],
+            "profile_id": null,
+            "zone_id": "mustard"
+          }
+        }
+      ],
+      "data_status": "mixed_real_and_mock"
+    },
+    {
+      "rank": 3,
+      "crop_id": "lentil",
+      "crop_name": "Lentil",
+      "suitability_score": 80.2,
+      "suitability_label": "strong",
+      "water_need": "low",
+      "risk_level": "low",
+      "estimated_total_cost_bdt": 35000.0,
+      "estimated_revenue_bdt": 135850.0,
+      "estimated_net_profit_bdt": 100850.0,
+      "roi_percent": 288.14,
+      "budget_fit": "comfortable",
+      "reasons": [
+        "Season fit: target rabi matches crop profile rabi.",
+        "Soil match: sandy_loam is listed in the supplied mock crop profile.",
+        "Water fit: limited access can cover the crop's low mock irrigation need.",
+        "No target month was supplied, so month-window scoring was not applied.",
+        "No immediate high-impact rain/water mismatch was detected in the live forecast window.",
+        "Provided source-derived location suitability score is 34.7/100, contributing -1.8 points.",
+        "Budget covers the mock total cost with at least a 10% buffer.",
+        "Mock expected projection is profitable: BDT 100,850.00 net, ROI 288.1%."
+      ],
+      "warnings": [
+        "Live mean temperature 28.13 C is outside the supplied district profile range 10-20 C."
+      ],
+      "evidence": [
+        {
+          "document_id": "spas::lentil::moulvibazar",
+          "title": "Lentil agronomy in Moulvibazar",
+          "source": "spas_dataset_bd",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.724912,
+          "snippet": "Source-derived district agronomy record for Lentil in Moulvibazar. Season: Kharif 2. Planting or transplanting period: October; growth period: November to February; harvest period: February to March. Temperature profile: average 15 C, minimum 10 C, maximum 20 C. Relative humidity normalized range 85 to 95 percent. Cultivated area 70 acres, production 30 metric tonnes, yield 0.4285714286 metric tonnes per acre.",
+          "metadata": {
+            "traceability": {
+              "source_file": "SPAS-Dataset-BD.csv",
+              "source_row_number": 2791,
+              "source_dataset_record_id": "spas::lentil::moulvibazar"
+            },
+            "quality": {
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "lentil"
+            ],
+            "profile_id": "lentil",
+            "zone_id": null
+          }
+        },
+        {
+          "document_id": "barc_zone::lentil::moulvibazar::moulvi_bazar",
+          "title": "Lentil suitability in Moulvi Bazar, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.679764,
+          "snippet": "Source-derived crop suitability record for Lentil in Moulvi Bazar, Moulvibazar. Weighted suitability score: 31.728104 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 24.501108 percent; moderately suitable or better: 34.866962 percent. Class shares: {\"very_suitable\": 0.498891, \"suitable\": 24.002217, \"moderately_suitable\": 10.365854, \"marginally_suitable\": 32.178492, \"not_suitable\": 32.954545}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Lentil-zone.xls",
+              "source_row_number": 445,
+              "source_dataset_record_id": "barc_zone::lentil::moulvibazar::moulvi_bazar"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 27179.0,
+                "total_area_difference": 0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "lentil"
+            ],
+            "profile_id": null,
+            "zone_id": "lentil"
+          }
+        },
+        {
+          "document_id": "barc_zone::lentil::moulvibazar::rajnagar",
+          "title": "Lentil suitability in Rajnagar, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.666174,
+          "snippet": "Source-derived crop suitability record for Lentil in Rajnagar, Moulvibazar. Weighted suitability score: 26.693084 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 19.971182 percent; moderately suitable or better: 37.377522 percent. Class shares: {\"very_suitable\": 1.008646, \"suitable\": 18.962536, \"moderately_suitable\": 17.40634, \"marginally_suitable\": 11.037464, \"not_suitable\": 51.585014}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Lentil-zone.xls",
+              "source_row_number": 446,
+              "source_dataset_record_id": "barc_zone::lentil::moulvibazar::rajnagar"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 23042.0,
+                "total_area_difference": -0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "lentil"
+            ],
+            "profile_id": null,
+            "zone_id": "lentil"
+          }
+        },
+        {
+          "document_id": "barc_zone::lentil::moulvibazar::kulaura",
+          "title": "Lentil suitability in Kulaura, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.649814,
+          "snippet": "Source-derived crop suitability record for Lentil in Kulaura, Moulvibazar. Weighted suitability score: 47.591484 out of 100. Dominant classes: suitable. Very suitable or suitable share: 52.521623 percent; moderately suitable or better: 66.799733 percent. Class shares: {\"very_suitable\": 0.0, \"suitable\": 52.521623, \"moderately_suitable\": 14.27811, \"marginally_suitable\": 4.244844, \"not_suitable\": 28.955422}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Lentil-zone.xls",
+              "source_row_number": 176,
+              "source_dataset_record_id": "barc_zone::lentil::moulvibazar::kulaura"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 43700.0,
+                "total_area_difference": -0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "lentil"
+            ],
+            "profile_id": null,
+            "zone_id": "lentil"
+          }
+        }
+      ],
+      "data_status": "mixed_real_and_mock"
+    }
+  ],
+  "selected_crop_id": "mungbean",
+  "plan": {
+    "crop_id": "mungbean",
+    "crop_name": "Mungbean",
+    "planned_sowing_date": "2026-09-10",
+    "expected_harvest_date": "2026-11-24",
+    "tasks": [
+      {
+        "task_id": "task_4ca0eab8c98d94e4584a5b5b",
+        "stage": "land_preparation",
+        "start_date": "2026-08-27",
+        "end_date": null,
+        "action": "Begin land preparation, confirm seed/input availability, and verify the budget ledger.",
+        "quantity": null,
+        "condition": null,
+        "reasoning": [
+          "The generated mock calendar starts land preparation 14 days before establishment on 2026-09-10.",
+          "Farm area used: 2 acres; soil: sandy_loam."
+        ],
+        "source_tags": [
+          "generated_gap_kb",
+          "farmer_profile"
+        ],
+        "weather_refresh_required": true
+      },
+      {
+        "task_id": "task_c832916de7eedb065f33d25a",
+        "stage": "fertilizer_basal",
+        "start_date": "2026-09-10",
+        "end_date": null,
+        "action": "Apply the mock fertilizer split for basal.",
+        "quantity": "tsp: 60.00 kg (100%); mop: 36.00 kg (100%); gypsum: 24.00 kg (100%); urea: 20.00 kg (100%)",
+        "condition": "Delay this nitrogen/top-dressing task if the refreshed 48-hour forecast reaches 25 mm or more.",
+        "reasoning": [
+          "Current forecast did not trigger an immediate shift; refresh weather before application.",
+          "Fertilizer quantities are synthetic values from the supplied mock KB."
+        ],
+        "source_tags": [
+          "provided_mock_fertilizer_plan",
+          "generated_mock_weather"
+        ],
+        "weather_refresh_required": true
+      },
+      {
+        "task_id": "task_b7944c4311b660ab818705f1",
+        "stage": "sowing_or_transplanting",
+        "start_date": "2026-09-10",
+        "end_date": null,
+        "action": "Establish Mungbean within the planned window.",
+        "quantity": "Mock seed rate: 24.00 kg for the farm",
+        "condition": "Recheck the 72-hour rain forecast on the morning of establishment.",
+        "reasoning": [
+          "Chosen date is derived from target season/month and the supplied mock crop calendar.",
+          "Live forecast total for the next 72 hours is 0.0 mm at planning time."
+        ],
+        "source_tags": [
+          "provided_mock_crop_calendar",
+          "generated_mock_weather"
+        ],
+        "weather_refresh_required": true
+      },
+      {
+        "task_id": "task_edb549167c78f7655b1c6893",
+        "stage": "pest_disease_checkpoint",
+        "start_date": "2026-10-02",
+        "end_date": null,
+        "action": "Scout for powdery mildew.",
+        "quantity": null,
+        "condition": "dry cool weather",
+        "reasoning": [
+          "Mock risk level: low; watch stage: late vegetative.",
+          "The supplied mock KB allows scouting/prevention advice only and does not support chemical doses."
+        ],
+        "source_tags": [
+          "provided_mock_pest_risk"
+        ],
+        "weather_refresh_required": true
+      },
+      {
+        "task_id": "task_2d18d08689d208862fe8f60d",
+        "stage": "pest_disease_checkpoint",
+        "start_date": "2026-10-02",
+        "end_date": null,
+        "action": "Scout for yellow mosaic virus.",
+        "quantity": null,
+        "condition": "whitefly pressure",
+        "reasoning": [
+          "Mock risk level: high; watch stage: vegetative.",
+          "The supplied mock KB allows scouting/prevention advice only and does not support chemical doses."
+        ],
+        "source_tags": [
+          "provided_mock_pest_risk"
+        ],
+        "weather_refresh_required": true
+      },
+      {
+        "task_id": "task_5abce1b13ce5ecda333553c3",
+        "stage": "irrigation_pod_filling",
+        "start_date": "2026-10-12",
+        "end_date": null,
+        "action": "Check soil moisture at the pod_filling stage and irrigate only if needed.",
+        "quantity": null,
+        "condition": "Irrigate if soil is dry and refreshed 5-day rainfall is below 10 mm; delay if useful rain is forecast.",
+        "reasoning": [
+          "pod_filling is listed as a critical water stage in the supplied mock irrigation plan.",
+          "Current live 5-day rainfall total is 0.0 mm, but this task may fall beyond the forecast horizon."
+        ],
+        "source_tags": [
+          "provided_mock_irrigation_plan",
+          "generated_mock_weather"
+        ],
+        "weather_refresh_required": true
+      },
+      {
+        "task_id": "task_35037095e2fa430d9a749687",
+        "stage": "irrigation_flowering",
+        "start_date": "2026-10-26",
+        "end_date": null,
+        "action": "Check soil moisture at the flowering stage and irrigate only if needed.",
+        "quantity": null,
+        "condition": "Irrigate if soil is dry and refreshed 5-day rainfall is below 10 mm; delay if useful rain is forecast.",
+        "reasoning": [
+          "flowering is listed as a critical water stage in the supplied mock irrigation plan.",
+          "Current live 5-day rainfall total is 0.0 mm, but this task may fall beyond the forecast horizon."
+        ],
+        "source_tags": [
+          "provided_mock_irrigation_plan",
+          "generated_mock_weather"
+        ],
+        "weather_refresh_required": true
+      },
+      {
+        "task_id": "task_48af9c5bc91b7bb1ec8b7720",
+        "stage": "pest_disease_checkpoint",
+        "start_date": "2026-10-26",
+        "end_date": null,
+        "action": "Scout for pod borer.",
+        "quantity": null,
+        "condition": "pod formation",
+        "reasoning": [
+          "Mock risk level: medium; watch stage: flowering to pod.",
+          "The supplied mock KB allows scouting/prevention advice only and does not support chemical doses."
+        ],
+        "source_tags": [
+          "provided_mock_pest_risk"
+        ],
+        "weather_refresh_required": true
+      },
+      {
+        "task_id": "task_7e7e1b57607733a05a53f304",
+        "stage": "pre_harvest",
+        "start_date": "2026-11-10",
+        "end_date": null,
+        "action": "Estimate harvest labor, bags, transport, expected yield, and current selling price.",
+        "quantity": null,
+        "condition": null,
+        "reasoning": [
+          "This checkpoint is generated 14 days before the mock expected harvest date."
+        ],
+        "source_tags": [
+          "generated_gap_kb",
+          "provided_mock_economics"
+        ],
+        "weather_refresh_required": true
+      },
+      {
+        "task_id": "task_07b5f71c7ca6d0a98ecdbdc9",
+        "stage": "harvest",
+        "start_date": "2026-11-24",
+        "end_date": null,
+        "action": "Harvest Mungbean and close the cost/revenue ledger.",
+        "quantity": null,
+        "condition": null,
+        "reasoning": [
+          "Expected harvest is based on the generated mock 75-day duration."
+        ],
+        "source_tags": [
+          "generated_gap_kb"
+        ],
+        "weather_refresh_required": true
+      }
+    ],
+    "fertilizer_summary_kg_for_farm": {
+      "urea": 20.0,
+      "tsp": 60.0,
+      "mop": 36.0,
+      "gypsum": 24.0,
+      "zinc_sulphate": 2.0,
+      "boric_acid": 1.0
+    },
+    "irrigation_summary": {
+      "seasonal_water_requirement_mm_mock": 160,
+      "irrigations_per_season_mock": 1,
+      "critical_water_stages": [
+        "flowering",
+        "pod_filling"
+      ],
+      "weather_rule": "If crop is in critical stage, soil is dry, and next 5-day rainfall is below 10 mm, schedule irrigation. If rainfall above 20 mm is forecast, skip or delay irrigation.",
+      "live_rainfall_next_5d_mm_at_plan_time": 0.0
+    },
+    "pest_watchlist": [
+      {
+        "crop_id": "mungbean",
+        "problem_name": "yellow mosaic virus",
+        "problem_type": "pest_or_disease_mock",
+        "risk_level_mock": "high",
+        "weather_or_stage_trigger_mock": "whitefly pressure",
+        "watch_stage": "vegetative",
+        "agent_advice_boundary": "Give scouting/prevention advice only. Do not generate chemical doses from this mock KB."
+      },
+      {
+        "crop_id": "mungbean",
+        "problem_name": "pod borer",
+        "problem_type": "pest_or_disease_mock",
+        "risk_level_mock": "medium",
+        "weather_or_stage_trigger_mock": "pod formation",
+        "watch_stage": "flowering to pod",
+        "agent_advice_boundary": "Give scouting/prevention advice only. Do not generate chemical doses from this mock KB."
+      },
+      {
+        "crop_id": "mungbean",
+        "problem_name": "powdery mildew",
+        "problem_type": "pest_or_disease_mock",
+        "risk_level_mock": "low",
+        "weather_or_stage_trigger_mock": "dry cool weather",
+        "watch_stage": "late vegetative",
+        "agent_advice_boundary": "Give scouting/prevention advice only. Do not generate chemical doses from this mock KB."
+      }
+    ],
+    "financial_projection": {
+      "crop_id": "mungbean",
+      "crop_name": "Mungbean",
+      "area_acre": 2.0,
+      "cost_components_bdt": {
+        "seed": 3600.0,
+        "land_prep": 5200.0,
+        "fertilizer": 4800.0,
+        "irrigation": 1400.0,
+        "labor": 6200.0,
+        "pest_control": 3000.0,
+        "harvest": 5200.0,
+        "transport": 1600.0,
+        "misc": 1200.0
+      },
+      "total_cost_bdt": 32200.0,
+      "budget_bdt": 80000.0,
+      "budget_surplus_or_gap_bdt": 47800.0,
+      "expected_yield_kg_per_acre": 600.0,
+      "total_expected_yield_kg": 1200.0,
+      "expected_price_bdt_per_kg": 105.0,
+      "expected_revenue_bdt": 126000.0,
+      "net_profit_bdt": 93800.0,
+      "roi_percent": 291.3,
+      "break_even_price_bdt_per_kg": 26.83,
+      "break_even_yield_kg": 306.67,
+      "scenario_projection": {
+        "conservative": {
+          "yield_kg_per_acre": 400.0,
+          "price_bdt_per_kg": 85.0,
+          "total_yield_kg": 800.0,
+          "revenue_bdt": 68000.0,
+          "profit_bdt": 35800.0
+        },
+        "expected": {
+          "yield_kg_per_acre": 600.0,
+          "price_bdt_per_kg": 105.0,
+          "total_yield_kg": 1200.0,
+          "revenue_bdt": 126000.0,
+          "profit_bdt": 93800.0
+        },
+        "optimistic": {
+          "yield_kg_per_acre": 800.0,
+          "price_bdt_per_kg": 130.0,
+          "total_yield_kg": 1600.0,
+          "revenue_bdt": 208000.0,
+          "profit_bdt": 175800.0
+        }
+      },
+      "assumptions": [
+        "All yield, price, and cost baselines are synthetic mock values from the supplied demo KB.",
+        "Farm area is 2 acre(s); every per-acre cost was multiplied by this area.",
+        "Expected yield factor applied: 1.000.",
+        "Expected price factor applied: 1.000.",
+        "The season plan uses synthetic economics; replace prices before field use."
+      ],
+      "math_trace": [
+        "total_cost = sum(scaled components) = BDT 32,200.00",
+        "total_expected_yield = 600.00 kg/acre × 2 acres = 1,200.00 kg",
+        "expected_revenue = 1,200.00 kg × BDT 105.00/kg = BDT 126,000.00",
+        "net_profit = BDT 126,000.00 - BDT 32,200.00 = BDT 93,800.00",
+        "ROI = net_profit / total_cost × 100 = 291.30%",
+        "break_even_price = total_cost / expected_yield = BDT 26.83/kg"
+      ],
+      "data_status": "mock_economics"
+    },
+    "plan_assumptions": [
+      "Dates after the live forecast horizon are not weather forecasts; they are calendar tasks marked for refresh.",
+      "Crop durations, fertilizer, irrigation, pest risks, costs, yields, and prices are synthetic mock values.",
+      "Source-derived district agronomy and suitability records are used as retrieval evidence where available."
+    ],
+    "evidence": [
+      {
+        "document_id": "spas::mungbean::moulvibazar",
+        "title": "Mungbean agronomy in Moulvibazar",
+        "source": "spas_dataset_bd",
+        "source_kind": "provided_source_derived",
+        "is_mock": false,
+        "score": 0.649414,
+        "snippet": "Source-derived district agronomy record for Mungbean in Moulvibazar. Season: Kharif 2. Planting or transplanting period: February; growth period: March to May; harvest period: May. Temperature profile: average 30 C, minimum 25 C, maximum 35 C. Relative humidity normalized range 60 to 80 percent. Cultivated area 11 acres, production 3 metric tonnes, yield 0.2727272727 metric tonnes per acre.",
+        "metadata": {
+          "traceability": {
+            "source_file": "SPAS-Dataset-BD.csv",
+            "source_row_number": 3239,
+            "source_dataset_record_id": "spas::mungbean::moulvibazar"
+          },
+          "quality": {
+            "quality_flags": []
+          },
+          "crop_ids": [
+            "mungbean"
+          ],
+          "profile_id": "mungbean",
+          "zone_id": null
+        }
+      },
+      {
+        "document_id": "barc_zone::mungbean_blackgram::moulvibazar::kamalganj",
+        "title": "Mungbean / Black gram suitability in Kamalganj, Moulvibazar",
+        "source": "barc_crop_suitability",
+        "source_kind": "provided_source_derived",
+        "is_mock": false,
+        "score": 0.631206,
+        "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Kamalganj, Moulvibazar. Weighted suitability score: 54.209622 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 58.18412 percent; moderately suitable or better: 61.385422 percent. Class shares: {\"very_suitable\": 35.883523, \"suitable\": 22.300597, \"moderately_suitable\": 3.201302, \"marginally_suitable\": 0.0, \"not_suitable\": 38.614578}. The weighted score is derived for retrieval and ranking convenience.",
+        "metadata": {
+          "traceability": {
+            "source_file": "Mung-zone.xls",
+            "source_row_number": 279,
+            "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::kamalganj"
+          },
+          "quality": {
+            "validation": {
+              "class_area_sum": 30580.0,
+              "total_area_difference": -0.0,
+              "class_areas_sum_to_total": true,
+              "all_values_non_negative": true
+            },
+            "quality_flags": []
+          },
+          "crop_ids": [
+            "mungbean",
+            "black_gram"
+          ],
+          "profile_id": null,
+          "zone_id": "mungbean_blackgram"
+        }
+      },
+      {
+        "document_id": "barc_zone::mungbean_blackgram::moulvibazar::srimangal",
+        "title": "Mungbean / Black gram suitability in Srimangal, Moulvibazar",
+        "source": "barc_crop_suitability",
+        "source_kind": "provided_source_derived",
+        "is_mock": false,
+        "score": 0.616544,
+        "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Srimangal, Moulvibazar. Weighted suitability score: 38.733432 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 34.585174 percent; moderately suitable or better: 40.353461 percent. Class shares: {\"very_suitable\": 34.585174, \"suitable\": 0.0, \"moderately_suitable\": 5.768287, \"marginally_suitable\": 5.056456, \"not_suitable\": 54.590083}. The weighted score is derived for retrieval and ranking convenience.",
+        "metadata": {
+          "traceability": {
+            "source_file": "Mung-zone.xls",
+            "source_row_number": 451,
+            "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::srimangal"
+          },
+          "quality": {
+            "validation": {
+              "class_area_sum": 32632.0,
+              "total_area_difference": 0.0,
+              "class_areas_sum_to_total": true,
+              "all_values_non_negative": true
+            },
+            "quality_flags": []
+          },
+          "crop_ids": [
+            "mungbean",
+            "black_gram"
+          ],
+          "profile_id": null,
+          "zone_id": "mungbean_blackgram"
+        }
+      },
+      {
+        "document_id": "barc_zone::mungbean_blackgram::moulvibazar::moulvi_bazar",
+        "title": "Mungbean / Black gram suitability in Moulvi Bazar, Moulvibazar",
+        "source": "barc_crop_suitability",
+        "source_kind": "provided_source_derived",
+        "is_mock": false,
+        "score": 0.616544,
+        "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Moulvi Bazar, Moulvibazar. Weighted suitability score: 50.810698 out of 100. Dominant classes: very_suitable. Very suitable or suitable share: 34.562084 percent; moderately suitable or better: 67.07317 percent. Class shares: {\"very_suitable\": 34.534368, \"suitable\": 0.027716, \"moderately_suitable\": 32.511086, \"marginally_suitable\": 0.0, \"not_suitable\": 32.926829}. The weighted score is derived for retrieval and ranking conveni...",
+        "metadata": {
+          "traceability": {
+            "source_file": "Mung-zone.xls",
+            "source_row_number": 281,
+            "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::moulvi_bazar"
+          },
+          "quality": {
+            "validation": {
+              "class_area_sum": 27179.0,
+              "total_area_difference": 0.0,
+              "class_areas_sum_to_total": true,
+              "all_values_non_negative": true
+            },
+            "quality_flags": []
+          },
+          "crop_ids": [
+            "mungbean",
+            "black_gram"
+          ],
+          "profile_id": null,
+          "zone_id": "mungbean_blackgram"
+        }
+      },
+      {
+        "document_id": "barc_zone::mungbean_blackgram::moulvibazar::rajnagar",
+        "title": "Mungbean / Black gram suitability in Rajnagar, Moulvibazar",
+        "source": "barc_crop_suitability",
+        "source_kind": "provided_source_derived",
+        "is_mock": false,
+        "score": 0.60954,
+        "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Rajnagar, Moulvibazar. Weighted suitability score: 42.68732 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 37.0317 percent; moderately suitable or better: 48.414985 percent. Class shares: {\"very_suitable\": 36.887608, \"suitable\": 0.144092, \"moderately_suitable\": 11.383285, \"marginally_suitable\": 0.0, \"not_suitable\": 51.585014}. The weighted score is derived for retrieval and ranking convenience.",
+        "metadata": {
+          "traceability": {
+            "source_file": "Mung-zone.xls",
+            "source_row_number": 450,
+            "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::rajnagar"
+          },
+          "quality": {
+            "validation": {
+              "class_area_sum": 23042.0,
+              "total_area_difference": -0.0,
+              "class_areas_sum_to_total": true,
+              "all_values_non_negative": true
+            },
+            "quality_flags": []
+          },
+          "crop_ids": [
+            "mungbean",
+            "black_gram"
+          ],
+          "profile_id": null,
+          "zone_id": "mungbean_blackgram"
+        }
+      },
+      {
+        "document_id": "barc_zone::mungbean_blackgram::moulvibazar::kulaura",
+        "title": "Mungbean / Black gram suitability in Kulaura, Moulvibazar",
+        "source": "barc_crop_suitability",
+        "source_kind": "provided_source_derived",
+        "is_mock": false,
+        "score": 0.600498,
+        "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Kulaura, Moulvibazar. Weighted suitability score: 67.831005 out of 100. Dominant classes: very_suitable. Very suitable or suitable share: 66.799734 percent; moderately suitable or better: 71.922821 percent. Class shares: {\"very_suitable\": 60.678643, \"suitable\": 6.121091, \"moderately_suitable\": 5.123087, \"marginally_suitable\": 0.0, \"not_suitable\": 28.077179}. The weighted score is derived for retrieval and ranking convenience.",
+        "metadata": {
+          "traceability": {
+            "source_file": "Mung-zone.xls",
+            "source_row_number": 280,
+            "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::kulaura"
+          },
+          "quality": {
+            "validation": {
+              "class_area_sum": 43700.0000000001,
+              "total_area_difference": 1e-10,
+              "class_areas_sum_to_total": true,
+              "all_values_non_negative": true
+            },
+            "quality_flags": []
+          },
+          "crop_ids": [
+            "mungbean",
+            "black_gram"
+          ],
+          "profile_id": null,
+          "zone_id": "mungbean_blackgram"
+        }
+      },
+      {
+        "document_id": "barc_zone::mungbean_blackgram::moulvibazar::barlekha",
+        "title": "Mungbean / Black gram suitability in Barlekha, Moulvibazar",
+        "source": "barc_crop_suitability",
+        "source_kind": "provided_source_derived",
+        "is_mock": false,
+        "score": 0.590415,
+        "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Barlekha, Moulvibazar. Weighted suitability score: 49.535256 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 51.730769 percent; moderately suitable or better: 59.294872 percent. Class shares: {\"very_suitable\": 27.820513, \"suitable\": 23.910256, \"moderately_suitable\": 7.564103, \"marginally_suitable\": 0.0, \"not_suitable\": 40.705128}. The weighted score is derived for retrieval and ranking convenience.",
+        "metadata": {
+          "traceability": {
+            "source_file": "Mung-zone.xls",
+            "source_row_number": 449,
+            "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::barlekha"
+          },
+          "quality": {
+            "validation": {
+              "class_area_sum": 39292.0,
+              "total_area_difference": 0.0,
+              "class_areas_sum_to_total": true,
+              "all_values_non_negative": true
+            },
+            "quality_flags": []
+          },
+          "crop_ids": [
+            "mungbean",
+            "black_gram"
+          ],
+          "profile_id": null,
+          "zone_id": "mungbean_blackgram"
+        }
+      }
+    ]
+  },
+  "decision_summary": [
+    "Inputs: 2 acres, sandy_loam soil, limited water, BDT 80,000, target rabi.",
+    "Location used: Moulvibazar; coordinates 22.99000, 91.55200 from generated_mock_geocode.",
+    "Weather used: 0.0 mm rain in 72h, 6.4 mm over the returned horizon, mean temperature 28.13 C; source generated_mock_weather.",
+    "Top crop score: Mungbean at 94.1/100.",
+    "Operational trace exposes tool parameters and returned values; it does not expose private chain-of-thought.",
+    "Selected crop: mungbean. A dated calendar and financial projection were computed."
+  ],
+  "safety_flags": [],
+  "trace": [
+    {
+      "step_no": 1,
+      "tool_name": "parse_farmer_message",
+      "parameters": {
+        "message": "I have 2 acres of sandy-loam land in Moulovibazar. My budget is 80000 taka, I have limited irrigation, and I want rabi.",
+        "current_profile": {
+          "location_text": null,
+          "district": null,
+          "upazila": null,
+          "latitude": null,
+          "longitude": null,
+          "geocode_source": null,
+          "geocode_confidence": null,
+          "farm_size_acre": null,
+          "farm_size_input": null,
+          "soil_type": null,
+          "water_availability": null,
+          "water_details": null,
+          "water_capacity_confirmed": null,
+          "budget_bdt": null,
+          "target_season": null,
+          "target_month": null,
+          "target_year": null,
+          "chosen_crop_id": null,
+          "previous_crop": null,
+          "risk_tolerance": null,
+          "language": "en"
+        }
+      },
+      "raw_result": {
+        "patch": {
+          "location_text": "Moulvibazar",
+          "district": "Moulvibazar",
+          "upazila": null,
+          "farm_size_acre": 2.0,
+          "farm_size_input": "2 acres",
+          "soil_type": "sandy_loam",
+          "budget_bdt": 80000.0,
+          "target_season": "rabi",
+          "water_availability": "limited"
+        },
+        "clarifications": [],
+        "extraction_notes": [
+          "Location extracted by catalog_alias: Moulvibazar"
+        ]
+      },
+      "status": "success",
+      "duration_ms": 2.955,
+      "source_kind": "deterministic_local_parser",
+      "created_at": "2026-07-24T13:20:14.305974+00:00"
+    },
+    {
+      "step_no": 2,
+      "tool_name": "geocode_location",
+      "parameters": {
+        "location_text": "Moulvibazar",
+        "district": "Moulvibazar",
+        "upazila": null,
+        "clean_query_preview": "Moulvibazar, Bangladesh"
+      },
+      "raw_result": {
+        "query_sent": "Moulvibazar, Bangladesh",
+        "latitude": 22.99,
+        "longitude": 91.552,
+        "formatted": "Moulvibazar, Bangladesh (sandbox fallback)",
+        "district": "Moulvibazar",
+        "upazila": null,
+        "country_code": "bd",
+        "confidence": 0.0,
+        "match_type": "generated_mock_fallback",
+        "result_type": "locality",
+        "place_id": null,
+        "source": "generated_mock_geocode",
+        "is_mock": true,
+        "needs_confirmation": false,
+        "cache_hit": false,
+        "raw": {
+          "fallback_reason": "offline_mode",
+          "entry": {
+            "district": "Moulvibazar",
+            "upazila": null,
+            "lat": 22.99,
+            "lon": 91.552,
+            "source": "generated_mock_coordinate"
+          }
+        },
+        "attribution": "Synthetic sandbox fallback; not Geoapify data"
+      },
+      "status": "success",
+      "duration_ms": 0.249,
+      "source_kind": "external_api_or_tagged_fallback",
+      "created_at": "2026-07-24T13:20:14.307121+00:00"
+    },
+    {
+      "step_no": 3,
+      "tool_name": "get_live_weather_forecast",
+      "parameters": {
+        "latitude": 22.99,
+        "longitude": 91.552,
+        "forecast_days": 7,
+        "force_refresh": false
+      },
+      "raw_result": {
+        "latitude_requested": 22.99,
+        "longitude_requested": 91.552,
+        "latitude_grid": 22.99,
+        "longitude_grid": 91.552,
+        "timezone": "Asia/Dhaka",
+        "current": {},
+        "days": [
+          {
+            "date": "2026-07-24",
+            "weather_code": 2,
+            "temperature_2m_max": 30.3,
+            "temperature_2m_min": 23.8,
+            "temperature_2m_mean": 26.8,
+            "precipitation_sum": 0.0,
+            "precipitation_probability_max": 25,
+            "relative_humidity_2m_mean": 65,
+            "et0_fao_evapotranspiration": 4.5
+          },
+          {
+            "date": "2026-07-25",
+            "weather_code": 2,
+            "temperature_2m_max": 30.8,
+            "temperature_2m_min": 24.3,
+            "temperature_2m_mean": 27.3,
+            "precipitation_sum": 0.0,
+            "precipitation_probability_max": 25,
+            "relative_humidity_2m_mean": 65,
+            "et0_fao_evapotranspiration": 4.5
+          },
+          {
+            "date": "2026-07-26",
+            "weather_code": 2,
+            "temperature_2m_max": 31.3,
+            "temperature_2m_min": 24.8,
+            "temperature_2m_mean": 27.8,
+            "precipitation_sum": 0.0,
+            "precipitation_probability_max": 25,
+            "relative_humidity_2m_mean": 65,
+            "et0_fao_evapotranspiration": 4.5
+          },
+          {
+            "date": "2026-07-27",
+            "weather_code": 2,
+            "temperature_2m_max": 31.7,
+            "temperature_2m_min": 25.2,
+            "temperature_2m_mean": 28.2,
+            "precipitation_sum": 0.0,
+            "precipitation_probability_max": 25,
+            "relative_humidity_2m_mean": 65,
+            "et0_fao_evapotranspiration": 4.5
+          },
+          {
+            "date": "2026-07-28",
+            "weather_code": 2,
+            "temperature_2m_max": 32.1,
+            "temperature_2m_min": 25.6,
+            "temperature_2m_mean": 28.6,
+            "precipitation_sum": 0.0,
+            "precipitation_probability_max": 25,
+            "relative_humidity_2m_mean": 65,
+            "et0_fao_evapotranspiration": 4.5
+          },
+          {
+            "date": "2026-07-29",
+            "weather_code": 2,
+            "temperature_2m_max": 32.5,
+            "temperature_2m_min": 26.0,
+            "temperature_2m_mean": 29.0,
+            "precipitation_sum": 1.4,
+            "precipitation_probability_max": 29,
+            "relative_humidity_2m_mean": 66,
+            "et0_fao_evapotranspiration": 4.4
+          },
+          {
+            "date": "2026-07-30",
+            "weather_code": 2,
+            "temperature_2m_max": 32.7,
+            "temperature_2m_min": 26.2,
+            "temperature_2m_mean": 29.2,
+            "precipitation_sum": 5.0,
+            "precipitation_probability_max": 40,
+            "relative_humidity_2m_mean": 70,
+            "et0_fao_evapotranspiration": 4.0
+          }
+        ],
+        "summary": {
+          "rainfall_next_48h_mm": 0.0,
+          "rainfall_next_72h_mm": 0.0,
+          "rainfall_next_5d_mm": 0.0,
+          "rainfall_forecast_total_mm": 6.4,
+          "temperature_avg_c": 28.13,
+          "temperature_min_c": 23.8,
+          "temperature_max_c": 32.7,
+          "humidity_avg_percent": 65.86,
+          "precipitation_probability_max_percent": 40.0,
+          "heavy_rain_next_48h": false,
+          "heavy_rain_next_72h": false,
+          "dry_next_5d": true,
+          "forecast_start": "2026-07-24",
+          "forecast_end": "2026-07-30"
+        },
+        "source": "generated_mock_weather",
+        "is_mock": true,
+        "raw": {
+          "latitude": 22.99,
+          "longitude": 91.552,
+          "timezone": "Asia/Dhaka",
+          "daily": {
+            "weather_code": [
+              2,
+              2,
+              2,
+              2,
+              2,
+              2,
+              2
+            ],
+            "temperature_2m_max": [
+              30.3,
+              30.8,
+              31.3,
+              31.7,
+              32.1,
+              32.5,
+              32.7
+            ],
+            "temperature_2m_min": [
+              23.8,
+              24.3,
+              24.8,
+              25.2,
+              25.6,
+              26.0,
+              26.2
+            ],
+            "temperature_2m_mean": [
+              26.8,
+              27.3,
+              27.8,
+              28.2,
+              28.6,
+              29.0,
+              29.2
+            ],
+            "precipitation_sum": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.4,
+              5.0
+            ],
+            "precipitation_probability_max": [
+              25,
+              25,
+              25,
+              25,
+              25,
+              29,
+              40
+            ],
+            "relative_humidity_2m_mean": [
+              65,
+              65,
+              65,
+              65,
+              65,
+              66,
+              70
+            ],
+            "et0_fao_evapotranspiration": [
+              4.5,
+              4.5,
+              4.5,
+              4.5,
+              4.5,
+              4.4,
+              4.0
+            ],
+            "time": [
+              "2026-07-24",
+              "2026-07-25",
+              "2026-07-26",
+              "2026-07-27",
+              "2026-07-28",
+              "2026-07-29",
+              "2026-07-30"
+            ]
+          },
+          "fallback_reason": "offline_mode"
+        },
+        "attribution": "Synthetic sandbox fallback; not Open-Meteo data",
+        "cache_hit": false
+      },
+      "status": "success",
+      "duration_ms": 0.274,
+      "source_kind": "external_api_or_tagged_fallback",
+      "created_at": "2026-07-24T13:20:14.308045+00:00"
+    },
+    {
+      "step_no": 4,
+      "tool_name": "retrieve_agronomic_context",
+      "parameters": {
+        "query": "crop suitability season calendar fertilizer water yield in  Moulvibazar for rabi soil sandy_loam",
+        "district": "Moulvibazar",
+        "upazila": null,
+        "top_k": 10
+      },
+      "raw_result": [
+        {
+          "document_id": "barc_zone::jute::moulvibazar::moulvi_bazar",
+          "title": "Jute suitability in Moulvi Bazar, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.627012,
+          "snippet": "Source-derived crop suitability record for Jute in Moulvi Bazar, Moulvibazar. Weighted suitability score: 59.132483 out of 100. Dominant classes: suitable. Very suitable or suitable share: 66.990022 percent; moderately suitable or better: 69.124168 percent. Class shares: {\"very_suitable\": 31.291574, \"suitable\": 35.698448, \"moderately_suitable\": 2.134146, \"marginally_suitable\": 0.0, \"not_suitable\": 30.875831}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Jute-zone.xls",
+              "source_row_number": 317,
+              "source_dataset_record_id": "barc_zone::jute::moulvibazar::moulvi_bazar"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 27179.0,
+                "total_area_difference": 0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "jute"
+            ],
+            "profile_id": null,
+            "zone_id": "jute"
+          }
+        },
+        {
+          "document_id": "barc_zone::rice_aman::moulvibazar::kamalganj",
+          "title": "Aman rice suitability in Kamalganj, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.614152,
+          "snippet": "Source-derived crop suitability record for Aman rice in Kamalganj, Moulvibazar. Weighted suitability score: 93.846084 out of 100. Dominant classes: very_suitable. Very suitable or suitable share: 92.457949 percent; moderately suitable or better: 93.651655 percent. Class shares: {\"very_suitable\": 92.457949, \"suitable\": 0.0, \"moderately_suitable\": 1.193706, \"marginally_suitable\": 3.165129, \"not_suitable\": 3.183216}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Aman-zone.xls",
+              "source_row_number": 175,
+              "source_dataset_record_id": "barc_zone::rice_aman::moulvibazar::kamalganj"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 30580.0,
+                "total_area_difference": -0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "rice"
+            ],
+            "profile_id": null,
+            "zone_id": "rice_aman"
+          }
+        },
+        {
+          "document_id": "barc_zone::sugarcane::moulvibazar::kulaura",
+          "title": "Sugarcane suitability in Kulaura, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.610189,
+          "snippet": "Source-derived crop suitability record for Sugarcane in Kulaura, Moulvibazar. Weighted suitability score: 45.961411 out of 100. Dominant classes: suitable. Very suitable or suitable share: 57.431803 percent; moderately suitable or better: 59.055223 percent. Class shares: {\"very_suitable\": 0.0, \"suitable\": 57.431803, \"moderately_suitable\": 1.62342, \"marginally_suitable\": 8.303393, \"not_suitable\": 32.641384}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Sugarcane-zone.xls",
+              "source_row_number": 125,
+              "source_dataset_record_id": "barc_zone::sugarcane::moulvibazar::kulaura"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 43700.0,
+                "total_area_difference": -0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "sugarcane"
+            ],
+            "profile_id": null,
+            "zone_id": "sugarcane"
+          }
+        },
+        {
+          "document_id": "barc_zone::jute::moulvibazar::barlekha",
+          "title": "Jute suitability in Barlekha, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.609127,
+          "snippet": "Source-derived crop suitability record for Jute in Barlekha, Moulvibazar. Weighted suitability score: 41.59188 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 35.854701 percent; moderately suitable or better: 59.82906 percent. Class shares: {\"very_suitable\": 9.145299, \"suitable\": 26.709402, \"moderately_suitable\": 23.974359, \"marginally_suitable\": 1.709402, \"not_suitable\": 38.461538}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Jute-zone.xls",
+              "source_row_number": 451,
+              "source_dataset_record_id": "barc_zone::jute::moulvibazar::barlekha"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 39292.0,
+                "total_area_difference": -0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "jute"
+            ],
+            "profile_id": null,
+            "zone_id": "jute"
+          }
+        },
+        {
+          "document_id": "barc_zone::jute::moulvibazar::kamalganj",
+          "title": "Jute suitability in Kamalganj, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.607953,
+          "snippet": "Source-derived crop suitability record for Jute in Kamalganj, Moulvibazar. Weighted suitability score: 47.146862 out of 100. Dominant classes: suitable. Very suitable or suitable share: 58.129861 percent; moderately suitable or better: 61.29499 percent. Class shares: {\"very_suitable\": 7.867607, \"suitable\": 50.262254, \"moderately_suitable\": 3.165129, \"marginally_suitable\": 0.0, \"not_suitable\": 38.70501}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Jute-zone.xls",
+              "source_row_number": 315,
+              "source_dataset_record_id": "barc_zone::jute::moulvibazar::kamalganj"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 30580.0,
+                "total_area_difference": 0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "jute"
+            ],
+            "profile_id": null,
+            "zone_id": "jute"
+          }
+        },
+        {
+          "document_id": "spas::cabbage::moulvibazar",
+          "title": "Cabbage agronomy in Moulvibazar",
+          "source": "spas_dataset_bd",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.604801,
+          "snippet": "Source-derived district agronomy record for Cabbage in Moulvibazar. Season: Kharif 2. Planting or transplanting period: September; growth period: October to January; harvest period: February. Temperature profile: average 17 C, minimum 10 C, maximum 24 C. Relative humidity normalized range 60 to 90 percent. Cultivated area 435 acres, production 2433 metric tonnes, yield 5.5931034483 metric tonnes per acre.",
+          "metadata": {
+            "traceability": {
+              "source_file": "SPAS-Dataset-BD.csv",
+              "source_row_number": 743,
+              "source_dataset_record_id": "spas::cabbage::moulvibazar"
+            },
+            "quality": {
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "cabbage"
+            ],
+            "profile_id": "cabbage",
+            "zone_id": null
+          }
+        },
+        {
+          "document_id": "barc_zone::maize::moulvibazar::rajnagar",
+          "title": "Maize suitability in Rajnagar, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.604315,
+          "snippet": "Source-derived crop suitability record for Maize in Rajnagar, Moulvibazar. Weighted suitability score: 27.233429 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 15.360231 percent; moderately suitable or better: 37.377522 percent. Class shares: {\"very_suitable\": 14.582133, \"suitable\": 0.778098, \"moderately_suitable\": 22.017291, \"marginally_suitable\": 4.236311, \"not_suitable\": 58.386167}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Maize-zone.xls",
+              "source_row_number": 445,
+              "source_dataset_record_id": "barc_zone::maize::moulvibazar::rajnagar"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 23042.0,
+                "total_area_difference": 0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "maize"
+            ],
+            "profile_id": null,
+            "zone_id": "maize"
+          }
+        },
+        {
+          "document_id": "spas::lemon::moulvibazar",
+          "title": "Lemon agronomy in Moulvibazar",
+          "source": "spas_dataset_bd",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.604315,
+          "snippet": "Source-derived district agronomy record for Lemon in Moulvibazar. Season: Rabi. Planting or transplanting period: January; growth period: January to January; harvest period: January. Temperature profile: average 17.5 C, minimum 10 C, maximum 25 C. Relative humidity normalized range 60 to 95 percent. Cultivated area 1101 acres, production 9898 metric tonnes, yield 8.9900090827 metric tonnes per acre.",
+          "metadata": {
+            "traceability": {
+              "source_file": "SPAS-Dataset-BD.csv",
+              "source_row_number": 2727,
+              "source_dataset_record_id": "spas::lemon::moulvibazar"
+            },
+            "quality": {
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "lemon"
+            ],
+            "profile_id": "lemon",
+            "zone_id": null
+          }
+        },
+        {
+          "document_id": "barc_zone::lentil::moulvibazar::srimangal",
+          "title": "Lentil suitability in Srimangal, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.603557,
+          "snippet": "Source-derived crop suitability record for Lentil in Srimangal, Moulvibazar. Weighted suitability score: 28.080511 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 34.806087 percent; moderately suitable or better: 37.162493 percent. Class shares: {\"very_suitable\": 0.0, \"suitable\": 34.806087, \"moderately_suitable\": 2.356406, \"marginally_suitable\": 3.190967, \"not_suitable\": 59.646539}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Lentil-zone.xls",
+              "source_row_number": 447,
+              "source_dataset_record_id": "barc_zone::lentil::moulvibazar::srimangal"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 32632.0,
+                "total_area_difference": 0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "lentil"
+            ],
+            "profile_id": null,
+            "zone_id": "lentil"
+          }
+        },
+        {
+          "document_id": "barc_zone::maize::moulvibazar::moulvi_bazar",
+          "title": "Maize suitability in Moulvi Bazar, Moulvibazar",
+          "source": "barc_crop_suitability",
+          "source_kind": "provided_source_derived",
+          "is_mock": false,
+          "score": 0.602077,
+          "snippet": "Source-derived crop suitability record for Maize in Moulvi Bazar, Moulvibazar. Weighted suitability score: 19.948725 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 3.686253 percent; moderately suitable or better: 34.894679 percent. Class shares: {\"very_suitable\": 3.409091, \"suitable\": 0.277162, \"moderately_suitable\": 31.208426, \"marginally_suitable\": 2.9102, \"not_suitable\": 62.195122}. The weighted score is derived for retrieval and ranking convenience.",
+          "metadata": {
+            "traceability": {
+              "source_file": "Maize-zone.xls",
+              "source_row_number": 444,
+              "source_dataset_record_id": "barc_zone::maize::moulvibazar::moulvi_bazar"
+            },
+            "quality": {
+              "validation": {
+                "class_area_sum": 27179.0,
+                "total_area_difference": 0.0,
+                "class_areas_sum_to_total": true,
+                "all_values_non_negative": true
+              },
+              "quality_flags": []
+            },
+            "crop_ids": [
+              "maize"
+            ],
+            "profile_id": null,
+            "zone_id": "maize"
+          }
+        }
+      ],
+      "status": "success",
+      "duration_ms": 43.955,
+      "source_kind": "persistent_hybrid_rag",
+      "created_at": "2026-07-24T13:20:14.352579+00:00"
+    },
+    {
+      "step_no": 5,
+      "tool_name": "rank_crop_candidates",
+      "parameters": {
+        "profile": {
+          "location_text": "Moulvibazar",
+          "district": "Moulvibazar",
+          "upazila": null,
+          "latitude": 22.99,
+          "longitude": 91.552,
+          "geocode_source": "generated_mock_geocode",
+          "geocode_confidence": 0.0,
+          "farm_size_acre": 2.0,
+          "farm_size_input": "2 acres",
+          "soil_type": "sandy_loam",
+          "water_availability": "limited",
+          "water_details": null,
+          "water_capacity_confirmed": null,
+          "budget_bdt": 80000.0,
+          "target_season": "rabi",
+          "target_month": null,
+          "target_year": null,
+          "chosen_crop_id": null,
+          "previous_crop": null,
+          "risk_tolerance": null,
+          "language": "en"
+        },
+        "weather_summary": {
+          "rainfall_next_48h_mm": 0.0,
+          "rainfall_next_72h_mm": 0.0,
+          "rainfall_next_5d_mm": 0.0,
+          "rainfall_forecast_total_mm": 6.4,
+          "temperature_avg_c": 28.13,
+          "temperature_min_c": 23.8,
+          "temperature_max_c": 32.7,
+          "humidity_avg_percent": 65.86,
+          "precipitation_probability_max_percent": 40.0,
+          "heavy_rain_next_48h": false,
+          "heavy_rain_next_72h": false,
+          "dry_next_5d": true,
+          "forecast_start": "2026-07-24",
+          "forecast_end": "2026-07-30"
+        },
+        "retrieved_context_document_ids": [
+          "barc_zone::jute::moulvibazar::moulvi_bazar",
+          "barc_zone::rice_aman::moulvibazar::kamalganj",
+          "barc_zone::sugarcane::moulvibazar::kulaura",
+          "barc_zone::jute::moulvibazar::barlekha",
+          "barc_zone::jute::moulvibazar::kamalganj",
+          "spas::cabbage::moulvibazar",
+          "barc_zone::maize::moulvibazar::rajnagar",
+          "spas::lemon::moulvibazar",
+          "barc_zone::lentil::moulvibazar::srimangal",
+          "barc_zone::maize::moulvibazar::moulvi_bazar"
+        ],
+        "minimum_candidates": 3
+      },
+      "raw_result": [
+        {
+          "rank": 1,
+          "crop_id": "mungbean",
+          "crop_name": "Mungbean",
+          "suitability_score": 94.1,
+          "suitability_label": "strong",
+          "water_need": "low",
+          "risk_level": "low",
+          "estimated_total_cost_bdt": 32200.0,
+          "estimated_revenue_bdt": 126000.0,
+          "estimated_net_profit_bdt": 93800.0,
+          "roi_percent": 291.3,
+          "budget_fit": "comfortable",
+          "reasons": [
+            "Season fit: target rabi matches crop profile kharif_or_rabi.",
+            "Soil match: sandy_loam is listed in the supplied mock crop profile.",
+            "Water fit: limited access can cover the crop's low mock irrigation need.",
+            "No target month was supplied, so month-window scoring was not applied.",
+            "No immediate high-impact rain/water mismatch was detected in the live forecast window.",
+            "Live mean temperature 28.13 C falls inside the supplied district profile range 25-35 C.",
+            "Provided source-derived location suitability score is 50.6/100, contributing +0.1 points.",
+            "Budget covers the mock total cost with at least a 10% buffer.",
+            "Mock expected projection is profitable: BDT 93,800.00 net, ROI 291.3%."
+          ],
+          "warnings": [],
+          "evidence": [
+            {
+              "document_id": "spas::mungbean::moulvibazar",
+              "title": "Mungbean agronomy in Moulvibazar",
+              "source": "spas_dataset_bd",
+              "source_kind": "provided_source_derived",
+              "is_mock": false,
+              "score": 0.671296,
+              "snippet": "Source-derived district agronomy record for Mungbean in Moulvibazar. Season: Kharif 2. Planting or transplanting period: February; growth period: March to May; harvest period: May. Temperature profile: average 30 C, minimum 25 C, maximum 35 C. Relative humidity normalized range 60 to 80 percent. Cultivated area 11 acres, production 3 metric tonnes, yield 0.2727272727 metric tonnes per acre.",
+              "metadata": {
+                "traceability": {
+                  "source_file": "SPAS-Dataset-BD.csv",
+                  "source_row_number": 3239,
+                  "source_dataset_record_id": "spas::mungbean::moulvibazar"
+                },
+                "quality": {
+                  "quality_flags": []
+                },
+                "crop_ids": [
+                  "mungbean"
+                ],
+                "profile_id": "mungbean",
+                "zone_id": null
+              }
+            },
+            {
+              "document_id": "barc_zone::mungbean_blackgram::moulvibazar::barlekha",
+              "title": "Mungbean / Black gram suitability in Barlekha, Moulvibazar",
+              "source": "barc_crop_suitability",
+              "source_kind": "provided_source_derived",
+              "is_mock": false,
+              "score": 0.630747,
+              "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Barlekha, Moulvibazar. Weighted suitability score: 49.535256 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 51.730769 percent; moderately suitable or better: 59.294872 percent. Class shares: {\"very_suitable\": 27.820513, \"suitable\": 23.910256, \"moderately_suitable\": 7.564103, \"marginally_suitable\": 0.0, \"not_suitable\": 40.705128}. The weighted score is derived for retrieval and ranking convenience.",
+              "metadata": {
+                "traceability": {
+                  "source_file": "Mung-zone.xls",
+                  "source_row_number": 449,
+                  "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::barlekha"
+                },
+                "quality": {
+                  "validation": {
+                    "class_area_sum": 39292.0,
+                    "total_area_difference": 0.0,
+                    "class_areas_sum_to_total": true,
+                    "all_values_non_negative": true
+                  },
+                  "quality_flags": []
+                },
+                "crop_ids": [
+                  "mungbean",
+                  "black_gram"
+                ],
+                "profile_id": null,
+                "zone_id": "mungbean_blackgram"
+              }
+            },
+            {
+              "document_id": "barc_zone::mungbean_blackgram::moulvibazar::kamalganj",
+              "title": "Mungbean / Black gram suitability in Kamalganj, Moulvibazar",
+              "source": "barc_crop_suitability",
+              "source_kind": "provided_source_derived",
+              "is_mock": false,
+              "score": 0.621072,
+              "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Kamalganj, Moulvibazar. Weighted suitability score: 54.209622 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 58.18412 percent; moderately suitable or better: 61.385422 percent. Class shares: {\"very_suitable\": 35.883523, \"suitable\": 22.300597, \"moderately_suitable\": 3.201302, \"marginally_suitable\": 0.0, \"not_suitable\": 38.614578}. The weighted score is derived for retrieval and ranking convenience.",
+              "metadata": {
+                "traceability": {
+                  "source_file": "Mung-zone.xls",
+                  "source_row_number": 279,
+                  "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::kamalganj"
+                },
+                "quality": {
+                  "validation": {
+                    "class_area_sum": 30580.0,
+                    "total_area_difference": -0.0,
+                    "class_areas_sum_to_total": true,
+                    "all_values_non_negative": true
+                  },
+                  "quality_flags": []
+                },
+                "crop_ids": [
+                  "mungbean",
+                  "black_gram"
+                ],
+                "profile_id": null,
+                "zone_id": "mungbean_blackgram"
+              }
+            },
+            {
+              "document_id": "barc_zone::mungbean_blackgram::moulvibazar::kulaura",
+              "title": "Mungbean / Black gram suitability in Kulaura, Moulvibazar",
+              "source": "barc_crop_suitability",
+              "source_kind": "provided_source_derived",
+              "is_mock": false,
+              "score": 0.620664,
+              "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Kulaura, Moulvibazar. Weighted suitability score: 67.831005 out of 100. Dominant classes: very_suitable. Very suitable or suitable share: 66.799734 percent; moderately suitable or better: 71.922821 percent. Class shares: {\"very_suitable\": 60.678643, \"suitable\": 6.121091, \"moderately_suitable\": 5.123087, \"marginally_suitable\": 0.0, \"not_suitable\": 28.077179}. The weighted score is derived for retrieval and ranking convenience.",
+              "metadata": {
+                "traceability": {
+                  "source_file": "Mung-zone.xls",
+                  "source_row_number": 280,
+                  "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::kulaura"
+                },
+                "quality": {
+                  "validation": {
+                    "class_area_sum": 43700.0000000001,
+                    "total_area_difference": 1e-10,
+                    "class_areas_sum_to_total": true,
+                    "all_values_non_negative": true
+                  },
+                  "quality_flags": []
+                },
+                "crop_ids": [
+                  "mungbean",
+                  "black_gram"
+                ],
+                "profile_id": null,
+                "zone_id": "mungbean_blackgram"
+              }
+            }
+          ],
+          "data_status": "mixed_real_and_mock"
+        },
+        {
+          "rank": 2,
+          "crop_id": "mustard",
+          "crop_name": "Mustard",
+          "suitability_score": 92.9,
+          "suitability_label": "strong",
+          "water_need": "low",
+          "risk_level": "low",
+          "estimated_total_cost_bdt": 37800.0,
+          "estimated_revenue_bdt": 101400.0,
+          "estimated_net_profit_bdt": 63600.0,
+          "roi_percent": 168.25,
+          "budget_fit": "comfortable",
+          "reasons": [
+            "Season fit: target rabi matches crop profile rabi.",
+            "Soil match: sandy_loam is listed in the supplied mock crop profile.",
+            "Water fit: limited access can cover the crop's low mock irrigation need.",
+            "No target month was supplied, so month-window scoring was not applied.",
+            "No immediate high-impact rain/water mismatch was detected in the live forecast window.",
+            "Live mean temperature 28.13 C falls inside the supplied district profile range 15-30 C.",
+            "Provided source-derived location suitability score is 40.9/100, contributing -1.1 points.",
+            "Budget covers the mock total cost with at least a 10% buffer.",
+            "Mock expected projection is profitable: BDT 63,600.00 net, ROI 168.2%."
+          ],
+          "warnings": [],
+          "evidence": [
+            {
+              "document_id": "barc_zone::mustard::moulvibazar::moulvi_bazar",
+              "title": "Mustard suitability in Moulvi Bazar, Moulvibazar",
+              "source": "barc_crop_suitability",
+              "source_kind": "provided_source_derived",
+              "is_mock": false,
+              "score": 0.688293,
+              "snippet": "Source-derived crop suitability record for Mustard in Moulvi Bazar, Moulvibazar. Weighted suitability score: 42.364191 out of 100. Dominant classes: suitable. Very suitable or suitable share: 34.562084 percent; moderately suitable or better: 66.740576 percent. Class shares: {\"very_suitable\": 1.080931, \"suitable\": 33.481153, \"moderately_suitable\": 32.178492, \"marginally_suitable\": 0.332594, \"not_suitable\": 32.926829}. The weighted score is derived for retrieval and ranking convenience.",
+              "metadata": {
+                "traceability": {
+                  "source_file": "Mustard-zone.xls",
+                  "source_row_number": 291,
+                  "source_dataset_record_id": "barc_zone::mustard::moulvibazar::moulvi_bazar"
+                },
+                "quality": {
+                  "validation": {
+                    "class_area_sum": 27179.0,
+                    "total_area_difference": 0.0,
+                    "class_areas_sum_to_total": true,
+                    "all_values_non_negative": true
+                  },
+                  "quality_flags": []
+                },
+                "crop_ids": [
+                  "mustard"
+                ],
+                "profile_id": null,
+                "zone_id": "mustard"
+              }
+            },
+            {
+              "document_id": "spas::rapeseed_and_mustard::moulvibazar",
+              "title": "Mustard / Rapeseed agronomy in Moulvibazar",
+              "source": "spas_dataset_bd",
+              "source_kind": "provided_source_derived",
+              "is_mock": false,
+              "score": 0.668295,
+              "snippet": "Source-derived district agronomy record for Mustard / Rapeseed in Moulvibazar. Season: Kharif 2. Planting or transplanting period: October; growth period: November to February; harvest period: February to April. Temperature profile: average 22.5 C, minimum 15 C, maximum 30 C. Relative humidity normalized range 65 to 85 percent. Cultivated area 736 acres, production 357 metric tonnes, yield 0.4850543478 metric tonnes per acre.",
+              "metadata": {
+                "traceability": {
+                  "source_file": "SPAS-Dataset-BD.csv",
+                  "source_row_number": 3943,
+                  "source_dataset_record_id": "spas::rapeseed_and_mustard::moulvibazar"
+                },
+                "quality": {
+                  "quality_flags": []
+                },
+                "crop_ids": [
+                  "mustard"
+                ],
+                "profile_id": "rapeseed_and_mustard",
+                "zone_id": null
+              }
+            },
+            {
+              "document_id": "barc_zone::mustard::moulvibazar::kulaura",
+              "title": "Mustard suitability in Kulaura, Moulvibazar",
+              "source": "barc_crop_suitability",
+              "source_kind": "provided_source_derived",
+              "is_mock": false,
+              "score": 0.66549,
+              "snippet": "Source-derived crop suitability record for Mustard in Kulaura, Moulvibazar. Weighted suitability score: 52.042582 out of 100. Dominant classes: suitable. Very suitable or suitable share: 61.74318 percent; moderately suitable or better: 71.922821 percent. Class shares: {\"very_suitable\": 1.849634, \"suitable\": 59.893546, \"moderately_suitable\": 10.179641, \"marginally_suitable\": 0.73187, \"not_suitable\": 27.345309}. The weighted score is derived for retrieval and ranking convenience.",
+              "metadata": {
+                "traceability": {
+                  "source_file": "Mustard-zone.xls",
+                  "source_row_number": 290,
+                  "source_dataset_record_id": "barc_zone::mustard::moulvibazar::kulaura"
+                },
+                "quality": {
+                  "validation": {
+                    "class_area_sum": 43700.0,
+                    "total_area_difference": 0.0,
+                    "class_areas_sum_to_total": true,
+                    "all_values_non_negative": true
+                  },
+                  "quality_flags": []
+                },
+                "crop_ids": [
+                  "mustard"
+                ],
+                "profile_id": null,
+                "zone_id": "mustard"
+              }
+            },
+            {
+              "document_id": "barc_zone::mustard::moulvibazar::srimangal",
+              "title": "Mustard suitability in Srimangal, Moulvibazar",
+              "source": "barc_crop_suitability",
+              "source_kind": "provided_source_derived",
+              "is_mock": false,
+              "score": 0.663504,
+              "snippet": "Source-derived crop suitability record for Mustard in Srimangal, Moulvibazar. Weighted suitability score: 30.308051 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 36.10702 percent; moderately suitable or better: 37.776141 percent. Class shares: {\"very_suitable\": 1.939126, \"suitable\": 34.167894, \"moderately_suitable\": 1.669121, \"marginally_suitable\": 7.633775, \"not_suitable\": 54.590083}. The weighted score is derived for retrieval and ranking convenience.",
+              "metadata": {
+                "traceability": {
+                  "source_file": "Mustard-zone.xls",
+                  "source_row_number": 450,
+                  "source_dataset_record_id": "barc_zone::mustard::moulvibazar::srimangal"
+                },
+                "quality": {
+                  "validation": {
+                    "class_area_sum": 32632.0,
+                    "total_area_difference": -0.0,
+                    "class_areas_sum_to_total": true,
+                    "all_values_non_negative": true
+                  },
+                  "quality_flags": []
+                },
+                "crop_ids": [
+                  "mustard"
+                ],
+                "profile_id": null,
+                "zone_id": "mustard"
+              }
+            }
+          ],
+          "data_status": "mixed_real_and_mock"
+        },
+        {
+          "rank": 3,
+          "crop_id": "lentil",
+          "crop_name": "Lentil",
+          "suitability_score": 80.2,
+          "suitability_label": "strong",
+          "water_need": "low",
+          "risk_level": "low",
+          "estimated_total_cost_bdt": 35000.0,
+          "estimated_revenue_bdt": 135850.0,
+          "estimated_net_profit_bdt": 100850.0,
+          "roi_percent": 288.14,
+          "budget_fit": "comfortable",
+          "reasons": [
+            "Season fit: target rabi matches crop profile rabi.",
+            "Soil match: sandy_loam is listed in the supplied mock crop profile.",
+            "Water fit: limited access can cover the crop's low mock irrigation need.",
+            "No target month was supplied, so month-window scoring was not applied.",
+            "No immediate high-impact rain/water mismatch was detected in the live forecast window.",
+            "Provided source-derived location suitability score is 34.7/100, contributing -1.8 points.",
+            "Budget covers the mock total cost with at least a 10% buffer.",
+            "Mock expected projection is profitable: BDT 100,850.00 net, ROI 288.1%."
+          ],
+          "warnings": [
+            "Live mean temperature 28.13 C is outside the supplied district profile range 10-20 C."
+          ],
+          "evidence": [
+            {
+              "document_id": "spas::lentil::moulvibazar",
+              "title": "Lentil agronomy in Moulvibazar",
+              "source": "spas_dataset_bd",
+              "source_kind": "provided_source_derived",
+              "is_mock": false,
+              "score": 0.724912,
+              "snippet": "Source-derived district agronomy record for Lentil in Moulvibazar. Season: Kharif 2. Planting or transplanting period: October; growth period: November to February; harvest period: February to March. Temperature profile: average 15 C, minimum 10 C, maximum 20 C. Relative humidity normalized range 85 to 95 percent. Cultivated area 70 acres, production 30 metric tonnes, yield 0.4285714286 metric tonnes per acre.",
+              "metadata": {
+                "traceability": {
+                  "source_file": "SPAS-Dataset-BD.csv",
+                  "source_row_number": 2791,
+                  "source_dataset_record_id": "spas::lentil::moulvibazar"
+                },
+                "quality": {
+                  "quality_flags": []
+                },
+                "crop_ids": [
+                  "lentil"
+                ],
+                "profile_id": "lentil",
+                "zone_id": null
+              }
+            },
+            {
+              "document_id": "barc_zone::lentil::moulvibazar::moulvi_bazar",
+              "title": "Lentil suitability in Moulvi Bazar, Moulvibazar",
+              "source": "barc_crop_suitability",
+              "source_kind": "provided_source_derived",
+              "is_mock": false,
+              "score": 0.679764,
+              "snippet": "Source-derived crop suitability record for Lentil in Moulvi Bazar, Moulvibazar. Weighted suitability score: 31.728104 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 24.501108 percent; moderately suitable or better: 34.866962 percent. Class shares: {\"very_suitable\": 0.498891, \"suitable\": 24.002217, \"moderately_suitable\": 10.365854, \"marginally_suitable\": 32.178492, \"not_suitable\": 32.954545}. The weighted score is derived for retrieval and ranking convenience.",
+              "metadata": {
+                "traceability": {
+                  "source_file": "Lentil-zone.xls",
+                  "source_row_number": 445,
+                  "source_dataset_record_id": "barc_zone::lentil::moulvibazar::moulvi_bazar"
+                },
+                "quality": {
+                  "validation": {
+                    "class_area_sum": 27179.0,
+                    "total_area_difference": 0.0,
+                    "class_areas_sum_to_total": true,
+                    "all_values_non_negative": true
+                  },
+                  "quality_flags": []
+                },
+                "crop_ids": [
+                  "lentil"
+                ],
+                "profile_id": null,
+                "zone_id": "lentil"
+              }
+            },
+            {
+              "document_id": "barc_zone::lentil::moulvibazar::rajnagar",
+              "title": "Lentil suitability in Rajnagar, Moulvibazar",
+              "source": "barc_crop_suitability",
+              "source_kind": "provided_source_derived",
+              "is_mock": false,
+              "score": 0.666174,
+              "snippet": "Source-derived crop suitability record for Lentil in Rajnagar, Moulvibazar. Weighted suitability score: 26.693084 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 19.971182 percent; moderately suitable or better: 37.377522 percent. Class shares: {\"very_suitable\": 1.008646, \"suitable\": 18.962536, \"moderately_suitable\": 17.40634, \"marginally_suitable\": 11.037464, \"not_suitable\": 51.585014}. The weighted score is derived for retrieval and ranking convenience.",
+              "metadata": {
+                "traceability": {
+                  "source_file": "Lentil-zone.xls",
+                  "source_row_number": 446,
+                  "source_dataset_record_id": "barc_zone::lentil::moulvibazar::rajnagar"
+                },
+                "quality": {
+                  "validation": {
+                    "class_area_sum": 23042.0,
+                    "total_area_difference": -0.0,
+                    "class_areas_sum_to_total": true,
+                    "all_values_non_negative": true
+                  },
+                  "quality_flags": []
+                },
+                "crop_ids": [
+                  "lentil"
+                ],
+                "profile_id": null,
+                "zone_id": "lentil"
+              }
+            },
+            {
+              "document_id": "barc_zone::lentil::moulvibazar::kulaura",
+              "title": "Lentil suitability in Kulaura, Moulvibazar",
+              "source": "barc_crop_suitability",
+              "source_kind": "provided_source_derived",
+              "is_mock": false,
+              "score": 0.649814,
+              "snippet": "Source-derived crop suitability record for Lentil in Kulaura, Moulvibazar. Weighted suitability score: 47.591484 out of 100. Dominant classes: suitable. Very suitable or suitable share: 52.521623 percent; moderately suitable or better: 66.799733 percent. Class shares: {\"very_suitable\": 0.0, \"suitable\": 52.521623, \"moderately_suitable\": 14.27811, \"marginally_suitable\": 4.244844, \"not_suitable\": 28.955422}. The weighted score is derived for retrieval and ranking convenience.",
+              "metadata": {
+                "traceability": {
+                  "source_file": "Lentil-zone.xls",
+                  "source_row_number": 176,
+                  "source_dataset_record_id": "barc_zone::lentil::moulvibazar::kulaura"
+                },
+                "quality": {
+                  "validation": {
+                    "class_area_sum": 43700.0,
+                    "total_area_difference": -0.0,
+                    "class_areas_sum_to_total": true,
+                    "all_values_non_negative": true
+                  },
+                  "quality_flags": []
+                },
+                "crop_ids": [
+                  "lentil"
+                ],
+                "profile_id": null,
+                "zone_id": "lentil"
+              }
+            }
+          ],
+          "data_status": "mixed_real_and_mock"
+        }
+      ],
+      "status": "success",
+      "duration_ms": 525.03,
+      "source_kind": "deterministic_rules_plus_rag_plus_financial_calculator",
+      "created_at": "2026-07-24T13:20:14.879610+00:00"
+    },
+    {
+      "step_no": 6,
+      "tool_name": "generate_dated_season_plan",
+      "parameters": {
+        "crop_id": "mungbean",
+        "profile": {
+          "location_text": "Moulvibazar",
+          "district": "Moulvibazar",
+          "upazila": null,
+          "latitude": 22.99,
+          "longitude": 91.552,
+          "geocode_source": "generated_mock_geocode",
+          "geocode_confidence": 0.0,
+          "farm_size_acre": 2.0,
+          "farm_size_input": "2 acres",
+          "soil_type": "sandy_loam",
+          "water_availability": "limited",
+          "water_details": null,
+          "water_capacity_confirmed": null,
+          "budget_bdt": 80000.0,
+          "target_season": "rabi",
+          "target_month": null,
+          "target_year": null,
+          "chosen_crop_id": "mungbean",
+          "previous_crop": null,
+          "risk_tolerance": null,
+          "language": "en"
+        },
+        "weather_summary": {
+          "rainfall_next_48h_mm": 0.0,
+          "rainfall_next_72h_mm": 0.0,
+          "rainfall_next_5d_mm": 0.0,
+          "rainfall_forecast_total_mm": 6.4,
+          "temperature_avg_c": 28.13,
+          "temperature_min_c": 23.8,
+          "temperature_max_c": 32.7,
+          "humidity_avg_percent": 65.86,
+          "precipitation_probability_max_percent": 40.0,
+          "heavy_rain_next_48h": false,
+          "heavy_rain_next_72h": false,
+          "dry_next_5d": true,
+          "forecast_start": "2026-07-24",
+          "forecast_end": "2026-07-30"
+        },
+        "yield_factor_from_recommendation": 1.0
+      },
+      "raw_result": {
+        "crop_id": "mungbean",
+        "crop_name": "Mungbean",
+        "planned_sowing_date": "2026-09-10",
+        "expected_harvest_date": "2026-11-24",
+        "tasks": [
+          {
+            "task_id": "task_4ca0eab8c98d94e4584a5b5b",
+            "stage": "land_preparation",
+            "start_date": "2026-08-27",
+            "end_date": null,
+            "action": "Begin land preparation, confirm seed/input availability, and verify the budget ledger.",
+            "quantity": null,
+            "condition": null,
+            "reasoning": [
+              "The generated mock calendar starts land preparation 14 days before establishment on 2026-09-10.",
+              "Farm area used: 2 acres; soil: sandy_loam."
+            ],
+            "source_tags": [
+              "generated_gap_kb",
+              "farmer_profile"
+            ],
+            "weather_refresh_required": true
+          },
+          {
+            "task_id": "task_c832916de7eedb065f33d25a",
+            "stage": "fertilizer_basal",
+            "start_date": "2026-09-10",
+            "end_date": null,
+            "action": "Apply the mock fertilizer split for basal.",
+            "quantity": "tsp: 60.00 kg (100%); mop: 36.00 kg (100%); gypsum: 24.00 kg (100%); urea: 20.00 kg (100%)",
+            "condition": "Delay this nitrogen/top-dressing task if the refreshed 48-hour forecast reaches 25 mm or more.",
+            "reasoning": [
+              "Current forecast did not trigger an immediate shift; refresh weather before application.",
+              "Fertilizer quantities are synthetic values from the supplied mock KB."
+            ],
+            "source_tags": [
+              "provided_mock_fertilizer_plan",
+              "generated_mock_weather"
+            ],
+            "weather_refresh_required": true
+          },
+          {
+            "task_id": "task_b7944c4311b660ab818705f1",
+            "stage": "sowing_or_transplanting",
+            "start_date": "2026-09-10",
+            "end_date": null,
+            "action": "Establish Mungbean within the planned window.",
+            "quantity": "Mock seed rate: 24.00 kg for the farm",
+            "condition": "Recheck the 72-hour rain forecast on the morning of establishment.",
+            "reasoning": [
+              "Chosen date is derived from target season/month and the supplied mock crop calendar.",
+              "Live forecast total for the next 72 hours is 0.0 mm at planning time."
+            ],
+            "source_tags": [
+              "provided_mock_crop_calendar",
+              "generated_mock_weather"
+            ],
+            "weather_refresh_required": true
+          },
+          {
+            "task_id": "task_edb549167c78f7655b1c6893",
+            "stage": "pest_disease_checkpoint",
+            "start_date": "2026-10-02",
+            "end_date": null,
+            "action": "Scout for powdery mildew.",
+            "quantity": null,
+            "condition": "dry cool weather",
+            "reasoning": [
+              "Mock risk level: low; watch stage: late vegetative.",
+              "The supplied mock KB allows scouting/prevention advice only and does not support chemical doses."
+            ],
+            "source_tags": [
+              "provided_mock_pest_risk"
+            ],
+            "weather_refresh_required": true
+          },
+          {
+            "task_id": "task_2d18d08689d208862fe8f60d",
+            "stage": "pest_disease_checkpoint",
+            "start_date": "2026-10-02",
+            "end_date": null,
+            "action": "Scout for yellow mosaic virus.",
+            "quantity": null,
+            "condition": "whitefly pressure",
+            "reasoning": [
+              "Mock risk level: high; watch stage: vegetative.",
+              "The supplied mock KB allows scouting/prevention advice only and does not support chemical doses."
+            ],
+            "source_tags": [
+              "provided_mock_pest_risk"
+            ],
+            "weather_refresh_required": true
+          },
+          {
+            "task_id": "task_5abce1b13ce5ecda333553c3",
+            "stage": "irrigation_pod_filling",
+            "start_date": "2026-10-12",
+            "end_date": null,
+            "action": "Check soil moisture at the pod_filling stage and irrigate only if needed.",
+            "quantity": null,
+            "condition": "Irrigate if soil is dry and refreshed 5-day rainfall is below 10 mm; delay if useful rain is forecast.",
+            "reasoning": [
+              "pod_filling is listed as a critical water stage in the supplied mock irrigation plan.",
+              "Current live 5-day rainfall total is 0.0 mm, but this task may fall beyond the forecast horizon."
+            ],
+            "source_tags": [
+              "provided_mock_irrigation_plan",
+              "generated_mock_weather"
+            ],
+            "weather_refresh_required": true
+          },
+          {
+            "task_id": "task_35037095e2fa430d9a749687",
+            "stage": "irrigation_flowering",
+            "start_date": "2026-10-26",
+            "end_date": null,
+            "action": "Check soil moisture at the flowering stage and irrigate only if needed.",
+            "quantity": null,
+            "condition": "Irrigate if soil is dry and refreshed 5-day rainfall is below 10 mm; delay if useful rain is forecast.",
+            "reasoning": [
+              "flowering is listed as a critical water stage in the supplied mock irrigation plan.",
+              "Current live 5-day rainfall total is 0.0 mm, but this task may fall beyond the forecast horizon."
+            ],
+            "source_tags": [
+              "provided_mock_irrigation_plan",
+              "generated_mock_weather"
+            ],
+            "weather_refresh_required": true
+          },
+          {
+            "task_id": "task_48af9c5bc91b7bb1ec8b7720",
+            "stage": "pest_disease_checkpoint",
+            "start_date": "2026-10-26",
+            "end_date": null,
+            "action": "Scout for pod borer.",
+            "quantity": null,
+            "condition": "pod formation",
+            "reasoning": [
+              "Mock risk level: medium; watch stage: flowering to pod.",
+              "The supplied mock KB allows scouting/prevention advice only and does not support chemical doses."
+            ],
+            "source_tags": [
+              "provided_mock_pest_risk"
+            ],
+            "weather_refresh_required": true
+          },
+          {
+            "task_id": "task_7e7e1b57607733a05a53f304",
+            "stage": "pre_harvest",
+            "start_date": "2026-11-10",
+            "end_date": null,
+            "action": "Estimate harvest labor, bags, transport, expected yield, and current selling price.",
+            "quantity": null,
+            "condition": null,
+            "reasoning": [
+              "This checkpoint is generated 14 days before the mock expected harvest date."
+            ],
+            "source_tags": [
+              "generated_gap_kb",
+              "provided_mock_economics"
+            ],
+            "weather_refresh_required": true
+          },
+          {
+            "task_id": "task_07b5f71c7ca6d0a98ecdbdc9",
+            "stage": "harvest",
+            "start_date": "2026-11-24",
+            "end_date": null,
+            "action": "Harvest Mungbean and close the cost/revenue ledger.",
+            "quantity": null,
+            "condition": null,
+            "reasoning": [
+              "Expected harvest is based on the generated mock 75-day duration."
+            ],
+            "source_tags": [
+              "generated_gap_kb"
+            ],
+            "weather_refresh_required": true
+          }
+        ],
+        "fertilizer_summary_kg_for_farm": {
+          "urea": 20.0,
+          "tsp": 60.0,
+          "mop": 36.0,
+          "gypsum": 24.0,
+          "zinc_sulphate": 2.0,
+          "boric_acid": 1.0
+        },
+        "irrigation_summary": {
+          "seasonal_water_requirement_mm_mock": 160,
+          "irrigations_per_season_mock": 1,
+          "critical_water_stages": [
+            "flowering",
+            "pod_filling"
+          ],
+          "weather_rule": "If crop is in critical stage, soil is dry, and next 5-day rainfall is below 10 mm, schedule irrigation. If rainfall above 20 mm is forecast, skip or delay irrigation.",
+          "live_rainfall_next_5d_mm_at_plan_time": 0.0
+        },
+        "pest_watchlist": [
+          {
+            "crop_id": "mungbean",
+            "problem_name": "yellow mosaic virus",
+            "problem_type": "pest_or_disease_mock",
+            "risk_level_mock": "high",
+            "weather_or_stage_trigger_mock": "whitefly pressure",
+            "watch_stage": "vegetative",
+            "agent_advice_boundary": "Give scouting/prevention advice only. Do not generate chemical doses from this mock KB."
+          },
+          {
+            "crop_id": "mungbean",
+            "problem_name": "pod borer",
+            "problem_type": "pest_or_disease_mock",
+            "risk_level_mock": "medium",
+            "weather_or_stage_trigger_mock": "pod formation",
+            "watch_stage": "flowering to pod",
+            "agent_advice_boundary": "Give scouting/prevention advice only. Do not generate chemical doses from this mock KB."
+          },
+          {
+            "crop_id": "mungbean",
+            "problem_name": "powdery mildew",
+            "problem_type": "pest_or_disease_mock",
+            "risk_level_mock": "low",
+            "weather_or_stage_trigger_mock": "dry cool weather",
+            "watch_stage": "late vegetative",
+            "agent_advice_boundary": "Give scouting/prevention advice only. Do not generate chemical doses from this mock KB."
+          }
+        ],
+        "financial_projection": {
+          "crop_id": "mungbean",
+          "crop_name": "Mungbean",
+          "area_acre": 2.0,
+          "cost_components_bdt": {
+            "seed": 3600.0,
+            "land_prep": 5200.0,
+            "fertilizer": 4800.0,
+            "irrigation": 1400.0,
+            "labor": 6200.0,
+            "pest_control": 3000.0,
+            "harvest": 5200.0,
+            "transport": 1600.0,
+            "misc": 1200.0
+          },
+          "total_cost_bdt": 32200.0,
+          "budget_bdt": 80000.0,
+          "budget_surplus_or_gap_bdt": 47800.0,
+          "expected_yield_kg_per_acre": 600.0,
+          "total_expected_yield_kg": 1200.0,
+          "expected_price_bdt_per_kg": 105.0,
+          "expected_revenue_bdt": 126000.0,
+          "net_profit_bdt": 93800.0,
+          "roi_percent": 291.3,
+          "break_even_price_bdt_per_kg": 26.83,
+          "break_even_yield_kg": 306.67,
+          "scenario_projection": {
+            "conservative": {
+              "yield_kg_per_acre": 400.0,
+              "price_bdt_per_kg": 85.0,
+              "total_yield_kg": 800.0,
+              "revenue_bdt": 68000.0,
+              "profit_bdt": 35800.0
+            },
+            "expected": {
+              "yield_kg_per_acre": 600.0,
+              "price_bdt_per_kg": 105.0,
+              "total_yield_kg": 1200.0,
+              "revenue_bdt": 126000.0,
+              "profit_bdt": 93800.0
+            },
+            "optimistic": {
+              "yield_kg_per_acre": 800.0,
+              "price_bdt_per_kg": 130.0,
+              "total_yield_kg": 1600.0,
+              "revenue_bdt": 208000.0,
+              "profit_bdt": 175800.0
+            }
+          },
+          "assumptions": [
+            "All yield, price, and cost baselines are synthetic mock values from the supplied demo KB.",
+            "Farm area is 2 acre(s); every per-acre cost was multiplied by this area.",
+            "Expected yield factor applied: 1.000.",
+            "Expected price factor applied: 1.000.",
+            "The season plan uses synthetic economics; replace prices before field use."
+          ],
+          "math_trace": [
+            "total_cost = sum(scaled components) = BDT 32,200.00",
+            "total_expected_yield = 600.00 kg/acre × 2 acres = 1,200.00 kg",
+            "expected_revenue = 1,200.00 kg × BDT 105.00/kg = BDT 126,000.00",
+            "net_profit = BDT 126,000.00 - BDT 32,200.00 = BDT 93,800.00",
+            "ROI = net_profit / total_cost × 100 = 291.30%",
+            "break_even_price = total_cost / expected_yield = BDT 26.83/kg"
+          ],
+          "data_status": "mock_economics"
+        },
+        "plan_assumptions": [
+          "Dates after the live forecast horizon are not weather forecasts; they are calendar tasks marked for refresh.",
+          "Crop durations, fertilizer, irrigation, pest risks, costs, yields, and prices are synthetic mock values.",
+          "Source-derived district agronomy and suitability records are used as retrieval evidence where available."
+        ],
+        "evidence": [
+          {
+            "document_id": "spas::mungbean::moulvibazar",
+            "title": "Mungbean agronomy in Moulvibazar",
+            "source": "spas_dataset_bd",
+            "source_kind": "provided_source_derived",
+            "is_mock": false,
+            "score": 0.649414,
+            "snippet": "Source-derived district agronomy record for Mungbean in Moulvibazar. Season: Kharif 2. Planting or transplanting period: February; growth period: March to May; harvest period: May. Temperature profile: average 30 C, minimum 25 C, maximum 35 C. Relative humidity normalized range 60 to 80 percent. Cultivated area 11 acres, production 3 metric tonnes, yield 0.2727272727 metric tonnes per acre.",
+            "metadata": {
+              "traceability": {
+                "source_file": "SPAS-Dataset-BD.csv",
+                "source_row_number": 3239,
+                "source_dataset_record_id": "spas::mungbean::moulvibazar"
+              },
+              "quality": {
+                "quality_flags": []
+              },
+              "crop_ids": [
+                "mungbean"
+              ],
+              "profile_id": "mungbean",
+              "zone_id": null
+            }
+          },
+          {
+            "document_id": "barc_zone::mungbean_blackgram::moulvibazar::kamalganj",
+            "title": "Mungbean / Black gram suitability in Kamalganj, Moulvibazar",
+            "source": "barc_crop_suitability",
+            "source_kind": "provided_source_derived",
+            "is_mock": false,
+            "score": 0.631206,
+            "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Kamalganj, Moulvibazar. Weighted suitability score: 54.209622 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 58.18412 percent; moderately suitable or better: 61.385422 percent. Class shares: {\"very_suitable\": 35.883523, \"suitable\": 22.300597, \"moderately_suitable\": 3.201302, \"marginally_suitable\": 0.0, \"not_suitable\": 38.614578}. The weighted score is derived for retrieval and ranking convenience.",
+            "metadata": {
+              "traceability": {
+                "source_file": "Mung-zone.xls",
+                "source_row_number": 279,
+                "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::kamalganj"
+              },
+              "quality": {
+                "validation": {
+                  "class_area_sum": 30580.0,
+                  "total_area_difference": -0.0,
+                  "class_areas_sum_to_total": true,
+                  "all_values_non_negative": true
+                },
+                "quality_flags": []
+              },
+              "crop_ids": [
+                "mungbean",
+                "black_gram"
+              ],
+              "profile_id": null,
+              "zone_id": "mungbean_blackgram"
+            }
+          },
+          {
+            "document_id": "barc_zone::mungbean_blackgram::moulvibazar::srimangal",
+            "title": "Mungbean / Black gram suitability in Srimangal, Moulvibazar",
+            "source": "barc_crop_suitability",
+            "source_kind": "provided_source_derived",
+            "is_mock": false,
+            "score": 0.616544,
+            "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Srimangal, Moulvibazar. Weighted suitability score: 38.733432 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 34.585174 percent; moderately suitable or better: 40.353461 percent. Class shares: {\"very_suitable\": 34.585174, \"suitable\": 0.0, \"moderately_suitable\": 5.768287, \"marginally_suitable\": 5.056456, \"not_suitable\": 54.590083}. The weighted score is derived for retrieval and ranking convenience.",
+            "metadata": {
+              "traceability": {
+                "source_file": "Mung-zone.xls",
+                "source_row_number": 451,
+                "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::srimangal"
+              },
+              "quality": {
+                "validation": {
+                  "class_area_sum": 32632.0,
+                  "total_area_difference": 0.0,
+                  "class_areas_sum_to_total": true,
+                  "all_values_non_negative": true
+                },
+                "quality_flags": []
+              },
+              "crop_ids": [
+                "mungbean",
+                "black_gram"
+              ],
+              "profile_id": null,
+              "zone_id": "mungbean_blackgram"
+            }
+          },
+          {
+            "document_id": "barc_zone::mungbean_blackgram::moulvibazar::moulvi_bazar",
+            "title": "Mungbean / Black gram suitability in Moulvi Bazar, Moulvibazar",
+            "source": "barc_crop_suitability",
+            "source_kind": "provided_source_derived",
+            "is_mock": false,
+            "score": 0.616544,
+            "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Moulvi Bazar, Moulvibazar. Weighted suitability score: 50.810698 out of 100. Dominant classes: very_suitable. Very suitable or suitable share: 34.562084 percent; moderately suitable or better: 67.07317 percent. Class shares: {\"very_suitable\": 34.534368, \"suitable\": 0.027716, \"moderately_suitable\": 32.511086, \"marginally_suitable\": 0.0, \"not_suitable\": 32.926829}. The weighted score is derived for retrieval and ranking conveni...",
+            "metadata": {
+              "traceability": {
+                "source_file": "Mung-zone.xls",
+                "source_row_number": 281,
+                "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::moulvi_bazar"
+              },
+              "quality": {
+                "validation": {
+                  "class_area_sum": 27179.0,
+                  "total_area_difference": 0.0,
+                  "class_areas_sum_to_total": true,
+                  "all_values_non_negative": true
+                },
+                "quality_flags": []
+              },
+              "crop_ids": [
+                "mungbean",
+                "black_gram"
+              ],
+              "profile_id": null,
+              "zone_id": "mungbean_blackgram"
+            }
+          },
+          {
+            "document_id": "barc_zone::mungbean_blackgram::moulvibazar::rajnagar",
+            "title": "Mungbean / Black gram suitability in Rajnagar, Moulvibazar",
+            "source": "barc_crop_suitability",
+            "source_kind": "provided_source_derived",
+            "is_mock": false,
+            "score": 0.60954,
+            "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Rajnagar, Moulvibazar. Weighted suitability score: 42.68732 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 37.0317 percent; moderately suitable or better: 48.414985 percent. Class shares: {\"very_suitable\": 36.887608, \"suitable\": 0.144092, \"moderately_suitable\": 11.383285, \"marginally_suitable\": 0.0, \"not_suitable\": 51.585014}. The weighted score is derived for retrieval and ranking convenience.",
+            "metadata": {
+              "traceability": {
+                "source_file": "Mung-zone.xls",
+                "source_row_number": 450,
+                "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::rajnagar"
+              },
+              "quality": {
+                "validation": {
+                  "class_area_sum": 23042.0,
+                  "total_area_difference": -0.0,
+                  "class_areas_sum_to_total": true,
+                  "all_values_non_negative": true
+                },
+                "quality_flags": []
+              },
+              "crop_ids": [
+                "mungbean",
+                "black_gram"
+              ],
+              "profile_id": null,
+              "zone_id": "mungbean_blackgram"
+            }
+          },
+          {
+            "document_id": "barc_zone::mungbean_blackgram::moulvibazar::kulaura",
+            "title": "Mungbean / Black gram suitability in Kulaura, Moulvibazar",
+            "source": "barc_crop_suitability",
+            "source_kind": "provided_source_derived",
+            "is_mock": false,
+            "score": 0.600498,
+            "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Kulaura, Moulvibazar. Weighted suitability score: 67.831005 out of 100. Dominant classes: very_suitable. Very suitable or suitable share: 66.799734 percent; moderately suitable or better: 71.922821 percent. Class shares: {\"very_suitable\": 60.678643, \"suitable\": 6.121091, \"moderately_suitable\": 5.123087, \"marginally_suitable\": 0.0, \"not_suitable\": 28.077179}. The weighted score is derived for retrieval and ranking convenience.",
+            "metadata": {
+              "traceability": {
+                "source_file": "Mung-zone.xls",
+                "source_row_number": 280,
+                "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::kulaura"
+              },
+              "quality": {
+                "validation": {
+                  "class_area_sum": 43700.0000000001,
+                  "total_area_difference": 1e-10,
+                  "class_areas_sum_to_total": true,
+                  "all_values_non_negative": true
+                },
+                "quality_flags": []
+              },
+              "crop_ids": [
+                "mungbean",
+                "black_gram"
+              ],
+              "profile_id": null,
+              "zone_id": "mungbean_blackgram"
+            }
+          },
+          {
+            "document_id": "barc_zone::mungbean_blackgram::moulvibazar::barlekha",
+            "title": "Mungbean / Black gram suitability in Barlekha, Moulvibazar",
+            "source": "barc_crop_suitability",
+            "source_kind": "provided_source_derived",
+            "is_mock": false,
+            "score": 0.590415,
+            "snippet": "Source-derived crop suitability record for Mungbean / Black gram in Barlekha, Moulvibazar. Weighted suitability score: 49.535256 out of 100. Dominant classes: not_suitable. Very suitable or suitable share: 51.730769 percent; moderately suitable or better: 59.294872 percent. Class shares: {\"very_suitable\": 27.820513, \"suitable\": 23.910256, \"moderately_suitable\": 7.564103, \"marginally_suitable\": 0.0, \"not_suitable\": 40.705128}. The weighted score is derived for retrieval and ranking convenience.",
+            "metadata": {
+              "traceability": {
+                "source_file": "Mung-zone.xls",
+                "source_row_number": 449,
+                "source_dataset_record_id": "barc_zone::mungbean_blackgram::moulvibazar::barlekha"
+              },
+              "quality": {
+                "validation": {
+                  "class_area_sum": 39292.0,
+                  "total_area_difference": 0.0,
+                  "class_areas_sum_to_total": true,
+                  "all_values_non_negative": true
+                },
+                "quality_flags": []
+              },
+              "crop_ids": [
+                "mungbean",
+                "black_gram"
+              ],
+              "profile_id": null,
+              "zone_id": "mungbean_blackgram"
+            }
+          }
+        ]
+      },
+      "status": "success",
+      "duration_ms": 13.105,
+      "source_kind": "calendar_rules_plus_rag_plus_financial_calculator",
+      "created_at": "2026-07-24T13:20:14.894195+00:00"
+    }
+  ]
+}

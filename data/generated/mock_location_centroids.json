@@ -1,0 +1,3715 @@
+{
+  "warning": "Synthetic coordinates; Geoapify should be used in live mode.",
+  "places": {
+    "bagerhat": {
+      "district": "Bagerhat",
+      "upazila": null,
+      "lat": 21.288,
+      "lon": 88.58,
+      "source": "generated_mock_coordinate"
+    },
+    "bandarban": {
+      "district": "Bandarban",
+      "upazila": null,
+      "lat": 22.727,
+      "lon": 91.917,
+      "source": "generated_mock_coordinate"
+    },
+    "barguna": {
+      "district": "Barguna",
+      "upazila": null,
+      "lat": 22.105,
+      "lon": 91.646,
+      "source": "generated_mock_coordinate"
+    },
+    "barishal": {
+      "district": "Barishal",
+      "upazila": null,
+      "lat": 21.825,
+      "lon": 88.889,
+      "source": "generated_mock_coordinate"
+    },
+    "bhola": {
+      "district": "Bhola",
+      "upazila": null,
+      "lat": 23.729,
+      "lon": 88.542,
+      "source": "generated_mock_coordinate"
+    },
+    "bogura": {
+      "district": "Bogura",
+      "upazila": null,
+      "lat": 21.887,
+      "lon": 90.699,
+      "source": "generated_mock_coordinate"
+    },
+    "brahmanbaria": {
+      "district": "Brahmanbaria",
+      "upazila": null,
+      "lat": 25.556,
+      "lon": 90.585,
+      "source": "generated_mock_coordinate"
+    },
+    "chandpur": {
+      "district": "Chandpur",
+      "upazila": null,
+      "lat": 21.286,
+      "lon": 92.245,
+      "source": "generated_mock_coordinate"
+    },
+    "chapai nawabganj": {
+      "district": "Chapai Nawabganj",
+      "upazila": null,
+      "lat": 25.128,
+      "lon": 91.553,
+      "source": "generated_mock_coordinate"
+    },
+    "chattogram": {
+      "district": "Chattogram",
+      "upazila": null,
+      "lat": 24.228,
+      "lon": 89.592,
+      "source": "generated_mock_coordinate"
+    },
+    "chuadanga": {
+      "district": "Chuadanga",
+      "upazila": null,
+      "lat": 25.31,
+      "lon": 89.002,
+      "source": "generated_mock_coordinate"
+    },
+    "cox's bazar": {
+      "district": "Cox's Bazar",
+      "upazila": null,
+      "lat": 23.559,
+      "lon": 92.2,
+      "source": "generated_mock_coordinate"
+    },
+    "cumilla": {
+      "district": "Cumilla",
+      "upazila": null,
+      "lat": 25.472,
+      "lon": 90.575,
+      "source": "generated_mock_coordinate"
+    },
+    "dhaka": {
+      "district": "Dhaka",
+      "upazila": null,
+      "lat": 21.661,
+      "lon": 90.419,
+      "source": "generated_mock_coordinate"
+    },
+    "dinajpur": {
+      "district": "Dinajpur",
+      "upazila": null,
+      "lat": 22.227,
+      "lon": 89.453,
+      "source": "generated_mock_coordinate"
+    },
+    "faridpur": {
+      "district": "Faridpur",
+      "upazila": null,
+      "lat": 25.024,
+      "lon": 88.225,
+      "source": "generated_mock_coordinate"
+    },
+    "feni": {
+      "district": "Feni",
+      "upazila": null,
+      "lat": 22.638,
+      "lon": 91.882,
+      "source": "generated_mock_coordinate"
+    },
+    "gaibandha": {
+      "district": "Gaibandha",
+      "upazila": null,
+      "lat": 25.49,
+      "lon": 88.588,
+      "source": "generated_mock_coordinate"
+    },
+    "gazipur": {
+      "district": "Gazipur",
+      "upazila": null,
+      "lat": 24.196,
+      "lon": 88.934,
+      "source": "generated_mock_coordinate"
+    },
+    "gopalganj": {
+      "district": "Gopalganj",
+      "upazila": null,
+      "lat": 24.148,
+      "lon": 90.224,
+      "source": "generated_mock_coordinate"
+    },
+    "habiganj": {
+      "district": "Habiganj",
+      "upazila": null,
+      "lat": 23.593,
+      "lon": 88.469,
+      "source": "generated_mock_coordinate"
+    },
+    "jamalpur": {
+      "district": "Jamalpur",
+      "upazila": null,
+      "lat": 24.78,
+      "lon": 92.145,
+      "source": "generated_mock_coordinate"
+    },
+    "jashore": {
+      "district": "Jashore",
+      "upazila": null,
+      "lat": 23.805,
+      "lon": 91.271,
+      "source": "generated_mock_coordinate"
+    },
+    "jhalokati": {
+      "district": "Jhalokati",
+      "upazila": null,
+      "lat": 25.026,
+      "lon": 90.823,
+      "source": "generated_mock_coordinate"
+    },
+    "jhenaidah": {
+      "district": "Jhenaidah",
+      "upazila": null,
+      "lat": 23.238,
+      "lon": 91.671,
+      "source": "generated_mock_coordinate"
+    },
+    "joypurhat": {
+      "district": "Joypurhat",
+      "upazila": null,
+      "lat": 23.612,
+      "lon": 88.576,
+      "source": "generated_mock_coordinate"
+    },
+    "khagrachari": {
+      "district": "Khagrachari",
+      "upazila": null,
+      "lat": 25.617,
+      "lon": 89.599,
+      "source": "generated_mock_coordinate"
+    },
+    "khulna": {
+      "district": "Khulna",
+      "upazila": null,
+      "lat": 20.984,
+      "lon": 88.64,
+      "source": "generated_mock_coordinate"
+    },
+    "kishoreganj": {
+      "district": "Kishoreganj",
+      "upazila": null,
+      "lat": 21.017,
+      "lon": 91.954,
+      "source": "generated_mock_coordinate"
+    },
+    "kurigram": {
+      "district": "Kurigram",
+      "upazila": null,
+      "lat": 25.087,
+      "lon": 91.035,
+      "source": "generated_mock_coordinate"
+    },
+    "kushtia": {
+      "district": "Kushtia",
+      "upazila": null,
+      "lat": 21.727,
+      "lon": 89.054,
+      "source": "generated_mock_coordinate"
+    },
+    "lakshmipur": {
+      "district": "Lakshmipur",
+      "upazila": null,
+      "lat": 21.546,
+      "lon": 92.124,
+      "source": "generated_mock_coordinate"
+    },
+    "lalmonirhat": {
+      "district": "Lalmonirhat",
+      "upazila": null,
+      "lat": 24.935,
+      "lon": 91.863,
+      "source": "generated_mock_coordinate"
+    },
+    "madaripur": {
+      "district": "Madaripur",
+      "upazila": null,
+      "lat": 21.439,
+      "lon": 90.889,
+      "source": "generated_mock_coordinate"
+    },
+    "magura": {
+      "district": "Magura",
+      "upazila": null,
+      "lat": 24.92,
+      "lon": 92.05,
+      "source": "generated_mock_coordinate"
+    },
+    "manikganj": {
+      "district": "Manikganj",
+      "upazila": null,
+      "lat": 25.522,
+      "lon": 90.55,
+      "source": "generated_mock_coordinate"
+    },
+    "meherpur": {
+      "district": "Meherpur",
+      "upazila": null,
+      "lat": 25.466,
+      "lon": 89.366,
+      "source": "generated_mock_coordinate"
+    },
+    "moulvibazar": {
+      "district": "Moulvibazar",
+      "upazila": null,
+      "lat": 22.99,
+      "lon": 91.552,
+      "source": "generated_mock_coordinate"
+    },
+    "munshiganj": {
+      "district": "Munshiganj",
+      "upazila": null,
+      "lat": 23.889,
+      "lon": 88.08,
+      "source": "generated_mock_coordinate"
+    },
+    "mymensingh": {
+      "district": "Mymensingh",
+      "upazila": null,
+      "lat": 21.229,
+      "lon": 89.414,
+      "source": "generated_mock_coordinate"
+    },
+    "naogaon": {
+      "district": "Naogaon",
+      "upazila": null,
+      "lat": 24.368,
+      "lon": 91.196,
+      "source": "generated_mock_coordinate"
+    },
+    "narail": {
+      "district": "Narail",
+      "upazila": null,
+      "lat": 21.409,
+      "lon": 90.525,
+      "source": "generated_mock_coordinate"
+    },
+    "narayanganj": {
+      "district": "Narayanganj",
+      "upazila": null,
+      "lat": 23.642,
+      "lon": 91.946,
+      "source": "generated_mock_coordinate"
+    },
+    "narsingdi": {
+      "district": "Narsingdi",
+      "upazila": null,
+      "lat": 22.241,
+      "lon": 90.317,
+      "source": "generated_mock_coordinate"
+    },
+    "natore": {
+      "district": "Natore",
+      "upazila": null,
+      "lat": 25.17,
+      "lon": 89.337,
+      "source": "generated_mock_coordinate"
+    },
+    "netrokona": {
+      "district": "Netrokona",
+      "upazila": null,
+      "lat": 23.398,
+      "lon": 91.298,
+      "source": "generated_mock_coordinate"
+    },
+    "nilphamari": {
+      "district": "Nilphamari",
+      "upazila": null,
+      "lat": 20.943,
+      "lon": 91.332,
+      "source": "generated_mock_coordinate"
+    },
+    "noakhali": {
+      "district": "Noakhali",
+      "upazila": null,
+      "lat": 23.278,
+      "lon": 90.089,
+      "source": "generated_mock_coordinate"
+    },
+    "pabna": {
+      "district": "Pabna",
+      "upazila": null,
+      "lat": 25.537,
+      "lon": 92.24,
+      "source": "generated_mock_coordinate"
+    },
+    "panchagarh": {
+      "district": "Panchagarh",
+      "upazila": null,
+      "lat": 21.387,
+      "lon": 89.736,
+      "source": "generated_mock_coordinate"
+    },
+    "patuakhali": {
+      "district": "Patuakhali",
+      "upazila": null,
+      "lat": 25.265,
+      "lon": 91.464,
+      "source": "generated_mock_coordinate"
+    },
+    "pirojpur": {
+      "district": "Pirojpur",
+      "upazila": null,
+      "lat": 21.239,
+      "lon": 89.196,
+      "source": "generated_mock_coordinate"
+    },
+    "rajbari": {
+      "district": "Rajbari",
+      "upazila": null,
+      "lat": 22.737,
+      "lon": 89.104,
+      "source": "generated_mock_coordinate"
+    },
+    "rajshahi": {
+      "district": "Rajshahi",
+      "upazila": null,
+      "lat": 23.529,
+      "lon": 88.305,
+      "source": "generated_mock_coordinate"
+    },
+    "rangamati": {
+      "district": "Rangamati",
+      "upazila": null,
+      "lat": 23.444,
+      "lon": 88.971,
+      "source": "generated_mock_coordinate"
+    },
+    "rangpur": {
+      "district": "Rangpur",
+      "upazila": null,
+      "lat": 24.335,
+      "lon": 89.155,
+      "source": "generated_mock_coordinate"
+    },
+    "satkhira": {
+      "district": "Satkhira",
+      "upazila": null,
+      "lat": 22.192,
+      "lon": 88.63,
+      "source": "generated_mock_coordinate"
+    },
+    "shariatpur": {
+      "district": "Shariatpur",
+      "upazila": null,
+      "lat": 22.47,
+      "lon": 91.112,
+      "source": "generated_mock_coordinate"
+    },
+    "sherpur": {
+      "district": "Sherpur",
+      "upazila": null,
+      "lat": 23.847,
+      "lon": 90.573,
+      "source": "generated_mock_coordinate"
+    },
+    "sirajganj": {
+      "district": "Sirajganj",
+      "upazila": null,
+      "lat": 22.258,
+      "lon": 89.277,
+      "source": "generated_mock_coordinate"
+    },
+    "sunamganj": {
+      "district": "Sunamganj",
+      "upazila": null,
+      "lat": 21.456,
+      "lon": 88.712,
+      "source": "generated_mock_coordinate"
+    },
+    "sylhet": {
+      "district": "Sylhet",
+      "upazila": null,
+      "lat": 24.625,
+      "lon": 88.691,
+      "source": "generated_mock_coordinate"
+    },
+    "tangail": {
+      "district": "Tangail",
+      "upazila": null,
+      "lat": 24.831,
+      "lon": 89.577,
+      "source": "generated_mock_coordinate"
+    },
+    "thakurgaon": {
+      "district": "Thakurgaon",
+      "upazila": null,
+      "lat": 23.331,
+      "lon": 88.31,
+      "source": "generated_mock_coordinate"
+    },
+    "bagerhat, bagerhat": {
+      "district": "Bagerhat",
+      "upazila": "Bagerhat",
+      "lat": 21.291,
+      "lon": 88.5808,
+      "source": "generated_mock_coordinate"
+    },
+    "chitalmari, bagerhat": {
+      "district": "Bagerhat",
+      "upazila": "Chitalmari",
+      "lat": 21.2936,
+      "lon": 88.5734,
+      "source": "generated_mock_coordinate"
+    },
+    "fakirhat, bagerhat": {
+      "district": "Bagerhat",
+      "upazila": "Fakirhat",
+      "lat": 21.2896,
+      "lon": 88.5756,
+      "source": "generated_mock_coordinate"
+    },
+    "kachua, bagerhat": {
+      "district": "Bagerhat",
+      "upazila": "Kachua",
+      "lat": 21.2854,
+      "lon": 88.5838,
+      "source": "generated_mock_coordinate"
+    },
+    "mollahat, bagerhat": {
+      "district": "Bagerhat",
+      "upazila": "Mollahat",
+      "lat": 21.2824,
+      "lon": 88.579,
+      "source": "generated_mock_coordinate"
+    },
+    "mongla, bagerhat": {
+      "district": "Bagerhat",
+      "upazila": "Mongla",
+      "lat": 21.2802,
+      "lon": 88.59,
+      "source": "generated_mock_coordinate"
+    },
+    "morelganj, bagerhat": {
+      "district": "Bagerhat",
+      "upazila": "Morelganj",
+      "lat": 21.2806,
+      "lon": 88.5894,
+      "source": "generated_mock_coordinate"
+    },
+    "rampal, bagerhat": {
+      "district": "Bagerhat",
+      "upazila": "Rampal",
+      "lat": 21.291,
+      "lon": 88.5732,
+      "source": "generated_mock_coordinate"
+    },
+    "sarankhola, bagerhat": {
+      "district": "Bagerhat",
+      "upazila": "Sarankhola",
+      "lat": 21.284,
+      "lon": 88.5872,
+      "source": "generated_mock_coordinate"
+    },
+    "alikadam, bandarban": {
+      "district": "Bandarban",
+      "upazila": "Alikadam",
+      "lat": 22.7258,
+      "lon": 91.9126,
+      "source": "generated_mock_coordinate"
+    },
+    "bandarban, bandarban": {
+      "district": "Bandarban",
+      "upazila": "Bandarban",
+      "lat": 22.731,
+      "lon": 91.9136,
+      "source": "generated_mock_coordinate"
+    },
+    "lama, bandarban": {
+      "district": "Bandarban",
+      "upazila": "Lama",
+      "lat": 22.7196,
+      "lon": 91.9174,
+      "source": "generated_mock_coordinate"
+    },
+    "naikhongchhari, bandarban": {
+      "district": "Bandarban",
+      "upazila": "Naikhongchhari",
+      "lat": 22.7238,
+      "lon": 91.9214,
+      "source": "generated_mock_coordinate"
+    },
+    "rowangchhari, bandarban": {
+      "district": "Bandarban",
+      "upazila": "Rowangchhari",
+      "lat": 22.7194,
+      "lon": 91.921,
+      "source": "generated_mock_coordinate"
+    },
+    "ruma, bandarban": {
+      "district": "Bandarban",
+      "upazila": "Ruma",
+      "lat": 22.7308,
+      "lon": 91.9102,
+      "source": "generated_mock_coordinate"
+    },
+    "thanchi, bandarban": {
+      "district": "Bandarban",
+      "upazila": "Thanchi",
+      "lat": 22.7286,
+      "lon": 91.9228,
+      "source": "generated_mock_coordinate"
+    },
+    "amtali, barguna": {
+      "district": "Barguna",
+      "upazila": "Amtali",
+      "lat": 22.1088,
+      "lon": 91.65,
+      "source": "generated_mock_coordinate"
+    },
+    "bamna, barguna": {
+      "district": "Barguna",
+      "upazila": "Bamna",
+      "lat": 22.1022,
+      "lon": 91.6464,
+      "source": "generated_mock_coordinate"
+    },
+    "betagi, barguna": {
+      "district": "Barguna",
+      "upazila": "Betagi",
+      "lat": 22.1116,
+      "lon": 91.646,
+      "source": "generated_mock_coordinate"
+    },
+    "borguna, barguna": {
+      "district": "Barguna",
+      "upazila": "Borguna",
+      "lat": 22.1092,
+      "lon": 91.6472,
+      "source": "generated_mock_coordinate"
+    },
+    "patharghata, barguna": {
+      "district": "Barguna",
+      "upazila": "Patharghata",
+      "lat": 22.1076,
+      "lon": 91.6414,
+      "source": "generated_mock_coordinate"
+    },
+    "agailjhara, barishal": {
+      "district": "Barishal",
+      "upazila": "Agailjhara",
+      "lat": 21.8162,
+      "lon": 88.8972,
+      "source": "generated_mock_coordinate"
+    },
+    "babuganj, barishal": {
+      "district": "Barishal",
+      "upazila": "Babuganj",
+      "lat": 21.8254,
+      "lon": 88.883,
+      "source": "generated_mock_coordinate"
+    },
+    "bakerganj, barishal": {
+      "district": "Barishal",
+      "upazila": "Bakerganj",
+      "lat": 21.8326,
+      "lon": 88.897,
+      "source": "generated_mock_coordinate"
+    },
+    "banaripara, barishal": {
+      "district": "Barishal",
+      "upazila": "Banaripara",
+      "lat": 21.8274,
+      "lon": 88.8886,
+      "source": "generated_mock_coordinate"
+    },
+    "barisal, barishal": {
+      "district": "Barishal",
+      "upazila": "Barisal",
+      "lat": 21.8338,
+      "lon": 88.8794,
+      "source": "generated_mock_coordinate"
+    },
+    "gaurnadi, barishal": {
+      "district": "Barishal",
+      "upazila": "Gaurnadi",
+      "lat": 21.822,
+      "lon": 88.8976,
+      "source": "generated_mock_coordinate"
+    },
+    "hizla, barishal": {
+      "district": "Barishal",
+      "upazila": "Hizla",
+      "lat": 21.8206,
+      "lon": 88.8794,
+      "source": "generated_mock_coordinate"
+    },
+    "mehendiganj, barishal": {
+      "district": "Barishal",
+      "upazila": "Mehendiganj",
+      "lat": 21.8228,
+      "lon": 88.8958,
+      "source": "generated_mock_coordinate"
+    },
+    "muladi, barishal": {
+      "district": "Barishal",
+      "upazila": "Muladi",
+      "lat": 21.8214,
+      "lon": 88.8876,
+      "source": "generated_mock_coordinate"
+    },
+    "ujirpur, barishal": {
+      "district": "Barishal",
+      "upazila": "Ujirpur",
+      "lat": 21.8232,
+      "lon": 88.8882,
+      "source": "generated_mock_coordinate"
+    },
+    "bhola, bhola": {
+      "district": "Bhola",
+      "upazila": "Bhola",
+      "lat": 23.7196,
+      "lon": 88.542,
+      "source": "generated_mock_coordinate"
+    },
+    "burhanuddin, bhola": {
+      "district": "Bhola",
+      "upazila": "Burhanuddin",
+      "lat": 23.726,
+      "lon": 88.5476,
+      "source": "generated_mock_coordinate"
+    },
+    "char fasson, bhola": {
+      "district": "Bhola",
+      "upazila": "Char Fasson",
+      "lat": 23.7296,
+      "lon": 88.545,
+      "source": "generated_mock_coordinate"
+    },
+    "daulatkhan, bhola": {
+      "district": "Bhola",
+      "upazila": "Daulatkhan",
+      "lat": 23.7322,
+      "lon": 88.5404,
+      "source": "generated_mock_coordinate"
+    },
+    "lalmohan, bhola": {
+      "district": "Bhola",
+      "upazila": "Lalmohan",
+      "lat": 23.7306,
+      "lon": 88.5324,
+      "source": "generated_mock_coordinate"
+    },
+    "monpura, bhola": {
+      "district": "Bhola",
+      "upazila": "Monpura",
+      "lat": 23.7254,
+      "lon": 88.5364,
+      "source": "generated_mock_coordinate"
+    },
+    "tajumuddin, bhola": {
+      "district": "Bhola",
+      "upazila": "Tajumuddin",
+      "lat": 23.7246,
+      "lon": 88.5376,
+      "source": "generated_mock_coordinate"
+    },
+    "adamdighi, bogura": {
+      "district": "Bogura",
+      "upazila": "Adamdighi",
+      "lat": 21.8832,
+      "lon": 90.7042,
+      "source": "generated_mock_coordinate"
+    },
+    "bogra, bogura": {
+      "district": "Bogura",
+      "upazila": "Bogra",
+      "lat": 21.8788,
+      "lon": 90.7046,
+      "source": "generated_mock_coordinate"
+    },
+    "dhubchachia, bogura": {
+      "district": "Bogura",
+      "upazila": "Dhubchachia",
+      "lat": 21.8934,
+      "lon": 90.6984,
+      "source": "generated_mock_coordinate"
+    },
+    "dhunot, bogura": {
+      "district": "Bogura",
+      "upazila": "Dhunot",
+      "lat": 21.8962,
+      "lon": 90.7058,
+      "source": "generated_mock_coordinate"
+    },
+    "gabtali, bogura": {
+      "district": "Bogura",
+      "upazila": "Gabtali",
+      "lat": 21.89,
+      "lon": 90.7058,
+      "source": "generated_mock_coordinate"
+    },
+    "kahalu, bogura": {
+      "district": "Bogura",
+      "upazila": "Kahalu",
+      "lat": 21.893,
+      "lon": 90.7016,
+      "source": "generated_mock_coordinate"
+    },
+    "nandigram, bogura": {
+      "district": "Bogura",
+      "upazila": "Nandigram",
+      "lat": 21.8968,
+      "lon": 90.708,
+      "source": "generated_mock_coordinate"
+    },
+    "shariakandi, bogura": {
+      "district": "Bogura",
+      "upazila": "Shariakandi",
+      "lat": 21.8834,
+      "lon": 90.6928,
+      "source": "generated_mock_coordinate"
+    },
+    "sherpur, bogura": {
+      "district": "Bogura",
+      "upazila": "Sherpur",
+      "lat": 21.8896,
+      "lon": 90.697,
+      "source": "generated_mock_coordinate"
+    },
+    "shibganj, bogura": {
+      "district": "Bogura",
+      "upazila": "Shibganj",
+      "lat": 21.8796,
+      "lon": 90.7056,
+      "source": "generated_mock_coordinate"
+    },
+    "sonatala, bogura": {
+      "district": "Bogura",
+      "upazila": "Sonatala",
+      "lat": 21.8826,
+      "lon": 90.7076,
+      "source": "generated_mock_coordinate"
+    },
+    "akhaura, brahmanbaria": {
+      "district": "Brahmanbaria",
+      "upazila": "Akhaura",
+      "lat": 25.5478,
+      "lon": 90.5888,
+      "source": "generated_mock_coordinate"
+    },
+    "banchharampur, brahmanbaria": {
+      "district": "Brahmanbaria",
+      "upazila": "Banchharampur",
+      "lat": 25.5462,
+      "lon": 90.585,
+      "source": "generated_mock_coordinate"
+    },
+    "brahmanbaria, brahmanbaria": {
+      "district": "Brahmanbaria",
+      "upazila": "Brahmanbaria",
+      "lat": 25.5548,
+      "lon": 90.5908,
+      "source": "generated_mock_coordinate"
+    },
+    "kasba, brahmanbaria": {
+      "district": "Brahmanbaria",
+      "upazila": "Kasba",
+      "lat": 25.548,
+      "lon": 90.589,
+      "source": "generated_mock_coordinate"
+    },
+    "nabinagar, brahmanbaria": {
+      "district": "Brahmanbaria",
+      "upazila": "Nabinagar",
+      "lat": 25.5574,
+      "lon": 90.5874,
+      "source": "generated_mock_coordinate"
+    },
+    "nasirnagar, brahmanbaria": {
+      "district": "Brahmanbaria",
+      "upazila": "Nasirnagar",
+      "lat": 25.5634,
+      "lon": 90.5802,
+      "source": "generated_mock_coordinate"
+    },
+    "sarail, brahmanbaria": {
+      "district": "Brahmanbaria",
+      "upazila": "Sarail",
+      "lat": 25.5536,
+      "lon": 90.5776,
+      "source": "generated_mock_coordinate"
+    },
+    "chandpur, chandpur": {
+      "district": "Chandpur",
+      "upazila": "Chandpur",
+      "lat": 21.2942,
+      "lon": 92.2506,
+      "source": "generated_mock_coordinate"
+    },
+    "faridganj, chandpur": {
+      "district": "Chandpur",
+      "upazila": "Faridganj",
+      "lat": 21.2776,
+      "lon": 92.2474,
+      "source": "generated_mock_coordinate"
+    },
+    "haimchar, chandpur": {
+      "district": "Chandpur",
+      "upazila": "Haimchar",
+      "lat": 21.2786,
+      "lon": 92.255,
+      "source": "generated_mock_coordinate"
+    },
+    "hajiganj, chandpur": {
+      "district": "Chandpur",
+      "upazila": "Hajiganj",
+      "lat": 21.2918,
+      "lon": 92.247,
+      "source": "generated_mock_coordinate"
+    },
+    "kachua, chandpur": {
+      "district": "Chandpur",
+      "upazila": "Kachua",
+      "lat": 21.2872,
+      "lon": 92.251,
+      "source": "generated_mock_coordinate"
+    },
+    "matlab, chandpur": {
+      "district": "Chandpur",
+      "upazila": "Matlab",
+      "lat": 21.2924,
+      "lon": 92.25,
+      "source": "generated_mock_coordinate"
+    },
+    "shahrasti, chandpur": {
+      "district": "Chandpur",
+      "upazila": "Shahrasti",
+      "lat": 21.284,
+      "lon": 92.2454,
+      "source": "generated_mock_coordinate"
+    },
+    "bholahat, chapai nawabganj": {
+      "district": "Chapai Nawabganj",
+      "upazila": "Bholahat",
+      "lat": 25.1294,
+      "lon": 91.5626,
+      "source": "generated_mock_coordinate"
+    },
+    "gomastapur, chapai nawabganj": {
+      "district": "Chapai Nawabganj",
+      "upazila": "Gomastapur",
+      "lat": 25.1276,
+      "lon": 91.5464,
+      "source": "generated_mock_coordinate"
+    },
+    "nachol, chapai nawabganj": {
+      "district": "Chapai Nawabganj",
+      "upazila": "Nachol",
+      "lat": 25.1202,
+      "lon": 91.5472,
+      "source": "generated_mock_coordinate"
+    },
+    "nawabganj, chapai nawabganj": {
+      "district": "Chapai Nawabganj",
+      "upazila": "Nawabganj",
+      "lat": 25.1324,
+      "lon": 91.545,
+      "source": "generated_mock_coordinate"
+    },
+    "shibganj, chapai nawabganj": {
+      "district": "Chapai Nawabganj",
+      "upazila": "Shibganj",
+      "lat": 25.1304,
+      "lon": 91.5546,
+      "source": "generated_mock_coordinate"
+    },
+    "anwara, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Anwara",
+      "lat": 24.2364,
+      "lon": 89.5828,
+      "source": "generated_mock_coordinate"
+    },
+    "banskhali, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Banskhali",
+      "lat": 24.2242,
+      "lon": 89.5832,
+      "source": "generated_mock_coordinate"
+    },
+    "boalkhali, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Boalkhali",
+      "lat": 24.223,
+      "lon": 89.5838,
+      "source": "generated_mock_coordinate"
+    },
+    "chandanais, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Chandanais",
+      "lat": 24.2184,
+      "lon": 89.5928,
+      "source": "generated_mock_coordinate"
+    },
+    "double mooring, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Double Mooring",
+      "lat": 24.2306,
+      "lon": 89.5958,
+      "source": "generated_mock_coordinate"
+    },
+    "fatikchhari, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Fatikchhari",
+      "lat": 24.224,
+      "lon": 89.5926,
+      "source": "generated_mock_coordinate"
+    },
+    "hathazari, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Hathazari",
+      "lat": 24.2294,
+      "lon": 89.5972,
+      "source": "generated_mock_coordinate"
+    },
+    "lohagora, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Lohagora",
+      "lat": 24.2368,
+      "lon": 89.5864,
+      "source": "generated_mock_coordinate"
+    },
+    "mirsharai, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Mirsharai",
+      "lat": 24.2312,
+      "lon": 89.5948,
+      "source": "generated_mock_coordinate"
+    },
+    "panchlais, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Panchlais",
+      "lat": 24.2298,
+      "lon": 89.5978,
+      "source": "generated_mock_coordinate"
+    },
+    "patenga, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Patenga",
+      "lat": 24.2292,
+      "lon": 89.5844,
+      "source": "generated_mock_coordinate"
+    },
+    "patia, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Patia",
+      "lat": 24.2182,
+      "lon": 89.5902,
+      "source": "generated_mock_coordinate"
+    },
+    "rangunia, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Rangunia",
+      "lat": 24.2228,
+      "lon": 89.5868,
+      "source": "generated_mock_coordinate"
+    },
+    "rauzan, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Rauzan",
+      "lat": 24.2254,
+      "lon": 89.5876,
+      "source": "generated_mock_coordinate"
+    },
+    "sandwip, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Sandwip",
+      "lat": 24.2198,
+      "lon": 89.5826,
+      "source": "generated_mock_coordinate"
+    },
+    "satkania, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Satkania",
+      "lat": 24.2328,
+      "lon": 89.5834,
+      "source": "generated_mock_coordinate"
+    },
+    "sitakunda, chattogram": {
+      "district": "Chattogram",
+      "upazila": "Sitakunda",
+      "lat": 24.2372,
+      "lon": 89.5856,
+      "source": "generated_mock_coordinate"
+    },
+    "alamdanga, chuadanga": {
+      "district": "Chuadanga",
+      "upazila": "Alamdanga",
+      "lat": 25.3074,
+      "lon": 89.004,
+      "source": "generated_mock_coordinate"
+    },
+    "chuadanga, chuadanga": {
+      "district": "Chuadanga",
+      "upazila": "Chuadanga",
+      "lat": 25.3148,
+      "lon": 89.0004,
+      "source": "generated_mock_coordinate"
+    },
+    "damurhuda, chuadanga": {
+      "district": "Chuadanga",
+      "upazila": "Damurhuda",
+      "lat": 25.3128,
+      "lon": 89.0036,
+      "source": "generated_mock_coordinate"
+    },
+    "jibannagar, chuadanga": {
+      "district": "Chuadanga",
+      "upazila": "Jibannagar",
+      "lat": 25.3124,
+      "lon": 89.0104,
+      "source": "generated_mock_coordinate"
+    },
+    "chakaria, cox's bazar": {
+      "district": "Cox'S Bazar",
+      "upazila": "Chakaria",
+      "lat": 23.5566,
+      "lon": 92.203,
+      "source": "generated_mock_coordinate"
+    },
+    "cox's bazar, cox's bazar": {
+      "district": "Cox'S Bazar",
+      "upazila": "Cox's Bazar",
+      "lat": 23.5544,
+      "lon": 92.2026,
+      "source": "generated_mock_coordinate"
+    },
+    "kutubdia, cox's bazar": {
+      "district": "Cox'S Bazar",
+      "upazila": "Kutubdia",
+      "lat": 23.5538,
+      "lon": 92.1906,
+      "source": "generated_mock_coordinate"
+    },
+    "moheshkhali, cox's bazar": {
+      "district": "Cox'S Bazar",
+      "upazila": "Moheshkhali",
+      "lat": 23.5674,
+      "lon": 92.1996,
+      "source": "generated_mock_coordinate"
+    },
+    "ramu, cox's bazar": {
+      "district": "Cox'S Bazar",
+      "upazila": "Ramu",
+      "lat": 23.5568,
+      "lon": 92.199,
+      "source": "generated_mock_coordinate"
+    },
+    "teknaf, cox's bazar": {
+      "district": "Cox'S Bazar",
+      "upazila": "Teknaf",
+      "lat": 23.5606,
+      "lon": 92.208,
+      "source": "generated_mock_coordinate"
+    },
+    "ukhia, cox's bazar": {
+      "district": "Cox'S Bazar",
+      "upazila": "Ukhia",
+      "lat": 23.5584,
+      "lon": 92.1906,
+      "source": "generated_mock_coordinate"
+    },
+    "barura, cumilla": {
+      "district": "Cumilla",
+      "upazila": "Barura",
+      "lat": 25.4708,
+      "lon": 90.5692,
+      "source": "generated_mock_coordinate"
+    },
+    "brahmanpara, cumilla": {
+      "district": "Cumilla",
+      "upazila": "Brahmanpara",
+      "lat": 25.4644,
+      "lon": 90.579,
+      "source": "generated_mock_coordinate"
+    },
+    "burichang, cumilla": {
+      "district": "Cumilla",
+      "upazila": "Burichang",
+      "lat": 25.4632,
+      "lon": 90.5822,
+      "source": "generated_mock_coordinate"
+    },
+    "chandina, cumilla": {
+      "district": "Cumilla",
+      "upazila": "Chandina",
+      "lat": 25.474,
+      "lon": 90.5726,
+      "source": "generated_mock_coordinate"
+    },
+    "chauddagram, cumilla": {
+      "district": "Cumilla",
+      "upazila": "Chauddagram",
+      "lat": 25.4792,
+      "lon": 90.565,
+      "source": "generated_mock_coordinate"
+    },
+    "comilla, cumilla": {
+      "district": "Cumilla",
+      "upazila": "Comilla",
+      "lat": 25.4768,
+      "lon": 90.5762,
+      "source": "generated_mock_coordinate"
+    },
+    "daudkandi, cumilla": {
+      "district": "Cumilla",
+      "upazila": "Daudkandi",
+      "lat": 25.4672,
+      "lon": 90.5802,
+      "source": "generated_mock_coordinate"
+    },
+    "debiduar, cumilla": {
+      "district": "Cumilla",
+      "upazila": "Debiduar",
+      "lat": 25.4738,
+      "lon": 90.5798,
+      "source": "generated_mock_coordinate"
+    },
+    "homna, cumilla": {
+      "district": "Cumilla",
+      "upazila": "Homna",
+      "lat": 25.4782,
+      "lon": 90.5752,
+      "source": "generated_mock_coordinate"
+    },
+    "laksham, cumilla": {
+      "district": "Cumilla",
+      "upazila": "Laksham",
+      "lat": 25.4658,
+      "lon": 90.5772,
+      "source": "generated_mock_coordinate"
+    },
+    "muradnagar, cumilla": {
+      "district": "Cumilla",
+      "upazila": "Muradnagar",
+      "lat": 25.4722,
+      "lon": 90.5782,
+      "source": "generated_mock_coordinate"
+    },
+    "nangalkot, cumilla": {
+      "district": "Cumilla",
+      "upazila": "Nangalkot",
+      "lat": 25.4804,
+      "lon": 90.572,
+      "source": "generated_mock_coordinate"
+    },
+    "dhaka metro, dhaka": {
+      "district": "Dhaka",
+      "upazila": "Dhaka Metro",
+      "lat": 21.6654,
+      "lon": 90.4174,
+      "source": "generated_mock_coordinate"
+    },
+    "dhamrai, dhaka": {
+      "district": "Dhaka",
+      "upazila": "Dhamrai",
+      "lat": 21.6522,
+      "lon": 90.4146,
+      "source": "generated_mock_coordinate"
+    },
+    "dohar, dhaka": {
+      "district": "Dhaka",
+      "upazila": "Dohar",
+      "lat": 21.6514,
+      "lon": 90.4162,
+      "source": "generated_mock_coordinate"
+    },
+    "keraniganj, dhaka": {
+      "district": "Dhaka",
+      "upazila": "Keraniganj",
+      "lat": 21.6614,
+      "lon": 90.4092,
+      "source": "generated_mock_coordinate"
+    },
+    "nawabganj, dhaka": {
+      "district": "Dhaka",
+      "upazila": "Nawabganj",
+      "lat": 21.6634,
+      "lon": 90.4246,
+      "source": "generated_mock_coordinate"
+    },
+    "savar, dhaka": {
+      "district": "Dhaka",
+      "upazila": "Savar",
+      "lat": 21.6536,
+      "lon": 90.4288,
+      "source": "generated_mock_coordinate"
+    },
+    "biral, dinajpur": {
+      "district": "Dinajpur",
+      "upazila": "Biral",
+      "lat": 22.2358,
+      "lon": 89.447,
+      "source": "generated_mock_coordinate"
+    },
+    "birampur, dinajpur": {
+      "district": "Dinajpur",
+      "upazila": "Birampur",
+      "lat": 22.2358,
+      "lon": 89.4442,
+      "source": "generated_mock_coordinate"
+    },
+    "birganj, dinajpur": {
+      "district": "Dinajpur",
+      "upazila": "Birganj",
+      "lat": 22.2368,
+      "lon": 89.4486,
+      "source": "generated_mock_coordinate"
+    },
+    "bochaganj, dinajpur": {
+      "district": "Dinajpur",
+      "upazila": "Bochaganj",
+      "lat": 22.224,
+      "lon": 89.4434,
+      "source": "generated_mock_coordinate"
+    },
+    "chirirbandar, dinajpur": {
+      "district": "Dinajpur",
+      "upazila": "Chirirbandar",
+      "lat": 22.2306,
+      "lon": 89.443,
+      "source": "generated_mock_coordinate"
+    },
+    "dinajpur, dinajpur": {
+      "district": "Dinajpur",
+      "upazila": "Dinajpur",
+      "lat": 22.221,
+      "lon": 89.4444,
+      "source": "generated_mock_coordinate"
+    },
+    "fulbari, dinajpur": {
+      "district": "Dinajpur",
+      "upazila": "Fulbari",
+      "lat": 22.2182,
+      "lon": 89.4572,
+      "source": "generated_mock_coordinate"
+    },
+    "ghoraghat, dinajpur": {
+      "district": "Dinajpur",
+      "upazila": "Ghoraghat",
+      "lat": 22.2264,
+      "lon": 89.45,
+      "source": "generated_mock_coordinate"
+    },
+    "hakimpur, dinajpur": {
+      "district": "Dinajpur",
+      "upazila": "Hakimpur",
+      "lat": 22.2216,
+      "lon": 89.4492,
+      "source": "generated_mock_coordinate"
+    },
+    "kaharol, dinajpur": {
+      "district": "Dinajpur",
+      "upazila": "Kaharol",
+      "lat": 22.22,
+      "lon": 89.453,
+      "source": "generated_mock_coordinate"
+    },
+    "khansama, dinajpur": {
+      "district": "Dinajpur",
+      "upazila": "Khansama",
+      "lat": 22.2262,
+      "lon": 89.446,
+      "source": "generated_mock_coordinate"
+    },
+    "nawabganj, dinajpur": {
+      "district": "Dinajpur",
+      "upazila": "Nawabganj",
+      "lat": 22.218,
+      "lon": 89.462,
+      "source": "generated_mock_coordinate"
+    },
+    "parbatipur, dinajpur": {
+      "district": "Dinajpur",
+      "upazila": "Parbatipur",
+      "lat": 22.2312,
+      "lon": 89.449,
+      "source": "generated_mock_coordinate"
+    },
+    "alfadanga, faridpur": {
+      "district": "Faridpur",
+      "upazila": "Alfadanga",
+      "lat": 25.0254,
+      "lon": 88.2168,
+      "source": "generated_mock_coordinate"
+    },
+    "bhanga, faridpur": {
+      "district": "Faridpur",
+      "upazila": "Bhanga",
+      "lat": 25.019,
+      "lon": 88.2262,
+      "source": "generated_mock_coordinate"
+    },
+    "boalmari, faridpur": {
+      "district": "Faridpur",
+      "upazila": "Boalmari",
+      "lat": 25.0286,
+      "lon": 88.2238,
+      "source": "generated_mock_coordinate"
+    },
+    "char bhadrasan, faridpur": {
+      "district": "Faridpur",
+      "upazila": "Char Bhadrasan",
+      "lat": 25.0204,
+      "lon": 88.2154,
+      "source": "generated_mock_coordinate"
+    },
+    "faridpur, faridpur": {
+      "district": "Faridpur",
+      "upazila": "Faridpur",
+      "lat": 25.015,
+      "lon": 88.2306,
+      "source": "generated_mock_coordinate"
+    },
+    "madhukhali, faridpur": {
+      "district": "Faridpur",
+      "upazila": "Madhukhali",
+      "lat": 25.0146,
+      "lon": 88.2234,
+      "source": "generated_mock_coordinate"
+    },
+    "nagarkanda, faridpur": {
+      "district": "Faridpur",
+      "upazila": "Nagarkanda",
+      "lat": 25.0282,
+      "lon": 88.218,
+      "source": "generated_mock_coordinate"
+    },
+    "sadarpur, faridpur": {
+      "district": "Faridpur",
+      "upazila": "Sadarpur",
+      "lat": 25.032,
+      "lon": 88.2246,
+      "source": "generated_mock_coordinate"
+    },
+    "chhagalnaiya, feni": {
+      "district": "Feni",
+      "upazila": "Chhagalnaiya",
+      "lat": 22.6324,
+      "lon": 91.8878,
+      "source": "generated_mock_coordinate"
+    },
+    "daganbhuiya, feni": {
+      "district": "Feni",
+      "upazila": "Daganbhuiya",
+      "lat": 22.6378,
+      "lon": 91.8772,
+      "source": "generated_mock_coordinate"
+    },
+    "feni, feni": {
+      "district": "Feni",
+      "upazila": "Feni",
+      "lat": 22.6332,
+      "lon": 91.8878,
+      "source": "generated_mock_coordinate"
+    },
+    "parshuram, feni": {
+      "district": "Feni",
+      "upazila": "Parshuram",
+      "lat": 22.6378,
+      "lon": 91.879,
+      "source": "generated_mock_coordinate"
+    },
+    "sonagazi, feni": {
+      "district": "Feni",
+      "upazila": "Sonagazi",
+      "lat": 22.637,
+      "lon": 91.881,
+      "source": "generated_mock_coordinate"
+    },
+    "gaibandha, gaibandha": {
+      "district": "Gaibandha",
+      "upazila": "Gaibandha",
+      "lat": 25.485,
+      "lon": 88.5978,
+      "source": "generated_mock_coordinate"
+    },
+    "gobindaganj, gaibandha": {
+      "district": "Gaibandha",
+      "upazila": "Gobindaganj",
+      "lat": 25.5,
+      "lon": 88.5934,
+      "source": "generated_mock_coordinate"
+    },
+    "palashbari, gaibandha": {
+      "district": "Gaibandha",
+      "upazila": "Palashbari",
+      "lat": 25.486,
+      "lon": 88.5866,
+      "source": "generated_mock_coordinate"
+    },
+    "phulchhari, gaibandha": {
+      "district": "Gaibandha",
+      "upazila": "Phulchhari",
+      "lat": 25.494,
+      "lon": 88.5888,
+      "source": "generated_mock_coordinate"
+    },
+    "sadullapur, gaibandha": {
+      "district": "Gaibandha",
+      "upazila": "Sadullapur",
+      "lat": 25.4986,
+      "lon": 88.5898,
+      "source": "generated_mock_coordinate"
+    },
+    "shaghata, gaibandha": {
+      "district": "Gaibandha",
+      "upazila": "Shaghata",
+      "lat": 25.4958,
+      "lon": 88.5842,
+      "source": "generated_mock_coordinate"
+    },
+    "sundarganj, gaibandha": {
+      "district": "Gaibandha",
+      "upazila": "Sundarganj",
+      "lat": 25.488,
+      "lon": 88.5798,
+      "source": "generated_mock_coordinate"
+    },
+    "gazipur, gazipur": {
+      "district": "Gazipur",
+      "upazila": "Gazipur",
+      "lat": 24.202,
+      "lon": 88.9368,
+      "source": "generated_mock_coordinate"
+    },
+    "kaliakoir, gazipur": {
+      "district": "Gazipur",
+      "upazila": "Kaliakoir",
+      "lat": 24.1882,
+      "lon": 88.9328,
+      "source": "generated_mock_coordinate"
+    },
+    "kaliganj, gazipur": {
+      "district": "Gazipur",
+      "upazila": "Kaliganj",
+      "lat": 24.198,
+      "lon": 88.9396,
+      "source": "generated_mock_coordinate"
+    },
+    "kapasia, gazipur": {
+      "district": "Gazipur",
+      "upazila": "Kapasia",
+      "lat": 24.1872,
+      "lon": 88.9312,
+      "source": "generated_mock_coordinate"
+    },
+    "sripur, gazipur": {
+      "district": "Gazipur",
+      "upazila": "Sripur",
+      "lat": 24.1988,
+      "lon": 88.9398,
+      "source": "generated_mock_coordinate"
+    },
+    "gopalganj, gopalganj": {
+      "district": "Gopalganj",
+      "upazila": "Gopalganj",
+      "lat": 24.1542,
+      "lon": 90.2304,
+      "source": "generated_mock_coordinate"
+    },
+    "kasiani, gopalganj": {
+      "district": "Gopalganj",
+      "upazila": "Kasiani",
+      "lat": 24.1564,
+      "lon": 90.2246,
+      "source": "generated_mock_coordinate"
+    },
+    "kotalipara, gopalganj": {
+      "district": "Gopalganj",
+      "upazila": "Kotalipara",
+      "lat": 24.1458,
+      "lon": 90.227,
+      "source": "generated_mock_coordinate"
+    },
+    "muksudpur, gopalganj": {
+      "district": "Gopalganj",
+      "upazila": "Muksudpur",
+      "lat": 24.1544,
+      "lon": 90.2196,
+      "source": "generated_mock_coordinate"
+    },
+    "tungipara, gopalganj": {
+      "district": "Gopalganj",
+      "upazila": "Tungipara",
+      "lat": 24.1444,
+      "lon": 90.2264,
+      "source": "generated_mock_coordinate"
+    },
+    "ajmiriganj, habiganj": {
+      "district": "Habiganj",
+      "upazila": "Ajmiriganj",
+      "lat": 23.5908,
+      "lon": 88.4786,
+      "source": "generated_mock_coordinate"
+    },
+    "bahubal, habiganj": {
+      "district": "Habiganj",
+      "upazila": "Bahubal",
+      "lat": 23.5952,
+      "lon": 88.4644,
+      "source": "generated_mock_coordinate"
+    },
+    "baniyachang, habiganj": {
+      "district": "Habiganj",
+      "upazila": "Baniyachang",
+      "lat": 23.6024,
+      "lon": 88.4706,
+      "source": "generated_mock_coordinate"
+    },
+    "chunarughat, habiganj": {
+      "district": "Habiganj",
+      "upazila": "Chunarughat",
+      "lat": 23.583,
+      "lon": 88.4786,
+      "source": "generated_mock_coordinate"
+    },
+    "habiganj, habiganj": {
+      "district": "Habiganj",
+      "upazila": "Habiganj",
+      "lat": 23.5944,
+      "lon": 88.4764,
+      "source": "generated_mock_coordinate"
+    },
+    "lakhai, habiganj": {
+      "district": "Habiganj",
+      "upazila": "Lakhai",
+      "lat": 23.5872,
+      "lon": 88.4744,
+      "source": "generated_mock_coordinate"
+    },
+    "madhabpur, habiganj": {
+      "district": "Habiganj",
+      "upazila": "Madhabpur",
+      "lat": 23.587,
+      "lon": 88.4704,
+      "source": "generated_mock_coordinate"
+    },
+    "nabiganj, habiganj": {
+      "district": "Habiganj",
+      "upazila": "Nabiganj",
+      "lat": 23.5896,
+      "lon": 88.4592,
+      "source": "generated_mock_coordinate"
+    },
+    "bakshiganj, jamalpur": {
+      "district": "Jamalpur",
+      "upazila": "Bakshiganj",
+      "lat": 24.7882,
+      "lon": 92.1474,
+      "source": "generated_mock_coordinate"
+    },
+    "dewanganj, jamalpur": {
+      "district": "Jamalpur",
+      "upazila": "Dewanganj",
+      "lat": 24.7708,
+      "lon": 92.1534,
+      "source": "generated_mock_coordinate"
+    },
+    "islampur, jamalpur": {
+      "district": "Jamalpur",
+      "upazila": "Islampur",
+      "lat": 24.7702,
+      "lon": 92.1438,
+      "source": "generated_mock_coordinate"
+    },
+    "jamalpur, jamalpur": {
+      "district": "Jamalpur",
+      "upazila": "Jamalpur",
+      "lat": 24.7792,
+      "lon": 92.1384,
+      "source": "generated_mock_coordinate"
+    },
+    "madarganj, jamalpur": {
+      "district": "Jamalpur",
+      "upazila": "Madarganj",
+      "lat": 24.7814,
+      "lon": 92.1392,
+      "source": "generated_mock_coordinate"
+    },
+    "melandaha, jamalpur": {
+      "district": "Jamalpur",
+      "upazila": "Melandaha",
+      "lat": 24.7826,
+      "lon": 92.1524,
+      "source": "generated_mock_coordinate"
+    },
+    "sarishabari, jamalpur": {
+      "district": "Jamalpur",
+      "upazila": "Sarishabari",
+      "lat": 24.7722,
+      "lon": 92.1384,
+      "source": "generated_mock_coordinate"
+    },
+    "abhoynagar, jashore": {
+      "district": "Jashore",
+      "upazila": "Abhoynagar",
+      "lat": 23.8108,
+      "lon": 91.2722,
+      "source": "generated_mock_coordinate"
+    },
+    "bagherpara, jashore": {
+      "district": "Jashore",
+      "upazila": "Bagherpara",
+      "lat": 23.7984,
+      "lon": 91.2658,
+      "source": "generated_mock_coordinate"
+    },
+    "chaugachha, jashore": {
+      "district": "Jashore",
+      "upazila": "Chaugachha",
+      "lat": 23.8038,
+      "lon": 91.2622,
+      "source": "generated_mock_coordinate"
+    },
+    "jessore, jashore": {
+      "district": "Jashore",
+      "upazila": "Jessore",
+      "lat": 23.7966,
+      "lon": 91.2794,
+      "source": "generated_mock_coordinate"
+    },
+    "jhikorgachha, jashore": {
+      "district": "Jashore",
+      "upazila": "Jhikorgachha",
+      "lat": 23.7994,
+      "lon": 91.262,
+      "source": "generated_mock_coordinate"
+    },
+    "keshabpur, jashore": {
+      "district": "Jashore",
+      "upazila": "Keshabpur",
+      "lat": 23.815,
+      "lon": 91.2746,
+      "source": "generated_mock_coordinate"
+    },
+    "manirampur, jashore": {
+      "district": "Jashore",
+      "upazila": "Manirampur",
+      "lat": 23.7956,
+      "lon": 91.2784,
+      "source": "generated_mock_coordinate"
+    },
+    "sarsa, jashore": {
+      "district": "Jashore",
+      "upazila": "Sarsa",
+      "lat": 23.8114,
+      "lon": 91.2698,
+      "source": "generated_mock_coordinate"
+    },
+    "jhalakati, jhalokati": {
+      "district": "Jhalokati",
+      "upazila": "Jhalakati",
+      "lat": 25.018,
+      "lon": 90.8322,
+      "source": "generated_mock_coordinate"
+    },
+    "kathalia, jhalokati": {
+      "district": "Jhalokati",
+      "upazila": "Kathalia",
+      "lat": 25.0284,
+      "lon": 90.8256,
+      "source": "generated_mock_coordinate"
+    },
+    "nalchiti, jhalokati": {
+      "district": "Jhalokati",
+      "upazila": "Nalchiti",
+      "lat": 25.028,
+      "lon": 90.8256,
+      "source": "generated_mock_coordinate"
+    },
+    "rajapur, jhalokati": {
+      "district": "Jhalokati",
+      "upazila": "Rajapur",
+      "lat": 25.032,
+      "lon": 90.8262,
+      "source": "generated_mock_coordinate"
+    },
+    "harinakundu, jhenaidah": {
+      "district": "Jhenaidah",
+      "upazila": "Harinakundu",
+      "lat": 23.2418,
+      "lon": 91.671,
+      "source": "generated_mock_coordinate"
+    },
+    "jhenaidah, jhenaidah": {
+      "district": "Jhenaidah",
+      "upazila": "Jhenaidah",
+      "lat": 23.2288,
+      "lon": 91.6794,
+      "source": "generated_mock_coordinate"
+    },
+    "kaliganj, jhenaidah": {
+      "district": "Jhenaidah",
+      "upazila": "Kaliganj",
+      "lat": 23.2316,
+      "lon": 91.6712,
+      "source": "generated_mock_coordinate"
+    },
+    "kotchandpur, jhenaidah": {
+      "district": "Jhenaidah",
+      "upazila": "Kotchandpur",
+      "lat": 23.2338,
+      "lon": 91.6706,
+      "source": "generated_mock_coordinate"
+    },
+    "maheshpur, jhenaidah": {
+      "district": "Jhenaidah",
+      "upazila": "Maheshpur",
+      "lat": 23.247,
+      "lon": 91.6662,
+      "source": "generated_mock_coordinate"
+    },
+    "sailkupa, jhenaidah": {
+      "district": "Jhenaidah",
+      "upazila": "Sailkupa",
+      "lat": 23.2316,
+      "lon": 91.6666,
+      "source": "generated_mock_coordinate"
+    },
+    "akkelpur, joypurhat": {
+      "district": "Joypurhat",
+      "upazila": "Akkelpur",
+      "lat": 23.6206,
+      "lon": 88.5708,
+      "source": "generated_mock_coordinate"
+    },
+    "joypurhat, joypurhat": {
+      "district": "Joypurhat",
+      "upazila": "Joypurhat",
+      "lat": 23.6114,
+      "lon": 88.5836,
+      "source": "generated_mock_coordinate"
+    },
+    "kalai, joypurhat": {
+      "district": "Joypurhat",
+      "upazila": "Kalai",
+      "lat": 23.6084,
+      "lon": 88.5708,
+      "source": "generated_mock_coordinate"
+    },
+    "khetlal, joypurhat": {
+      "district": "Joypurhat",
+      "upazila": "Khetlal",
+      "lat": 23.6142,
+      "lon": 88.5844,
+      "source": "generated_mock_coordinate"
+    },
+    "panchbibi, joypurhat": {
+      "district": "Joypurhat",
+      "upazila": "Panchbibi",
+      "lat": 23.6162,
+      "lon": 88.568,
+      "source": "generated_mock_coordinate"
+    },
+    "dighinala, khagrachari": {
+      "district": "Khagrachari",
+      "upazila": "Dighinala",
+      "lat": 25.6224,
+      "lon": 89.5994,
+      "source": "generated_mock_coordinate"
+    },
+    "khagrachhari, khagrachari": {
+      "district": "Khagrachari",
+      "upazila": "Khagrachhari",
+      "lat": 25.611,
+      "lon": 89.5986,
+      "source": "generated_mock_coordinate"
+    },
+    "laksmichhari, khagrachari": {
+      "district": "Khagrachari",
+      "upazila": "Laksmichhari",
+      "lat": 25.6176,
+      "lon": 89.6038,
+      "source": "generated_mock_coordinate"
+    },
+    "manikchhari, khagrachari": {
+      "district": "Khagrachari",
+      "upazila": "Manikchhari",
+      "lat": 25.6178,
+      "lon": 89.598,
+      "source": "generated_mock_coordinate"
+    },
+    "matiranga, khagrachari": {
+      "district": "Khagrachari",
+      "upazila": "Matiranga",
+      "lat": 25.6172,
+      "lon": 89.5948,
+      "source": "generated_mock_coordinate"
+    },
+    "mohalchhari, khagrachari": {
+      "district": "Khagrachari",
+      "upazila": "Mohalchhari",
+      "lat": 25.6106,
+      "lon": 89.5996,
+      "source": "generated_mock_coordinate"
+    },
+    "panchhari, khagrachari": {
+      "district": "Khagrachari",
+      "upazila": "Panchhari",
+      "lat": 25.6144,
+      "lon": 89.5994,
+      "source": "generated_mock_coordinate"
+    },
+    "ramgarh, khagrachari": {
+      "district": "Khagrachari",
+      "upazila": "Ramgarh",
+      "lat": 25.6168,
+      "lon": 89.5944,
+      "source": "generated_mock_coordinate"
+    },
+    "batiaghata, khulna": {
+      "district": "Khulna",
+      "upazila": "Batiaghata",
+      "lat": 20.9922,
+      "lon": 88.6494,
+      "source": "generated_mock_coordinate"
+    },
+    "dacope, khulna": {
+      "district": "Khulna",
+      "upazila": "Dacope",
+      "lat": 20.9904,
+      "lon": 88.6438,
+      "source": "generated_mock_coordinate"
+    },
+    "dighalia (daulathpur), khulna": {
+      "district": "Khulna",
+      "upazila": "Dighalia (daulathpur)",
+      "lat": 20.9866,
+      "lon": 88.6326,
+      "source": "generated_mock_coordinate"
+    },
+    "dumuria, khulna": {
+      "district": "Khulna",
+      "upazila": "Dumuria",
+      "lat": 20.9918,
+      "lon": 88.6396,
+      "source": "generated_mock_coordinate"
+    },
+    "khulna metro, khulna": {
+      "district": "Khulna",
+      "upazila": "Khulna Metro",
+      "lat": 20.98,
+      "lon": 88.6418,
+      "source": "generated_mock_coordinate"
+    },
+    "koyra, khulna": {
+      "district": "Khulna",
+      "upazila": "Koyra",
+      "lat": 20.976,
+      "lon": 88.6476,
+      "source": "generated_mock_coordinate"
+    },
+    "paikgachha, khulna": {
+      "district": "Khulna",
+      "upazila": "Paikgachha",
+      "lat": 20.9854,
+      "lon": 88.65,
+      "source": "generated_mock_coordinate"
+    },
+    "phultala, khulna": {
+      "district": "Khulna",
+      "upazila": "Phultala",
+      "lat": 20.9924,
+      "lon": 88.6388,
+      "source": "generated_mock_coordinate"
+    },
+    "rupsha, khulna": {
+      "district": "Khulna",
+      "upazila": "Rupsha",
+      "lat": 20.9796,
+      "lon": 88.6464,
+      "source": "generated_mock_coordinate"
+    },
+    "terakhada, khulna": {
+      "district": "Khulna",
+      "upazila": "Terakhada",
+      "lat": 20.979,
+      "lon": 88.6488,
+      "source": "generated_mock_coordinate"
+    },
+    "ashtagram, kishoreganj": {
+      "district": "Kishoreganj",
+      "upazila": "Ashtagram",
+      "lat": 21.0176,
+      "lon": 91.9502,
+      "source": "generated_mock_coordinate"
+    },
+    "bajitpur, kishoreganj": {
+      "district": "Kishoreganj",
+      "upazila": "Bajitpur",
+      "lat": 21.0242,
+      "lon": 91.9546,
+      "source": "generated_mock_coordinate"
+    },
+    "bhairab, kishoreganj": {
+      "district": "Kishoreganj",
+      "upazila": "Bhairab",
+      "lat": 21.0198,
+      "lon": 91.952,
+      "source": "generated_mock_coordinate"
+    },
+    "hossainpur, kishoreganj": {
+      "district": "Kishoreganj",
+      "upazila": "Hossainpur",
+      "lat": 21.025,
+      "lon": 91.9502,
+      "source": "generated_mock_coordinate"
+    },
+    "itna, kishoreganj": {
+      "district": "Kishoreganj",
+      "upazila": "Itna",
+      "lat": 21.0114,
+      "lon": 91.9542,
+      "source": "generated_mock_coordinate"
+    },
+    "karimganj, kishoreganj": {
+      "district": "Kishoreganj",
+      "upazila": "Karimganj",
+      "lat": 21.0116,
+      "lon": 91.9526,
+      "source": "generated_mock_coordinate"
+    },
+    "katiadi, kishoreganj": {
+      "district": "Kishoreganj",
+      "upazila": "Katiadi",
+      "lat": 21.0258,
+      "lon": 91.9474,
+      "source": "generated_mock_coordinate"
+    },
+    "kishoreganj, kishoreganj": {
+      "district": "Kishoreganj",
+      "upazila": "Kishoreganj",
+      "lat": 21.0112,
+      "lon": 91.9616,
+      "source": "generated_mock_coordinate"
+    },
+    "kuliarchar, kishoreganj": {
+      "district": "Kishoreganj",
+      "upazila": "Kuliarchar",
+      "lat": 21.0126,
+      "lon": 91.9594,
+      "source": "generated_mock_coordinate"
+    },
+    "mithamoin, kishoreganj": {
+      "district": "Kishoreganj",
+      "upazila": "Mithamoin",
+      "lat": 21.0212,
+      "lon": 91.9546,
+      "source": "generated_mock_coordinate"
+    },
+    "nikli, kishoreganj": {
+      "district": "Kishoreganj",
+      "upazila": "Nikli",
+      "lat": 21.0176,
+      "lon": 91.9452,
+      "source": "generated_mock_coordinate"
+    },
+    "pakundia, kishoreganj": {
+      "district": "Kishoreganj",
+      "upazila": "Pakundia",
+      "lat": 21.0218,
+      "lon": 91.95,
+      "source": "generated_mock_coordinate"
+    },
+    "tarail, kishoreganj": {
+      "district": "Kishoreganj",
+      "upazila": "Tarail",
+      "lat": 21.017,
+      "lon": 91.9612,
+      "source": "generated_mock_coordinate"
+    },
+    "bhurungamari, kurigram": {
+      "district": "Kurigram",
+      "upazila": "Bhurungamari",
+      "lat": 25.0908,
+      "lon": 91.0412,
+      "source": "generated_mock_coordinate"
+    },
+    "chilmari, kurigram": {
+      "district": "Kurigram",
+      "upazila": "Chilmari",
+      "lat": 25.0832,
+      "lon": 91.0342,
+      "source": "generated_mock_coordinate"
+    },
+    "kurigram, kurigram": {
+      "district": "Kurigram",
+      "upazila": "Kurigram",
+      "lat": 25.0932,
+      "lon": 91.0406,
+      "source": "generated_mock_coordinate"
+    },
+    "nageshwari, kurigram": {
+      "district": "Kurigram",
+      "upazila": "Nageshwari",
+      "lat": 25.0882,
+      "lon": 91.0344,
+      "source": "generated_mock_coordinate"
+    },
+    "phulbari, kurigram": {
+      "district": "Kurigram",
+      "upazila": "Phulbari",
+      "lat": 25.0944,
+      "lon": 91.0302,
+      "source": "generated_mock_coordinate"
+    },
+    "rajarhat, kurigram": {
+      "district": "Kurigram",
+      "upazila": "Rajarhat",
+      "lat": 25.0922,
+      "lon": 91.0292,
+      "source": "generated_mock_coordinate"
+    },
+    "rajibpur (dhushmara), kurigram": {
+      "district": "Kurigram",
+      "upazila": "Rajibpur (dhushmara)",
+      "lat": 25.0864,
+      "lon": 91.0428,
+      "source": "generated_mock_coordinate"
+    },
+    "ruhumari, kurigram": {
+      "district": "Kurigram",
+      "upazila": "Ruhumari",
+      "lat": 25.0788,
+      "lon": 91.0436,
+      "source": "generated_mock_coordinate"
+    },
+    "ulipur, kurigram": {
+      "district": "Kurigram",
+      "upazila": "Ulipur",
+      "lat": 25.0886,
+      "lon": 91.0426,
+      "source": "generated_mock_coordinate"
+    },
+    "bheramara, kushtia": {
+      "district": "Kushtia",
+      "upazila": "Bheramara",
+      "lat": 21.733,
+      "lon": 89.0618,
+      "source": "generated_mock_coordinate"
+    },
+    "daulatpur, kushtia": {
+      "district": "Kushtia",
+      "upazila": "Daulatpur",
+      "lat": 21.7174,
+      "lon": 89.0638,
+      "source": "generated_mock_coordinate"
+    },
+    "khoksha, kushtia": {
+      "district": "Kushtia",
+      "upazila": "Khoksha",
+      "lat": 21.7186,
+      "lon": 89.0542,
+      "source": "generated_mock_coordinate"
+    },
+    "kumarkhali, kushtia": {
+      "district": "Kushtia",
+      "upazila": "Kumarkhali",
+      "lat": 21.7362,
+      "lon": 89.0632,
+      "source": "generated_mock_coordinate"
+    },
+    "kushtia, kushtia": {
+      "district": "Kushtia",
+      "upazila": "Kushtia",
+      "lat": 21.7286,
+      "lon": 89.0534,
+      "source": "generated_mock_coordinate"
+    },
+    "mirpur, kushtia": {
+      "district": "Kushtia",
+      "upazila": "Mirpur",
+      "lat": 21.717,
+      "lon": 89.0474,
+      "source": "generated_mock_coordinate"
+    },
+    "laksmipur, lakshmipur": {
+      "district": "Lakshmipur",
+      "upazila": "Laksmipur",
+      "lat": 21.545,
+      "lon": 92.1218,
+      "source": "generated_mock_coordinate"
+    },
+    "raipur, lakshmipur": {
+      "district": "Lakshmipur",
+      "upazila": "Raipur",
+      "lat": 21.5378,
+      "lon": 92.1238,
+      "source": "generated_mock_coordinate"
+    },
+    "ramganj, lakshmipur": {
+      "district": "Lakshmipur",
+      "upazila": "Ramganj",
+      "lat": 21.5474,
+      "lon": 92.1338,
+      "source": "generated_mock_coordinate"
+    },
+    "ramgati, lakshmipur": {
+      "district": "Lakshmipur",
+      "upazila": "Ramgati",
+      "lat": 21.5536,
+      "lon": 92.1214,
+      "source": "generated_mock_coordinate"
+    },
+    "aditmari, lalmonirhat": {
+      "district": "Lalmonirhat",
+      "upazila": "Aditmari",
+      "lat": 24.9428,
+      "lon": 91.8634,
+      "source": "generated_mock_coordinate"
+    },
+    "hatibanda, lalmonirhat": {
+      "district": "Lalmonirhat",
+      "upazila": "Hatibanda",
+      "lat": 24.9392,
+      "lon": 91.8642,
+      "source": "generated_mock_coordinate"
+    },
+    "kaliganj, lalmonirhat": {
+      "district": "Lalmonirhat",
+      "upazila": "Kaliganj",
+      "lat": 24.9342,
+      "lon": 91.8716,
+      "source": "generated_mock_coordinate"
+    },
+    "lalmonirhat, lalmonirhat": {
+      "district": "Lalmonirhat",
+      "upazila": "Lalmonirhat",
+      "lat": 24.9386,
+      "lon": 91.8726,
+      "source": "generated_mock_coordinate"
+    },
+    "patgram, lalmonirhat": {
+      "district": "Lalmonirhat",
+      "upazila": "Patgram",
+      "lat": 24.94,
+      "lon": 91.8698,
+      "source": "generated_mock_coordinate"
+    },
+    "kalkini, madaripur": {
+      "district": "Madaripur",
+      "upazila": "Kalkini",
+      "lat": 21.446,
+      "lon": 90.8802,
+      "source": "generated_mock_coordinate"
+    },
+    "madaripur, madaripur": {
+      "district": "Madaripur",
+      "upazila": "Madaripur",
+      "lat": 21.4466,
+      "lon": 90.8968,
+      "source": "generated_mock_coordinate"
+    },
+    "rajoir, madaripur": {
+      "district": "Madaripur",
+      "upazila": "Rajoir",
+      "lat": 21.449,
+      "lon": 90.8814,
+      "source": "generated_mock_coordinate"
+    },
+    "sibchar, madaripur": {
+      "district": "Madaripur",
+      "upazila": "Sibchar",
+      "lat": 21.4476,
+      "lon": 90.899,
+      "source": "generated_mock_coordinate"
+    },
+    "magura, magura": {
+      "district": "Magura",
+      "upazila": "Magura",
+      "lat": 24.9142,
+      "lon": 92.0566,
+      "source": "generated_mock_coordinate"
+    },
+    "mohammadpur, magura": {
+      "district": "Magura",
+      "upazila": "Mohammadpur",
+      "lat": 24.915,
+      "lon": 92.0536,
+      "source": "generated_mock_coordinate"
+    },
+    "salikha, magura": {
+      "district": "Magura",
+      "upazila": "Salikha",
+      "lat": 24.9112,
+      "lon": 92.0516,
+      "source": "generated_mock_coordinate"
+    },
+    "sripur, magura": {
+      "district": "Magura",
+      "upazila": "Sripur",
+      "lat": 24.9154,
+      "lon": 92.04,
+      "source": "generated_mock_coordinate"
+    },
+    "daulatpur, manikganj": {
+      "district": "Manikganj",
+      "upazila": "Daulatpur",
+      "lat": 25.5222,
+      "lon": 90.556,
+      "source": "generated_mock_coordinate"
+    },
+    "ghior, manikganj": {
+      "district": "Manikganj",
+      "upazila": "Ghior",
+      "lat": 25.5214,
+      "lon": 90.548,
+      "source": "generated_mock_coordinate"
+    },
+    "harirampur, manikganj": {
+      "district": "Manikganj",
+      "upazila": "Harirampur",
+      "lat": 25.5224,
+      "lon": 90.555,
+      "source": "generated_mock_coordinate"
+    },
+    "manikganj, manikganj": {
+      "district": "Manikganj",
+      "upazila": "Manikganj",
+      "lat": 25.5156,
+      "lon": 90.5446,
+      "source": "generated_mock_coordinate"
+    },
+    "saturia, manikganj": {
+      "district": "Manikganj",
+      "upazila": "Saturia",
+      "lat": 25.5168,
+      "lon": 90.5584,
+      "source": "generated_mock_coordinate"
+    },
+    "sibalay, manikganj": {
+      "district": "Manikganj",
+      "upazila": "Sibalay",
+      "lat": 25.5304,
+      "lon": 90.55,
+      "source": "generated_mock_coordinate"
+    },
+    "singair, manikganj": {
+      "district": "Manikganj",
+      "upazila": "Singair",
+      "lat": 25.521,
+      "lon": 90.5554,
+      "source": "generated_mock_coordinate"
+    },
+    "gangni, meherpur": {
+      "district": "Meherpur",
+      "upazila": "Gangni",
+      "lat": 25.4658,
+      "lon": 89.3658,
+      "source": "generated_mock_coordinate"
+    },
+    "meherpur, meherpur": {
+      "district": "Meherpur",
+      "upazila": "Meherpur",
+      "lat": 25.4612,
+      "lon": 89.3624,
+      "source": "generated_mock_coordinate"
+    },
+    "barlekha, moulvibazar": {
+      "district": "Moulvibazar",
+      "upazila": "Barlekha",
+      "lat": 22.99,
+      "lon": 91.55,
+      "source": "generated_mock_coordinate"
+    },
+    "kamalganj, moulvibazar": {
+      "district": "Moulvibazar",
+      "upazila": "Kamalganj",
+      "lat": 22.9932,
+      "lon": 91.5536,
+      "source": "generated_mock_coordinate"
+    },
+    "kulaura, moulvibazar": {
+      "district": "Moulvibazar",
+      "upazila": "Kulaura",
+      "lat": 22.9802,
+      "lon": 91.552,
+      "source": "generated_mock_coordinate"
+    },
+    "moulvi bazar, moulvibazar": {
+      "district": "Moulvibazar",
+      "upazila": "Moulvi Bazar",
+      "lat": 22.9936,
+      "lon": 91.559,
+      "source": "generated_mock_coordinate"
+    },
+    "rajnagar, moulvibazar": {
+      "district": "Moulvibazar",
+      "upazila": "Rajnagar",
+      "lat": 22.995,
+      "lon": 91.5484,
+      "source": "generated_mock_coordinate"
+    },
+    "srimangal, moulvibazar": {
+      "district": "Moulvibazar",
+      "upazila": "Srimangal",
+      "lat": 22.9956,
+      "lon": 91.5596,
+      "source": "generated_mock_coordinate"
+    },
+    "gozaria, munshiganj": {
+      "district": "Munshiganj",
+      "upazila": "Gozaria",
+      "lat": 23.88,
+      "lon": 88.0776,
+      "source": "generated_mock_coordinate"
+    },
+    "lohajang, munshiganj": {
+      "district": "Munshiganj",
+      "upazila": "Lohajang",
+      "lat": 23.8836,
+      "lon": 88.0862,
+      "source": "generated_mock_coordinate"
+    },
+    "munshiganj, munshiganj": {
+      "district": "Munshiganj",
+      "upazila": "Munshiganj",
+      "lat": 23.8862,
+      "lon": 88.087,
+      "source": "generated_mock_coordinate"
+    },
+    "serajdikhan, munshiganj": {
+      "district": "Munshiganj",
+      "upazila": "Serajdikhan",
+      "lat": 23.887,
+      "lon": 88.081,
+      "source": "generated_mock_coordinate"
+    },
+    "srinagar, munshiganj": {
+      "district": "Munshiganj",
+      "upazila": "Srinagar",
+      "lat": 23.8912,
+      "lon": 88.0822,
+      "source": "generated_mock_coordinate"
+    },
+    "tongibari, munshiganj": {
+      "district": "Munshiganj",
+      "upazila": "Tongibari",
+      "lat": 23.8982,
+      "lon": 88.0854,
+      "source": "generated_mock_coordinate"
+    },
+    "bhaluka, mymensingh": {
+      "district": "Mymensingh",
+      "upazila": "Bhaluka",
+      "lat": 21.2262,
+      "lon": 89.4134,
+      "source": "generated_mock_coordinate"
+    },
+    "dhobaura, mymensingh": {
+      "district": "Mymensingh",
+      "upazila": "Dhobaura",
+      "lat": 21.2314,
+      "lon": 89.4072,
+      "source": "generated_mock_coordinate"
+    },
+    "gafargaon, mymensingh": {
+      "district": "Mymensingh",
+      "upazila": "Gafargaon",
+      "lat": 21.2348,
+      "lon": 89.4174,
+      "source": "generated_mock_coordinate"
+    },
+    "gouripur, mymensingh": {
+      "district": "Mymensingh",
+      "upazila": "Gouripur",
+      "lat": 21.2232,
+      "lon": 89.4196,
+      "source": "generated_mock_coordinate"
+    },
+    "haluaghat, mymensingh": {
+      "district": "Mymensingh",
+      "upazila": "Haluaghat",
+      "lat": 21.2338,
+      "lon": 89.416,
+      "source": "generated_mock_coordinate"
+    },
+    "ishwarganj, mymensingh": {
+      "district": "Mymensingh",
+      "upazila": "Ishwarganj",
+      "lat": 21.2222,
+      "lon": 89.4218,
+      "source": "generated_mock_coordinate"
+    },
+    "muktagachha, mymensingh": {
+      "district": "Mymensingh",
+      "upazila": "Muktagachha",
+      "lat": 21.234,
+      "lon": 89.416,
+      "source": "generated_mock_coordinate"
+    },
+    "mymensingh, mymensingh": {
+      "district": "Mymensingh",
+      "upazila": "Mymensingh",
+      "lat": 21.2284,
+      "lon": 89.4178,
+      "source": "generated_mock_coordinate"
+    },
+    "nandail, mymensingh": {
+      "district": "Mymensingh",
+      "upazila": "Nandail",
+      "lat": 21.2354,
+      "lon": 89.4054,
+      "source": "generated_mock_coordinate"
+    },
+    "phulbaria, mymensingh": {
+      "district": "Mymensingh",
+      "upazila": "Phulbaria",
+      "lat": 21.2386,
+      "lon": 89.4186,
+      "source": "generated_mock_coordinate"
+    },
+    "phulpur, mymensingh": {
+      "district": "Mymensingh",
+      "upazila": "Phulpur",
+      "lat": 21.2328,
+      "lon": 89.4084,
+      "source": "generated_mock_coordinate"
+    },
+    "trisal, mymensingh": {
+      "district": "Mymensingh",
+      "upazila": "Trisal",
+      "lat": 21.2216,
+      "lon": 89.4058,
+      "source": "generated_mock_coordinate"
+    },
+    "atrai, naogaon": {
+      "district": "Naogaon",
+      "upazila": "Atrai",
+      "lat": 24.3766,
+      "lon": 91.1896,
+      "source": "generated_mock_coordinate"
+    },
+    "badalgachhi, naogaon": {
+      "district": "Naogaon",
+      "upazila": "Badalgachhi",
+      "lat": 24.3698,
+      "lon": 91.189,
+      "source": "generated_mock_coordinate"
+    },
+    "dhamoirhat, naogaon": {
+      "district": "Naogaon",
+      "upazila": "Dhamoirhat",
+      "lat": 24.3644,
+      "lon": 91.1886,
+      "source": "generated_mock_coordinate"
+    },
+    "manda, naogaon": {
+      "district": "Naogaon",
+      "upazila": "Manda",
+      "lat": 24.3772,
+      "lon": 91.1874,
+      "source": "generated_mock_coordinate"
+    },
+    "mohadebpur, naogaon": {
+      "district": "Naogaon",
+      "upazila": "Mohadebpur",
+      "lat": 24.3744,
+      "lon": 91.1952,
+      "source": "generated_mock_coordinate"
+    },
+    "naogaon, naogaon": {
+      "district": "Naogaon",
+      "upazila": "Naogaon",
+      "lat": 24.3774,
+      "lon": 91.198,
+      "source": "generated_mock_coordinate"
+    },
+    "niamatpur, naogaon": {
+      "district": "Naogaon",
+      "upazila": "Niamatpur",
+      "lat": 24.3694,
+      "lon": 91.1904,
+      "source": "generated_mock_coordinate"
+    },
+    "patnitala, naogaon": {
+      "district": "Naogaon",
+      "upazila": "Patnitala",
+      "lat": 24.3632,
+      "lon": 91.1962,
+      "source": "generated_mock_coordinate"
+    },
+    "porsha, naogaon": {
+      "district": "Naogaon",
+      "upazila": "Porsha",
+      "lat": 24.3762,
+      "lon": 91.1894,
+      "source": "generated_mock_coordinate"
+    },
+    "raninagar, naogaon": {
+      "district": "Naogaon",
+      "upazila": "Raninagar",
+      "lat": 24.3642,
+      "lon": 91.1992,
+      "source": "generated_mock_coordinate"
+    },
+    "shapahar, naogaon": {
+      "district": "Naogaon",
+      "upazila": "Shapahar",
+      "lat": 24.375,
+      "lon": 91.1872,
+      "source": "generated_mock_coordinate"
+    },
+    "kalia, narail": {
+      "district": "Narail",
+      "upazila": "Kalia",
+      "lat": 21.3992,
+      "lon": 90.5246,
+      "source": "generated_mock_coordinate"
+    },
+    "lohagara, narail": {
+      "district": "Narail",
+      "upazila": "Lohagara",
+      "lat": 21.4156,
+      "lon": 90.5196,
+      "source": "generated_mock_coordinate"
+    },
+    "narail, narail": {
+      "district": "Narail",
+      "upazila": "Narail",
+      "lat": 21.418,
+      "lon": 90.5264,
+      "source": "generated_mock_coordinate"
+    },
+    "araihazar, narayanganj": {
+      "district": "Narayanganj",
+      "upazila": "Araihazar",
+      "lat": 23.6502,
+      "lon": 91.956,
+      "source": "generated_mock_coordinate"
+    },
+    "bandar, narayanganj": {
+      "district": "Narayanganj",
+      "upazila": "Bandar",
+      "lat": 23.6472,
+      "lon": 91.9498,
+      "source": "generated_mock_coordinate"
+    },
+    "narayanganj, narayanganj": {
+      "district": "Narayanganj",
+      "upazila": "Narayanganj",
+      "lat": 23.6406,
+      "lon": 91.9436,
+      "source": "generated_mock_coordinate"
+    },
+    "rupganj, narayanganj": {
+      "district": "Narayanganj",
+      "upazila": "Rupganj",
+      "lat": 23.643,
+      "lon": 91.94,
+      "source": "generated_mock_coordinate"
+    },
+    "sonargaon, narayanganj": {
+      "district": "Narayanganj",
+      "upazila": "Sonargaon",
+      "lat": 23.6476,
+      "lon": 91.9556,
+      "source": "generated_mock_coordinate"
+    },
+    "belabo, narsingdi": {
+      "district": "Narsingdi",
+      "upazila": "Belabo",
+      "lat": 22.2348,
+      "lon": 90.324,
+      "source": "generated_mock_coordinate"
+    },
+    "manohardi, narsingdi": {
+      "district": "Narsingdi",
+      "upazila": "Manohardi",
+      "lat": 22.2466,
+      "lon": 90.3202,
+      "source": "generated_mock_coordinate"
+    },
+    "narsingdi, narsingdi": {
+      "district": "Narsingdi",
+      "upazila": "Narsingdi",
+      "lat": 22.2412,
+      "lon": 90.3116,
+      "source": "generated_mock_coordinate"
+    },
+    "palas, narsingdi": {
+      "district": "Narsingdi",
+      "upazila": "Palas",
+      "lat": 22.238,
+      "lon": 90.316,
+      "source": "generated_mock_coordinate"
+    },
+    "raipura, narsingdi": {
+      "district": "Narsingdi",
+      "upazila": "Raipura",
+      "lat": 22.25,
+      "lon": 90.3196,
+      "source": "generated_mock_coordinate"
+    },
+    "sibpur, narsingdi": {
+      "district": "Narsingdi",
+      "upazila": "Sibpur",
+      "lat": 22.2422,
+      "lon": 90.3126,
+      "source": "generated_mock_coordinate"
+    },
+    "bagatipara, natore": {
+      "district": "Natore",
+      "upazila": "Bagatipara",
+      "lat": 25.1662,
+      "lon": 89.3282,
+      "source": "generated_mock_coordinate"
+    },
+    "baraigram, natore": {
+      "district": "Natore",
+      "upazila": "Baraigram",
+      "lat": 25.177,
+      "lon": 89.3334,
+      "source": "generated_mock_coordinate"
+    },
+    "gurudashpur, natore": {
+      "district": "Natore",
+      "upazila": "Gurudashpur",
+      "lat": 25.1774,
+      "lon": 89.3432,
+      "source": "generated_mock_coordinate"
+    },
+    "lalpur, natore": {
+      "district": "Natore",
+      "upazila": "Lalpur",
+      "lat": 25.169,
+      "lon": 89.3396,
+      "source": "generated_mock_coordinate"
+    },
+    "nator, natore": {
+      "district": "Natore",
+      "upazila": "Nator",
+      "lat": 25.1672,
+      "lon": 89.3366,
+      "source": "generated_mock_coordinate"
+    },
+    "shingra, natore": {
+      "district": "Natore",
+      "upazila": "Shingra",
+      "lat": 25.171,
+      "lon": 89.3422,
+      "source": "generated_mock_coordinate"
+    },
+    "atpara, netrokona": {
+      "district": "Netrokona",
+      "upazila": "Atpara",
+      "lat": 23.3942,
+      "lon": 91.2914,
+      "source": "generated_mock_coordinate"
+    },
+    "barhatta, netrokona": {
+      "district": "Netrokona",
+      "upazila": "Barhatta",
+      "lat": 23.3904,
+      "lon": 91.2924,
+      "source": "generated_mock_coordinate"
+    },
+    "durgapur, netrokona": {
+      "district": "Netrokona",
+      "upazila": "Durgapur",
+      "lat": 23.3894,
+      "lon": 91.3018,
+      "source": "generated_mock_coordinate"
+    },
+    "kalmakanda, netrokona": {
+      "district": "Netrokona",
+      "upazila": "Kalmakanda",
+      "lat": 23.39,
+      "lon": 91.3054,
+      "source": "generated_mock_coordinate"
+    },
+    "kendua, netrokona": {
+      "district": "Netrokona",
+      "upazila": "Kendua",
+      "lat": 23.3962,
+      "lon": 91.2934,
+      "source": "generated_mock_coordinate"
+    },
+    "khaliajuri, netrokona": {
+      "district": "Netrokona",
+      "upazila": "Khaliajuri",
+      "lat": 23.3942,
+      "lon": 91.2956,
+      "source": "generated_mock_coordinate"
+    },
+    "madan, netrokona": {
+      "district": "Netrokona",
+      "upazila": "Madan",
+      "lat": 23.3922,
+      "lon": 91.2986,
+      "source": "generated_mock_coordinate"
+    },
+    "mohanganj, netrokona": {
+      "district": "Netrokona",
+      "upazila": "Mohanganj",
+      "lat": 23.3962,
+      "lon": 91.2942,
+      "source": "generated_mock_coordinate"
+    },
+    "netrakona, netrokona": {
+      "district": "Netrokona",
+      "upazila": "Netrakona",
+      "lat": 23.3914,
+      "lon": 91.2966,
+      "source": "generated_mock_coordinate"
+    },
+    "purbadhala, netrokona": {
+      "district": "Netrokona",
+      "upazila": "Purbadhala",
+      "lat": 23.3952,
+      "lon": 91.2926,
+      "source": "generated_mock_coordinate"
+    },
+    "dimla, nilphamari": {
+      "district": "Nilphamari",
+      "upazila": "Dimla",
+      "lat": 20.9488,
+      "lon": 91.335,
+      "source": "generated_mock_coordinate"
+    },
+    "domar, nilphamari": {
+      "district": "Nilphamari",
+      "upazila": "Domar",
+      "lat": 20.9406,
+      "lon": 91.3336,
+      "source": "generated_mock_coordinate"
+    },
+    "jaldhaka, nilphamari": {
+      "district": "Nilphamari",
+      "upazila": "Jaldhaka",
+      "lat": 20.9358,
+      "lon": 91.3292,
+      "source": "generated_mock_coordinate"
+    },
+    "kishorganj, nilphamari": {
+      "district": "Nilphamari",
+      "upazila": "Kishorganj",
+      "lat": 20.9488,
+      "lon": 91.3264,
+      "source": "generated_mock_coordinate"
+    },
+    "nilphamari, nilphamari": {
+      "district": "Nilphamari",
+      "upazila": "Nilphamari",
+      "lat": 20.9392,
+      "lon": 91.3244,
+      "source": "generated_mock_coordinate"
+    },
+    "saidpur, nilphamari": {
+      "district": "Nilphamari",
+      "upazila": "Saidpur",
+      "lat": 20.94,
+      "lon": 91.3412,
+      "source": "generated_mock_coordinate"
+    },
+    "begumganj, noakhali": {
+      "district": "Noakhali",
+      "upazila": "Begumganj",
+      "lat": 23.2816,
+      "lon": 90.082,
+      "source": "generated_mock_coordinate"
+    },
+    "chatkhil, noakhali": {
+      "district": "Noakhali",
+      "upazila": "Chatkhil",
+      "lat": 23.2864,
+      "lon": 90.0974,
+      "source": "generated_mock_coordinate"
+    },
+    "companiganj, noakhali": {
+      "district": "Noakhali",
+      "upazila": "Companiganj",
+      "lat": 23.273,
+      "lon": 90.0824,
+      "source": "generated_mock_coordinate"
+    },
+    "hatiya, noakhali": {
+      "district": "Noakhali",
+      "upazila": "Hatiya",
+      "lat": 23.2714,
+      "lon": 90.0976,
+      "source": "generated_mock_coordinate"
+    },
+    "noakhali, noakhali": {
+      "district": "Noakhali",
+      "upazila": "Noakhali",
+      "lat": 23.2818,
+      "lon": 90.0914,
+      "source": "generated_mock_coordinate"
+    },
+    "senbag, noakhali": {
+      "district": "Noakhali",
+      "upazila": "Senbag",
+      "lat": 23.283,
+      "lon": 90.0928,
+      "source": "generated_mock_coordinate"
+    },
+    "atgharia, pabna": {
+      "district": "Pabna",
+      "upazila": "Atgharia",
+      "lat": 25.5304,
+      "lon": 92.2358,
+      "source": "generated_mock_coordinate"
+    },
+    "bera, pabna": {
+      "district": "Pabna",
+      "upazila": "Bera",
+      "lat": 25.5396,
+      "lon": 92.2468,
+      "source": "generated_mock_coordinate"
+    },
+    "bhangura, pabna": {
+      "district": "Pabna",
+      "upazila": "Bhangura",
+      "lat": 25.5444,
+      "lon": 92.2496,
+      "source": "generated_mock_coordinate"
+    },
+    "chatmohar, pabna": {
+      "district": "Pabna",
+      "upazila": "Chatmohar",
+      "lat": 25.5368,
+      "lon": 92.2446,
+      "source": "generated_mock_coordinate"
+    },
+    "faridpur, pabna": {
+      "district": "Pabna",
+      "upazila": "Faridpur",
+      "lat": 25.5272,
+      "lon": 92.2314,
+      "source": "generated_mock_coordinate"
+    },
+    "ishwardi, pabna": {
+      "district": "Pabna",
+      "upazila": "Ishwardi",
+      "lat": 25.5342,
+      "lon": 92.2454,
+      "source": "generated_mock_coordinate"
+    },
+    "pabna, pabna": {
+      "district": "Pabna",
+      "upazila": "Pabna",
+      "lat": 25.5278,
+      "lon": 92.2458,
+      "source": "generated_mock_coordinate"
+    },
+    "santhia, pabna": {
+      "district": "Pabna",
+      "upazila": "Santhia",
+      "lat": 25.5352,
+      "lon": 92.242,
+      "source": "generated_mock_coordinate"
+    },
+    "sujanagar, pabna": {
+      "district": "Pabna",
+      "upazila": "Sujanagar",
+      "lat": 25.5404,
+      "lon": 92.2418,
+      "source": "generated_mock_coordinate"
+    },
+    "atwari, panchagarh": {
+      "district": "Panchagarh",
+      "upazila": "Atwari",
+      "lat": 21.387,
+      "lon": 89.7394,
+      "source": "generated_mock_coordinate"
+    },
+    "boda, panchagarh": {
+      "district": "Panchagarh",
+      "upazila": "Boda",
+      "lat": 21.3908,
+      "lon": 89.744,
+      "source": "generated_mock_coordinate"
+    },
+    "debiganj, panchagarh": {
+      "district": "Panchagarh",
+      "upazila": "Debiganj",
+      "lat": 21.3938,
+      "lon": 89.7334,
+      "source": "generated_mock_coordinate"
+    },
+    "panchagar, panchagarh": {
+      "district": "Panchagarh",
+      "upazila": "Panchagar",
+      "lat": 21.3878,
+      "lon": 89.732,
+      "source": "generated_mock_coordinate"
+    },
+    "tetulia, panchagarh": {
+      "district": "Panchagarh",
+      "upazila": "Tetulia",
+      "lat": 21.3834,
+      "lon": 89.7286,
+      "source": "generated_mock_coordinate"
+    },
+    "bauphal, patuakhali": {
+      "district": "Patuakhali",
+      "upazila": "Bauphal",
+      "lat": 25.2616,
+      "lon": 91.4552,
+      "source": "generated_mock_coordinate"
+    },
+    "dashmina, patuakhali": {
+      "district": "Patuakhali",
+      "upazila": "Dashmina",
+      "lat": 25.2596,
+      "lon": 91.46,
+      "source": "generated_mock_coordinate"
+    },
+    "galachipa, patuakhali": {
+      "district": "Patuakhali",
+      "upazila": "Galachipa",
+      "lat": 25.2676,
+      "lon": 91.4618,
+      "source": "generated_mock_coordinate"
+    },
+    "kalapara, patuakhali": {
+      "district": "Patuakhali",
+      "upazila": "Kalapara",
+      "lat": 25.2686,
+      "lon": 91.4672,
+      "source": "generated_mock_coordinate"
+    },
+    "mirzaganj, patuakhali": {
+      "district": "Patuakhali",
+      "upazila": "Mirzaganj",
+      "lat": 25.2598,
+      "lon": 91.4546,
+      "source": "generated_mock_coordinate"
+    },
+    "patuakhali, patuakhali": {
+      "district": "Patuakhali",
+      "upazila": "Patuakhali",
+      "lat": 25.2726,
+      "lon": 91.4634,
+      "source": "generated_mock_coordinate"
+    },
+    "bhandaria, pirojpur": {
+      "district": "Pirojpur",
+      "upazila": "Bhandaria",
+      "lat": 21.2446,
+      "lon": 89.2,
+      "source": "generated_mock_coordinate"
+    },
+    "kawkhali, pirojpur": {
+      "district": "Pirojpur",
+      "upazila": "Kawkhali",
+      "lat": 21.2378,
+      "lon": 89.1864,
+      "source": "generated_mock_coordinate"
+    },
+    "mathbaria, pirojpur": {
+      "district": "Pirojpur",
+      "upazila": "Mathbaria",
+      "lat": 21.2294,
+      "lon": 89.2046,
+      "source": "generated_mock_coordinate"
+    },
+    "nazirpur, pirojpur": {
+      "district": "Pirojpur",
+      "upazila": "Nazirpur",
+      "lat": 21.2444,
+      "lon": 89.199,
+      "source": "generated_mock_coordinate"
+    },
+    "pirojpur, pirojpur": {
+      "district": "Pirojpur",
+      "upazila": "Pirojpur",
+      "lat": 21.2394,
+      "lon": 89.1886,
+      "source": "generated_mock_coordinate"
+    },
+    "sarupkati, pirojpur": {
+      "district": "Pirojpur",
+      "upazila": "Sarupkati",
+      "lat": 21.2298,
+      "lon": 89.204,
+      "source": "generated_mock_coordinate"
+    },
+    "baliakandi, rajbari": {
+      "district": "Rajbari",
+      "upazila": "Baliakandi",
+      "lat": 22.7354,
+      "lon": 89.1086,
+      "source": "generated_mock_coordinate"
+    },
+    "goalanda, rajbari": {
+      "district": "Rajbari",
+      "upazila": "Goalanda",
+      "lat": 22.7378,
+      "lon": 89.1038,
+      "source": "generated_mock_coordinate"
+    },
+    "pangsha, rajbari": {
+      "district": "Rajbari",
+      "upazila": "Pangsha",
+      "lat": 22.7448,
+      "lon": 89.1038,
+      "source": "generated_mock_coordinate"
+    },
+    "rajbari, rajbari": {
+      "district": "Rajbari",
+      "upazila": "Rajbari",
+      "lat": 22.74,
+      "lon": 89.0948,
+      "source": "generated_mock_coordinate"
+    },
+    "bagha, rajshahi": {
+      "district": "Rajshahi",
+      "upazila": "Bagha",
+      "lat": 23.5278,
+      "lon": 88.3076,
+      "source": "generated_mock_coordinate"
+    },
+    "bagmara, rajshahi": {
+      "district": "Rajshahi",
+      "upazila": "Bagmara",
+      "lat": 23.5356,
+      "lon": 88.303,
+      "source": "generated_mock_coordinate"
+    },
+    "boalia (rajshahi), rajshahi": {
+      "district": "Rajshahi",
+      "upazila": "Boalia (rajshahi)",
+      "lat": 23.5238,
+      "lon": 88.311,
+      "source": "generated_mock_coordinate"
+    },
+    "charghat, rajshahi": {
+      "district": "Rajshahi",
+      "upazila": "Charghat",
+      "lat": 23.522,
+      "lon": 88.3016,
+      "source": "generated_mock_coordinate"
+    },
+    "durgapur, rajshahi": {
+      "district": "Rajshahi",
+      "upazila": "Durgapur",
+      "lat": 23.5354,
+      "lon": 88.3136,
+      "source": "generated_mock_coordinate"
+    },
+    "godagari, rajshahi": {
+      "district": "Rajshahi",
+      "upazila": "Godagari",
+      "lat": 23.5242,
+      "lon": 88.31,
+      "source": "generated_mock_coordinate"
+    },
+    "mohanpur, rajshahi": {
+      "district": "Rajshahi",
+      "upazila": "Mohanpur",
+      "lat": 23.535,
+      "lon": 88.3012,
+      "source": "generated_mock_coordinate"
+    },
+    "paba, rajshahi": {
+      "district": "Rajshahi",
+      "upazila": "Paba",
+      "lat": 23.529,
+      "lon": 88.3148,
+      "source": "generated_mock_coordinate"
+    },
+    "puthia, rajshahi": {
+      "district": "Rajshahi",
+      "upazila": "Puthia",
+      "lat": 23.5322,
+      "lon": 88.3008,
+      "source": "generated_mock_coordinate"
+    },
+    "tanor, rajshahi": {
+      "district": "Rajshahi",
+      "upazila": "Tanor",
+      "lat": 23.5208,
+      "lon": 88.295,
+      "source": "generated_mock_coordinate"
+    },
+    "baghaichhari, rangamati": {
+      "district": "Rangamati",
+      "upazila": "Baghaichhari",
+      "lat": 23.4508,
+      "lon": 88.9714,
+      "source": "generated_mock_coordinate"
+    },
+    "barkal, rangamati": {
+      "district": "Rangamati",
+      "upazila": "Barkal",
+      "lat": 23.4478,
+      "lon": 88.9688,
+      "source": "generated_mock_coordinate"
+    },
+    "belaichhari, rangamati": {
+      "district": "Rangamati",
+      "upazila": "Belaichhari",
+      "lat": 23.4402,
+      "lon": 88.9798,
+      "source": "generated_mock_coordinate"
+    },
+    "juraichhari, rangamati": {
+      "district": "Rangamati",
+      "upazila": "Juraichhari",
+      "lat": 23.4508,
+      "lon": 88.9696,
+      "source": "generated_mock_coordinate"
+    },
+    "kaptai, rangamati": {
+      "district": "Rangamati",
+      "upazila": "Kaptai",
+      "lat": 23.439,
+      "lon": 88.9692,
+      "source": "generated_mock_coordinate"
+    },
+    "kawkhali (betbunia), rangamati": {
+      "district": "Rangamati",
+      "upazila": "Kawkhali (betbunia)",
+      "lat": 23.4504,
+      "lon": 88.9628,
+      "source": "generated_mock_coordinate"
+    },
+    "langadu, rangamati": {
+      "district": "Rangamati",
+      "upazila": "Langadu",
+      "lat": 23.4502,
+      "lon": 88.9768,
+      "source": "generated_mock_coordinate"
+    },
+    "nannerchar, rangamati": {
+      "district": "Rangamati",
+      "upazila": "Nannerchar",
+      "lat": 23.4406,
+      "lon": 88.9618,
+      "source": "generated_mock_coordinate"
+    },
+    "rajasthali, rangamati": {
+      "district": "Rangamati",
+      "upazila": "Rajasthali",
+      "lat": 23.4516,
+      "lon": 88.9792,
+      "source": "generated_mock_coordinate"
+    },
+    "rangamati, rangamati": {
+      "district": "Rangamati",
+      "upazila": "Rangamati",
+      "lat": 23.435,
+      "lon": 88.973,
+      "source": "generated_mock_coordinate"
+    },
+    "badarganj, rangpur": {
+      "district": "Rangpur",
+      "upazila": "Badarganj",
+      "lat": 24.3266,
+      "lon": 89.165,
+      "source": "generated_mock_coordinate"
+    },
+    "gangachara, rangpur": {
+      "district": "Rangpur",
+      "upazila": "Gangachara",
+      "lat": 24.3392,
+      "lon": 89.1648,
+      "source": "generated_mock_coordinate"
+    },
+    "kaunia, rangpur": {
+      "district": "Rangpur",
+      "upazila": "Kaunia",
+      "lat": 24.3256,
+      "lon": 89.1478,
+      "source": "generated_mock_coordinate"
+    },
+    "mithapukur, rangpur": {
+      "district": "Rangpur",
+      "upazila": "Mithapukur",
+      "lat": 24.3424,
+      "lon": 89.1644,
+      "source": "generated_mock_coordinate"
+    },
+    "pirgachha, rangpur": {
+      "district": "Rangpur",
+      "upazila": "Pirgachha",
+      "lat": 24.3318,
+      "lon": 89.1512,
+      "source": "generated_mock_coordinate"
+    },
+    "pirganj, rangpur": {
+      "district": "Rangpur",
+      "upazila": "Pirganj",
+      "lat": 24.3314,
+      "lon": 89.1574,
+      "source": "generated_mock_coordinate"
+    },
+    "rangpur, rangpur": {
+      "district": "Rangpur",
+      "upazila": "Rangpur",
+      "lat": 24.3262,
+      "lon": 89.1586,
+      "source": "generated_mock_coordinate"
+    },
+    "taraganj, rangpur": {
+      "district": "Rangpur",
+      "upazila": "Taraganj",
+      "lat": 24.328,
+      "lon": 89.1496,
+      "source": "generated_mock_coordinate"
+    },
+    "asasuni, satkhira": {
+      "district": "Satkhira",
+      "upazila": "Asasuni",
+      "lat": 22.193,
+      "lon": 88.6332,
+      "source": "generated_mock_coordinate"
+    },
+    "debhata, satkhira": {
+      "district": "Satkhira",
+      "upazila": "Debhata",
+      "lat": 22.1954,
+      "lon": 88.6312,
+      "source": "generated_mock_coordinate"
+    },
+    "kalaroa, satkhira": {
+      "district": "Satkhira",
+      "upazila": "Kalaroa",
+      "lat": 22.1848,
+      "lon": 88.6378,
+      "source": "generated_mock_coordinate"
+    },
+    "kaliganj, satkhira": {
+      "district": "Satkhira",
+      "upazila": "Kaliganj",
+      "lat": 22.193,
+      "lon": 88.6286,
+      "source": "generated_mock_coordinate"
+    },
+    "satkhira, satkhira": {
+      "district": "Satkhira",
+      "upazila": "Satkhira",
+      "lat": 22.184,
+      "lon": 88.6246,
+      "source": "generated_mock_coordinate"
+    },
+    "shyamnagar, satkhira": {
+      "district": "Satkhira",
+      "upazila": "Shyamnagar",
+      "lat": 22.1986,
+      "lon": 88.6236,
+      "source": "generated_mock_coordinate"
+    },
+    "tala, satkhira": {
+      "district": "Satkhira",
+      "upazila": "Tala",
+      "lat": 22.184,
+      "lon": 88.633,
+      "source": "generated_mock_coordinate"
+    },
+    "bhedarganj, shariatpur": {
+      "district": "Shariatpur",
+      "upazila": "Bhedarganj",
+      "lat": 22.4638,
+      "lon": 91.111,
+      "source": "generated_mock_coordinate"
+    },
+    "damudya, shariatpur": {
+      "district": "Shariatpur",
+      "upazila": "Damudya",
+      "lat": 22.4718,
+      "lon": 91.1172,
+      "source": "generated_mock_coordinate"
+    },
+    "goshairhat, shariatpur": {
+      "district": "Shariatpur",
+      "upazila": "Goshairhat",
+      "lat": 22.4754,
+      "lon": 91.1022,
+      "source": "generated_mock_coordinate"
+    },
+    "janjira, shariatpur": {
+      "district": "Shariatpur",
+      "upazila": "Janjira",
+      "lat": 22.4772,
+      "lon": 91.1096,
+      "source": "generated_mock_coordinate"
+    },
+    "naria, shariatpur": {
+      "district": "Shariatpur",
+      "upazila": "Naria",
+      "lat": 22.4684,
+      "lon": 91.1216,
+      "source": "generated_mock_coordinate"
+    },
+    "palong (sadar), shariatpur": {
+      "district": "Shariatpur",
+      "upazila": "Palong (sadar)",
+      "lat": 22.48,
+      "lon": 91.112,
+      "source": "generated_mock_coordinate"
+    },
+    "jhenaigati, sherpur": {
+      "district": "Sherpur",
+      "upazila": "Jhenaigati",
+      "lat": 23.8426,
+      "lon": 90.565,
+      "source": "generated_mock_coordinate"
+    },
+    "nakla, sherpur": {
+      "district": "Sherpur",
+      "upazila": "Nakla",
+      "lat": 23.844,
+      "lon": 90.5792,
+      "source": "generated_mock_coordinate"
+    },
+    "nalitabari, sherpur": {
+      "district": "Sherpur",
+      "upazila": "Nalitabari",
+      "lat": 23.8558,
+      "lon": 90.5758,
+      "source": "generated_mock_coordinate"
+    },
+    "sherpur, sherpur": {
+      "district": "Sherpur",
+      "upazila": "Sherpur",
+      "lat": 23.855,
+      "lon": 90.5732,
+      "source": "generated_mock_coordinate"
+    },
+    "sribardi, sherpur": {
+      "district": "Sherpur",
+      "upazila": "Sribardi",
+      "lat": 23.846,
+      "lon": 90.5792,
+      "source": "generated_mock_coordinate"
+    },
+    "belkuchi, sirajganj": {
+      "district": "Sirajganj",
+      "upazila": "Belkuchi",
+      "lat": 22.2642,
+      "lon": 89.2692,
+      "source": "generated_mock_coordinate"
+    },
+    "chauhali, sirajganj": {
+      "district": "Sirajganj",
+      "upazila": "Chauhali",
+      "lat": 22.2546,
+      "lon": 89.284,
+      "source": "generated_mock_coordinate"
+    },
+    "kamarkhanda, sirajganj": {
+      "district": "Sirajganj",
+      "upazila": "Kamarkhanda",
+      "lat": 22.2664,
+      "lon": 89.2696,
+      "source": "generated_mock_coordinate"
+    },
+    "kazipur, sirajganj": {
+      "district": "Sirajganj",
+      "upazila": "Kazipur",
+      "lat": 22.2582,
+      "lon": 89.2708,
+      "source": "generated_mock_coordinate"
+    },
+    "raiganj, sirajganj": {
+      "district": "Sirajganj",
+      "upazila": "Raiganj",
+      "lat": 22.261,
+      "lon": 89.269,
+      "source": "generated_mock_coordinate"
+    },
+    "shahzadpur, sirajganj": {
+      "district": "Sirajganj",
+      "upazila": "Shahzadpur",
+      "lat": 22.2482,
+      "lon": 89.281,
+      "source": "generated_mock_coordinate"
+    },
+    "sirajganj, sirajganj": {
+      "district": "Sirajganj",
+      "upazila": "Sirajganj",
+      "lat": 22.2496,
+      "lon": 89.2788,
+      "source": "generated_mock_coordinate"
+    },
+    "taras, sirajganj": {
+      "district": "Sirajganj",
+      "upazila": "Taras",
+      "lat": 22.259,
+      "lon": 89.2694,
+      "source": "generated_mock_coordinate"
+    },
+    "ullapara, sirajganj": {
+      "district": "Sirajganj",
+      "upazila": "Ullapara",
+      "lat": 22.2634,
+      "lon": 89.2706,
+      "source": "generated_mock_coordinate"
+    },
+    "bishambarpur, sunamganj": {
+      "district": "Sunamganj",
+      "upazila": "Bishambarpur",
+      "lat": 21.4522,
+      "lon": 88.7038,
+      "source": "generated_mock_coordinate"
+    },
+    "chhatak, sunamganj": {
+      "district": "Sunamganj",
+      "upazila": "Chhatak",
+      "lat": 21.4606,
+      "lon": 88.703,
+      "source": "generated_mock_coordinate"
+    },
+    "dharmapasha, sunamganj": {
+      "district": "Sunamganj",
+      "upazila": "Dharmapasha",
+      "lat": 21.4498,
+      "lon": 88.7104,
+      "source": "generated_mock_coordinate"
+    },
+    "dirai, sunamganj": {
+      "district": "Sunamganj",
+      "upazila": "Dirai",
+      "lat": 21.4504,
+      "lon": 88.7206,
+      "source": "generated_mock_coordinate"
+    },
+    "dwarabazar, sunamganj": {
+      "district": "Sunamganj",
+      "upazila": "Dwarabazar",
+      "lat": 21.4494,
+      "lon": 88.7138,
+      "source": "generated_mock_coordinate"
+    },
+    "jagannathpur, sunamganj": {
+      "district": "Sunamganj",
+      "upazila": "Jagannathpur",
+      "lat": 21.4522,
+      "lon": 88.721,
+      "source": "generated_mock_coordinate"
+    },
+    "jamalganj, sunamganj": {
+      "district": "Sunamganj",
+      "upazila": "Jamalganj",
+      "lat": 21.4476,
+      "lon": 88.7182,
+      "source": "generated_mock_coordinate"
+    },
+    "sulla, sunamganj": {
+      "district": "Sunamganj",
+      "upazila": "Sulla",
+      "lat": 21.4592,
+      "lon": 88.7086,
+      "source": "generated_mock_coordinate"
+    },
+    "sunamganj, sunamganj": {
+      "district": "Sunamganj",
+      "upazila": "Sunamganj",
+      "lat": 21.4488,
+      "lon": 88.7064,
+      "source": "generated_mock_coordinate"
+    },
+    "tahirpur, sunamganj": {
+      "district": "Sunamganj",
+      "upazila": "Tahirpur",
+      "lat": 21.4632,
+      "lon": 88.7186,
+      "source": "generated_mock_coordinate"
+    },
+    "balaganj, sylhet": {
+      "district": "Sylhet",
+      "upazila": "Balaganj",
+      "lat": 24.616,
+      "lon": 88.6894,
+      "source": "generated_mock_coordinate"
+    },
+    "beani bazar, sylhet": {
+      "district": "Sylhet",
+      "upazila": "Beani Bazar",
+      "lat": 24.6248,
+      "lon": 88.6898,
+      "source": "generated_mock_coordinate"
+    },
+    "bishwanath, sylhet": {
+      "district": "Sylhet",
+      "upazila": "Bishwanath",
+      "lat": 24.6344,
+      "lon": 88.697,
+      "source": "generated_mock_coordinate"
+    },
+    "companiganj, sylhet": {
+      "district": "Sylhet",
+      "upazila": "Companiganj",
+      "lat": 24.6288,
+      "lon": 88.6894,
+      "source": "generated_mock_coordinate"
+    },
+    "fenchuganj, sylhet": {
+      "district": "Sylhet",
+      "upazila": "Fenchuganj",
+      "lat": 24.6174,
+      "lon": 88.7006,
+      "source": "generated_mock_coordinate"
+    },
+    "golapganj, sylhet": {
+      "district": "Sylhet",
+      "upazila": "Golapganj",
+      "lat": 24.6312,
+      "lon": 88.6868,
+      "source": "generated_mock_coordinate"
+    },
+    "gowainghat, sylhet": {
+      "district": "Sylhet",
+      "upazila": "Gowainghat",
+      "lat": 24.616,
+      "lon": 88.7002,
+      "source": "generated_mock_coordinate"
+    },
+    "jaintapur, sylhet": {
+      "district": "Sylhet",
+      "upazila": "Jaintapur",
+      "lat": 24.6246,
+      "lon": 88.7006,
+      "source": "generated_mock_coordinate"
+    },
+    "kanaighat, sylhet": {
+      "district": "Sylhet",
+      "upazila": "Kanaighat",
+      "lat": 24.6328,
+      "lon": 88.684,
+      "source": "generated_mock_coordinate"
+    },
+    "sylhet, sylhet": {
+      "district": "Sylhet",
+      "upazila": "Sylhet",
+      "lat": 24.6182,
+      "lon": 88.6946,
+      "source": "generated_mock_coordinate"
+    },
+    "zakiganj, sylhet": {
+      "district": "Sylhet",
+      "upazila": "Zakiganj",
+      "lat": 24.6194,
+      "lon": 88.6952,
+      "source": "generated_mock_coordinate"
+    },
+    "basail, tangail": {
+      "district": "Tangail",
+      "upazila": "Basail",
+      "lat": 24.8384,
+      "lon": 89.5784,
+      "source": "generated_mock_coordinate"
+    },
+    "bhuapur, tangail": {
+      "district": "Tangail",
+      "upazila": "Bhuapur",
+      "lat": 24.8258,
+      "lon": 89.572,
+      "source": "generated_mock_coordinate"
+    },
+    "delduar, tangail": {
+      "district": "Tangail",
+      "upazila": "Delduar",
+      "lat": 24.8306,
+      "lon": 89.5708,
+      "source": "generated_mock_coordinate"
+    },
+    "ghatail, tangail": {
+      "district": "Tangail",
+      "upazila": "Ghatail",
+      "lat": 24.8234,
+      "lon": 89.5832,
+      "source": "generated_mock_coordinate"
+    },
+    "gopalpur, tangail": {
+      "district": "Tangail",
+      "upazila": "Gopalpur",
+      "lat": 24.8254,
+      "lon": 89.584,
+      "source": "generated_mock_coordinate"
+    },
+    "kalihati, tangail": {
+      "district": "Tangail",
+      "upazila": "Kalihati",
+      "lat": 24.8342,
+      "lon": 89.568,
+      "source": "generated_mock_coordinate"
+    },
+    "madhupur, tangail": {
+      "district": "Tangail",
+      "upazila": "Madhupur",
+      "lat": 24.8248,
+      "lon": 89.5692,
+      "source": "generated_mock_coordinate"
+    },
+    "mirzapur, tangail": {
+      "district": "Tangail",
+      "upazila": "Mirzapur",
+      "lat": 24.8378,
+      "lon": 89.5802,
+      "source": "generated_mock_coordinate"
+    },
+    "nagarpur, tangail": {
+      "district": "Tangail",
+      "upazila": "Nagarpur",
+      "lat": 24.8306,
+      "lon": 89.5782,
+      "source": "generated_mock_coordinate"
+    },
+    "shakhipur, tangail": {
+      "district": "Tangail",
+      "upazila": "Shakhipur",
+      "lat": 24.8374,
+      "lon": 89.573,
+      "source": "generated_mock_coordinate"
+    },
+    "tangail, tangail": {
+      "district": "Tangail",
+      "upazila": "Tangail",
+      "lat": 24.8384,
+      "lon": 89.574,
+      "source": "generated_mock_coordinate"
+    },
+    "baliadangi, thakurgaon": {
+      "district": "Thakurgaon",
+      "upazila": "Baliadangi",
+      "lat": 23.335,
+      "lon": 88.3008,
+      "source": "generated_mock_coordinate"
+    },
+    "haripur, thakurgaon": {
+      "district": "Thakurgaon",
+      "upazila": "Haripur",
+      "lat": 23.3268,
+      "lon": 88.308,
+      "source": "generated_mock_coordinate"
+    },
+    "pirganj, thakurgaon": {
+      "district": "Thakurgaon",
+      "upazila": "Pirganj",
+      "lat": 23.3332,
+      "lon": 88.3198,
+      "source": "generated_mock_coordinate"
+    },
+    "ranisonkail, thakurgaon": {
+      "district": "Thakurgaon",
+      "upazila": "Ranisonkail",
+      "lat": 23.3318,
+      "lon": 88.3158,
+      "source": "generated_mock_coordinate"
+    },
+    "thakurgaon, thakurgaon": {
+      "district": "Thakurgaon",
+      "upazila": "Thakurgaon",
+      "lat": 23.325,
+      "lon": 88.312,
+      "source": "generated_mock_coordinate"
+    }
+  }
+}

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriSense AI — Agentic Agricultural Advisor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              900: '#14532d',
+              950: '#052e16',
+            },
+            accent: {
+              500: '#3b82f6',
+              600: '#2563eb',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="h-full flex flex-col font-sans antialiased overflow-hidden selection:bg-brand-500 selection:text-white">
+
+  <!-- TOP NAVIGATION HEADER -->
+  <header class="h-16 border-b border-slate-800 bg-slate-900/80 backdrop-blur px-6 flex items-center justify-between shrink-0 z-20">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-emerald-400 flex items-center justify-center shadow-lg shadow-brand-500/20">
+        <i data-lucide="sprout" class="w-6 h-6 text-white"></i>
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="font-bold text-lg text-white tracking-tight">AgriSense AI</h1>
+          <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20">v1.0 Agentic</span>
+        </div>
+        <p class="text-xs text-slate-400">Autonomous Smallholder Farm Advisory & Season Planner</p>
+      </div>
+    </div>
+
+    <!-- CENTER CONTROLS: ENGINE SELECTOR -->
+    <div class="flex items-center bg-slate-800/80 p-1 rounded-xl border border-slate-700/60">
+      <button id="engine-agentic" class="px-3.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 bg-brand-600 text-white shadow">
+        <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+        Gemini 2.0 Agentic Engine
+      </button>
+      <button id="engine-tier0" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+        Tier-0 Deterministic Engine
+      </button>
+    </div>
+
+    <!-- RIGHT STATUS BADGES -->
+    <div class="flex items-center gap-3">
+      <div id="backend-status" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-xs text-slate-300">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span id="backend-text">Connecting...</span>
+      </div>
+      <button id="btn-new-session" class="px-3.5 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 transition flex items-center gap-1.5">
+        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+        New Session
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN 3-COLUMN LAYOUT -->
+  <div class="flex-1 flex overflow-hidden">
+
+    <!-- LEFT COLUMN: FARM PROFILE & TOOL DRAWER -->
+    <aside class="w-80 border-r border-slate-800 bg-slate-900/50 flex flex-col shrink-0 overflow-y-auto">
+      
+      <!-- PROFILE CARD -->
+      <div class="p-4 border-b border-slate-800">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+            <i data-lucide="map-pin" class="w-4 h-4 text-brand-400"></i>
+            Farm Profile State
+          </h2>
+          <span id="profile-status-badge" class="px-2 py-0.5 text-[10px] font-semibold rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">Collecting</span>
+        </div>
+
+        <div id="profile-details" class="space-y-2 text-xs">
+          <div class="flex justify-between py-1 border-b border-slate-800/60">
+            <span class="text-slate-400">Location</span>
+            <span id="p-location" class="font-medium text-slate-200">Not provided</span>
+          </div>
+          <div class="flex justify-between py-1 border-b border-slate-800/60">
+            <span class="text-slate-400">Coordinates</span>
+            <span id="p-coords" class="font-mono text-[11px] text-slate-300">Unmapped</span>
+          </div>
+          <div class="flex justify-between py-1 border-b border-slate-800/60">
+            <span class="text-slate-400">Land Area</span>
+            <span id="p-area" class="font-medium text-slate-200">—</span>
+          </div>
+          <div class="flex justify-between py-1 border-b border-slate-800/60">
+            <span class="text-slate-400">Soil Texture</span>
+            <span id="p-soil" class="font-medium text-slate-200">—</span>
+          </div>
+          <div class="flex justify-between py-1 border-b border-slate-800/60">
+            <span class="text-slate-400">Water / Irrigation</span>
+            <span id="p-water" class="font-medium text-slate-200">—</span>
+          </div>
+          <div class="flex justify-between py-1 border-b border-slate-800/60">
+            <span class="text-slate-400">Budget</span>
+            <span id="p-budget" class="font-medium text-slate-200">—</span>
+          </div>
+          <div class="flex justify-between py-1 border-b border-slate-800/60">
+            <span class="text-slate-400">Target Season</span>
+            <span id="p-season" class="font-medium text-slate-200">—</span>
+          </div>
+          <div class="flex justify-between py-1">
+            <span class="text-slate-400">Selected Crop</span>
+            <span id="p-crop" class="font-semibold text-brand-400">—</span>
+          </div>
+        </div>
+
+        <div id="missing-fields-box" class="mt-3 p-2.5 rounded-lg bg-amber-500/5 border border-amber-500/20 hidden">
+          <p class="text-[11px] text-amber-300/90 font-medium mb-1 flex items-center gap-1">
+            <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
+            Missing Fields Required:
+          </p>
+          <div id="missing-fields-tags" class="flex flex-wrap gap-1"></div>
+        </div>
+      </div>
+
+      <!-- DIRECT TOOL SANDBOX -->
+      <div class="p-4 border-b border-slate-800">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-1.5">
+          <i data-lucide="wrench" class="w-4 h-4 text-accent-500"></i>
+          Direct Tool Sandbox
+        </h2>
+        <div class="space-y-2">
+          <button id="btn-tool-geocode" class="w-full py-1.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-left font-medium text-slate-200 flex items-center justify-between transition">
+            <span>geocode_location</span>
+            <i data-lucide="play" class="w-3 h-3 text-slate-400"></i>
+          </button>
+          <button id="btn-tool-weather" class="w-full py-1.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-left font-medium text-slate-200 flex items-center justify-between transition">
+            <span>get_weather_forecast</span>
+            <i data-lucide="play" class="w-3 h-3 text-slate-400"></i>
+          </button>
+          <button id="btn-tool-rag" class="w-full py-1.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-left font-medium text-slate-200 flex items-center justify-between transition">
+            <span>retrieve_agronomic_context</span>
+            <i data-lucide="play" class="w-3 h-3 text-slate-400"></i>
+          </button>
+          <button id="btn-tool-rank" class="w-full py-1.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-left font-medium text-slate-200 flex items-center justify-between transition">
+            <span>rank_crop_candidates</span>
+            <i data-lucide="play" class="w-3 h-3 text-slate-400"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- DEMO PROMPTS PACK -->
+      <div class="p-4 flex-1">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-1.5">
+          <i data-lucide="sparkles" class="w-4 h-4 text-purple-400"></i>
+          Sample Farmer Scenarios
+        </h2>
+        <div class="space-y-2">
+          <button class="sample-prompt w-full p-2 rounded bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 text-[11px] text-left text-slate-300 transition"
+            data-prompt="we have a plot of land in moulovibazar. it is 2 acre and has reliable irrigation and sandy-loamy soil. wehave a budget of 60 thousand taka. we are planing for the boro season.">
+            🌾 <strong>Moulovibazar Boro Demo:</strong> 2 acres, BDT 60k, sandy-loam, reliable irrigation.
+          </button>
+          <button class="sample-prompt w-full p-2 rounded bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 text-[11px] text-left text-slate-300 transition"
+            data-prompt="my farm is in rangpur. 1.5 bigha, loam soil, tubewell water. budget 25000 taka for rabi season wheat or maize.">
+            🌽 <strong>Rangpur Rabi Demo:</strong> 1.5 bigha, BDT 25k, loam, tubewell.
+          </button>
+          <button class="sample-prompt w-full p-2 rounded bg-slate-800/60 hover:bg-slate-800 border border-slate-700/50 text-[11px] text-left text-slate-300 transition"
+            data-prompt="আমার বাড়ি ময়মনসিংহে। ৩ একর জমি আছে, পলি মাটি, খাল থেকে পানি আনবো। ৪০ হাজার টাকা বাজেট।">
+            🇧🇩 <strong>Mymensingh Bangla Demo:</strong> 3 acres, silt soil, canal water, BDT 40k.
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER COLUMN: CONVERSATIONAL CHAT INTERFACE -->
+    <main class="flex-1 flex flex-col bg-slate-950 min-w-0">
+      
+      <!-- CHAT MESSAGE LOG -->
+      <div id="chat-container" class="flex-1 overflow-y-auto p-6 space-y-6">
+        
+        <!-- INITIAL WELCOME BANNER -->
+        <div class="max-w-2xl mx-auto p-5 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-900/60 border border-slate-800 text-center shadow-xl">
+          <div class="w-12 h-12 rounded-2xl bg-brand-500/10 border border-brand-500/20 text-brand-400 mx-auto flex items-center justify-center mb-3">
+            <i data-lucide="bot" class="w-7 h-7"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-100 mb-1">Welcome to AgriSense Autonomous Agent</h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4 max-w-lg mx-auto">
+            Describe your land location, area, soil texture, irrigation source, budget, or target season. The AI will autonomously geocode coordinates, pull live Open-Meteo weather forecasts, query official BARC/BAMIS/AIS extension manuals via hybrid RAG, rank crops, and generate a dated financial plan.
+          </p>
+          <div class="flex items-center justify-center gap-2 text-[11px] text-slate-400">
+            <span class="px-2 py-1 rounded bg-slate-800 border border-slate-700">⚡ Live Geoapify</span>
+            <span class="px-2 py-1 rounded bg-slate-800 border border-slate-700">🌧️ Open-Meteo Weather</span>
+            <span class="px-2 py-1 rounded bg-slate-800 border border-slate-700">📚 BARC FRG-2024 RAG</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CROP RECOMMENDATION CARDS OVERLAY (DYNAMIC) -->
+      <div id="crop-recommendations-bar" class="px-6 py-3 border-t border-slate-800 bg-slate-900/90 backdrop-blur hidden">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+            <i data-lucide="award" class="w-4 h-4 text-brand-400"></i>
+            Ranked Crop Candidates (Select one to generate dated plan):
+          </span>
+        </div>
+        <div id="crop-cards-container" class="grid grid-cols-3 gap-3"></div>
+      </div>
+
+      <!-- INPUT BAR -->
+      <div class="p-4 border-t border-slate-800 bg-slate-900/60 backdrop-blur">
+        <form id="chat-form" class="max-w-4xl mx-auto flex items-end gap-3">
+          <div class="flex-1 bg-slate-900 border border-slate-700/80 rounded-xl focus-within:border-brand-500 transition shadow-inner">
+            <textarea id="chat-input" rows="2" placeholder="Tell AgriSense about your plot (e.g. '2 acres in Moulovibazar with BDT 60k budget for boro season')..."
+              class="w-full bg-transparent px-4 py-3 text-sm text-slate-100 placeholder-slate-500 focus:outline-none resize-none"></textarea>
+          </div>
+          <button type="submit" id="btn-send" class="h-11 px-5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-medium text-sm flex items-center justify-center gap-2 transition shadow-lg shadow-brand-600/20 shrink-0">
+            <span>Send</span>
+            <i data-lucide="send" class="w-4 h-4"></i>
+          </button>
+        </form>
+      </div>
+
+    </main>
+
+    <!-- RIGHT COLUMN: OPERATIONAL TOOL TRACES & DATED PLAN -->
+    <aside class="w-96 border-l border-slate-800 bg-slate-900/50 flex flex-col shrink-0">
+      
+      <!-- TABS HEADER -->
+      <div class="flex border-b border-slate-800 bg-slate-900">
+        <button id="tab-btn-traces" class="flex-1 py-3 text-xs font-bold uppercase tracking-wider text-brand-400 border-b-2 border-brand-500 flex items-center justify-center gap-1.5">
+          <i data-lucide="activity" class="w-4 h-4"></i>
+          Tool Traces (<span id="trace-count">0</span>)
+        </button>
+        <button id="tab-btn-plan" class="flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center justify-center gap-1.5">
+          <i data-lucide="calendar" class="w-4 h-4"></i>
+          Dated Season Plan
+        </button>
+      </div>
+
+      <!-- TAB CONTENT 1: OPERATIONAL TRACES LIST -->
+      <div id="tab-content-traces" class="flex-1 overflow-y-auto p-4 space-y-3">
+        <div id="traces-empty" class="text-center py-12 text-slate-500 text-xs">
+          <i data-lucide="cpu" class="w-8 h-8 mx-auto mb-2 text-slate-600"></i>
+          No tool calls recorded yet.<br>Send a prompt to observe live tool execution traces.
+        </div>
+        <div id="traces-list" class="space-y-3"></div>
+      </div>
+
+      <!-- TAB CONTENT 2: DATED SEASON PLAN & FINANCIAL PROJECTION -->
+      <div id="tab-content-plan" class="flex-1 overflow-y-auto p-4 space-y-4 hidden">
+        <div id="plan-empty" class="text-center py-12 text-slate-500 text-xs">
+          <i data-lucide="calendar-off" class="w-8 h-8 mx-auto mb-2 text-slate-600"></i>
+          No active season plan generated.<br>Select a recommended crop candidate to construct dated calendar & financials.
+        </div>
+        
+        <div id="plan-details" class="space-y-4 hidden">
+          <!-- PLAN SUMMARY CARD -->
+          <div class="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700/80">
+            <h3 id="plan-title" class="font-bold text-sm text-slate-100 mb-1">Crop Plan</h3>
+            <p id="plan-subtitle" class="text-xs text-slate-400 mb-3"></p>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="p-2 rounded bg-slate-900/60 border border-slate-700/50">
+                <span class="text-slate-400 block text-[10px]">TOTAL COST</span>
+                <span id="plan-cost" class="font-bold text-slate-200 text-sm">BDT 0</span>
+              </div>
+              <div class="p-2 rounded bg-slate-900/60 border border-slate-700/50">
+                <span class="text-slate-400 block text-[10px]">NET PROFIT</span>
+                <span id="plan-profit" class="font-bold text-brand-400 text-sm">BDT 0</span>
+              </div>
+              <div class="p-2 rounded bg-slate-900/60 border border-slate-700/50">
+                <span class="text-slate-400 block text-[10px]">EXPECTED YIELD</span>
+                <span id="plan-yield" class="font-medium text-slate-200">0 kg</span>
+              </div>
+              <div class="p-2 rounded bg-slate-900/60 border border-slate-700/50">
+                <span class="text-slate-400 block text-[10px]">PROJECTED ROI</span>
+                <span id="plan-roi" class="font-bold text-emerald-400">0%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE TIMELINE CHECKPOINTS -->
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Stage Timeline & Checkpoints</h4>
+            <div id="plan-timeline" class="space-y-2"></div>
+          </div>
+
+          <!-- FERTILIZER SPLIT TABLE -->
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Fertilizer Application Schedule</h4>
+            <div class="overflow-x-auto rounded-lg border border-slate-800">
+              <table id="plan-fertilizer-table" class="w-full text-left text-[11px] text-slate-300">
+                <thead class="bg-slate-800 text-slate-400">
+                  <tr>
+                    <th class="p-2">Stage</th>
+                    <th class="p-2">Fertilizer</th>
+                    <th class="p-2 text-right">Amount</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800/60"></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- TOOL TRACE DETAIL MODAL -->
+  <div id="modal-trace" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl">
+      <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+        <h3 id="modal-trace-title" class="font-bold text-sm text-slate-100 font-mono">Tool Trace Payload</h3>
+        <button id="modal-trace-close" class="text-slate-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="p-4 overflow-y-auto font-mono text-xs text-slate-300 space-y-4">
+        <div>
+          <span class="text-slate-500 block mb-1 text-[10px] uppercase">Parameters</span>
+          <pre id="modal-trace-params" class="p-3 rounded-lg bg-slate-950 border border-slate-800 overflow-x-auto text-emerald-400"></pre>
+        </div>
+        <div>
+          <span class="text-slate-500 block mb-1 text-[10px] uppercase">Raw Result</span>
+          <pre id="modal-trace-result" class="p-3 rounded-lg bg-slate-950 border border-slate-800 overflow-x-auto text-blue-300"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

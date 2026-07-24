@@ -1,0 +1,31 @@
+{
+  "mock_weather_api_response": {
+    "location": "Mithapukur, Rangpur",
+    "generated_at": "2026-07-24T14:00:00+06:00",
+    "rainfall_forecast_next_48h_mm": 4,
+    "rainfall_forecast_next_5d_mm": 12,
+    "humidity_avg_next_5d": 68,
+    "temperature_min_c": 18,
+    "temperature_max_c": 29,
+    "heavy_rain_warning": false,
+    "agri_interpretation": "Good for sowing and top dressing if soil moisture is adequate."
+  },
+  "mock_market_api_response": {
+    "market": "Rangpur mock wholesale market",
+    "date": "2026-07-24",
+    "prices_bdt_per_kg": {
+      "maize": 23,
+      "mustard": 78,
+      "potato": 20,
+      "tomato": 32,
+      "onion": 38
+    },
+    "trend_signal": {
+      "maize": "stable",
+      "mustard": "slightly_up",
+      "potato": "volatile",
+      "tomato": "volatile",
+      "onion": "up"
+    }
+  }
+}

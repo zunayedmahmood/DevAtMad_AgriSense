@@ -1,0 +1,19 @@
+{
+  "kb_name": "AgriSense mixed-evidence Bangladesh agriculture KB",
+  "version": "5.0.0",
+  "data_status": "Reviewed public Tier 0 evidence for rice_boro, wheat, and maize plus explicitly labelled seeded-demo operational assumptions.",
+  "unit_system": "per_acre unless stated otherwise",
+  "supported_compliant_path": {
+    "target_season": "rabi",
+    "complete_public_crop_ids": ["rice_boro", "wheat", "maize"],
+    "required_public_types_per_crop": ["crop_master", "calendar", "fertilizer"]
+  },
+  "seeded_assumptions": {
+    "currency": "BDT",
+    "area_unit": "acre",
+    "fertilizer_unit": "kg/acre",
+    "yield_unit": "kg/acre",
+    "covers": ["exact fertilizer quantities", "irrigation quantities and cost", "pest cost", "yield", "market price", "input cost", "financial scenarios"]
+  },
+  "warning": "Seeded values are prototype assumptions and are not official recommendations. Public classification is assigned per record only after provenance validation."
+}

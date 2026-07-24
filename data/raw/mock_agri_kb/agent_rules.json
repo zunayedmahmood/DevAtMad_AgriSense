@@ -1,0 +1,96 @@
+{
+  "required_farmer_context": [
+    {
+      "field": "district",
+      "ask": "Which district is your farm in?"
+    },
+    {
+      "field": "upazila",
+      "ask": "Which upazila or nearby town?"
+    },
+    {
+      "field": "land_area_acre",
+      "ask": "How much land will you cultivate?"
+    },
+    {
+      "field": "target_season",
+      "ask": "Which season or planting month are you targeting?"
+    },
+    {
+      "field": "soil_texture",
+      "ask": "What is your soil like: sandy, sandy-loam, loam, clay-loam, or clay?"
+    },
+    {
+      "field": "irrigation_access",
+      "ask": "Do you have irrigation: none, limited, reliable, or rented?"
+    },
+    {
+      "field": "budget_bdt",
+      "ask": "What is your total crop budget?"
+    },
+    {
+      "field": "previous_crop",
+      "ask": "What crop was grown on this land last season?"
+    }
+  ],
+  "crop_recommendation_scoring": {
+    "season_match": 25,
+    "soil_match": 18,
+    "irrigation_fit": 15,
+    "budget_fit": 12,
+    "market_signal": 10,
+    "sowing_window_fit": 10,
+    "risk_fit": 10,
+    "late_sowing_penalty": -15,
+    "waterlogging_penalty": -12,
+    "high_cash_need_penalty": -10,
+    "pest_pressure_penalty": -8
+  },
+  "weather_decision_rules": [
+    {
+      "rule_id": "avoid_fertilizer_before_rain",
+      "if": "rainfall_forecast_next_48h_mm >= 25",
+      "then": "delay_top_dressing",
+      "explanation": "Delay urea/top dressing because heavy rain may wash nutrients away."
+    },
+    {
+      "rule_id": "delay_sowing_heavy_rain",
+      "if": "rainfall_forecast_next_72h_mm >= 40 and crop.waterlogging_sensitivity in ['medium','high']",
+      "then": "delay_sowing_2_to_4_days",
+      "explanation": "Delay sowing because the crop is sensitive to excess water at establishment."
+    },
+    {
+      "rule_id": "irrigate_dry_stage",
+      "if": "crop_stage in crop.critical_water_stages and rainfall_forecast_next_5d_mm < 10 and soil_moisture == 'dry'",
+      "then": "schedule_irrigation",
+      "explanation": "Irrigate because the crop is in a water-sensitive stage and no useful rain is expected."
+    },
+    {
+      "rule_id": "fungal_risk_humidity",
+      "if": "humidity_avg_next_5d >= 80 and rainfall_forecast_next_5d_mm >= 15",
+      "then": "increase_fungal_disease_monitoring",
+      "explanation": "Warm humid rainy conditions increase fungal disease risk."
+    }
+  ],
+  "financial_formulas": {
+    "area_scaled_cost": "sum(per_acre_cost_components) * land_area_acre",
+    "expected_revenue": "expected_yield_kg_per_acre * land_area_acre * expected_price_bdt_per_kg",
+    "profit": "expected_revenue - total_cost",
+    "profit_margin_percent": "profit / expected_revenue * 100",
+    "break_even_price_bdt_per_kg": "total_cost / (expected_yield_kg_per_acre * land_area_acre)",
+    "conservative_revenue": "low_yield_kg_per_acre * land_area_acre * conservative_price_bdt_per_kg",
+    "optimistic_revenue": "high_yield_kg_per_acre * land_area_acre * optimistic_price_bdt_per_kg"
+  },
+  "explanation_template": {
+    "recommendation": "Choose {crop_name} as option {rank}.",
+    "reason": "It fits {season}, {soil_texture}, irrigation status {irrigation_access}, and budget status {budget_fit}.",
+    "inputs_used": [
+      "farmer profile",
+      "crop suitability rule",
+      "mock weather",
+      "mock market price",
+      "cost calculator"
+    ],
+    "next_action": "Confirm local input prices before using the plan."
+  }
+}
