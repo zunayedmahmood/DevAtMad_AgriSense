@@ -81,6 +81,10 @@ class GeminiAgenticEngine:
             })
         return declarations
 
+    async def turn(self, payload: AgentTurnRequest) -> AgentTurnResponse:
+        """Alias for run_turn() to satisfy the controller's .turn() interface."""
+        return await self.run_turn(payload)
+
     async def run_turn(self, payload: AgentTurnRequest) -> AgentTurnResponse:
         """Executes a single conversational agent turn with true tool calling."""
         farmer_id = self.services.database.ensure_farmer(payload.farmer_id)
@@ -182,10 +186,37 @@ class GeminiAgenticEngine:
 
         # Context prompt overlay including persistent cross-chat farm memory
         durable_memory_str = json.dumps([c.model_dump(mode="json") for c in candidates]) if candidates else "[]"
-        context_overlay = (
-            f"\n\nCURRENT KNOWN FARM PROFILE FOR THIS SESSION: {json.dumps(profile.model_dump(mode='json'))}\n"
-            f"SAVED PERSISTENT CROSS-CHAT FARM MEMORY (FOR FARMER '{payload.farmer_id}'): {durable_memory_str}\n"
-        )
+        profile_dict = profile.model_dump(mode="json")
+        has_active_farm = active_farm_id is not None
+        has_profile_data = any(v is not None for v in [
+            profile_dict.get("location_text"), profile_dict.get("farm_size_acre"),
+            profile_dict.get("soil_type"), profile_dict.get("water_availability")
+        ])
+
+        if has_active_farm and has_profile_data:
+            context_overlay = (
+                f"\n\n=== FARMER MEMORY IS ALREADY LOADED — DO NOT ASK FOR FARM DETAILS ===\n"
+                f"ACTIVE FARM ID: {active_farm_id}\n"
+                f"CURRENT FARM PROFILE (already applied from saved memory): {json.dumps(profile_dict)}\n"
+                f"ALL SAVED FARMS FOR THIS FARMER: {durable_memory_str}\n"
+                f"INSTRUCTION: The farmer's saved farm profile is already loaded above. "
+                f"You KNOW their location ({profile_dict.get('location_text')}), "
+                f"farm size ({profile_dict.get('farm_size_acre')} acres), "
+                f"soil ({profile_dict.get('soil_type')}), and water source ({profile_dict.get('water_availability')}). "
+                f"DO NOT ask them to repeat this information. "
+                f"Proceed directly to answering their question using the tools at your disposal.\n"
+                f"=== END FARMER MEMORY ===\n"
+            )
+        else:
+            context_overlay = (
+                f"\n\nCURRENT KNOWN FARM PROFILE FOR THIS SESSION: {json.dumps(profile_dict)}\n"
+                f"SAVED PERSISTENT CROSS-CHAT FARM MEMORY (FOR FARMER '{payload.farmer_id}'): {durable_memory_str}\n"
+                + (
+                    f"NOTE: The farmer has {len(candidates)} saved farm(s) listed above. "
+                    f"Use these to avoid asking the farmer to repeat their farm details if they match the conversation context.\n"
+                    if candidates else ""
+                )
+            )
         system_instruction = AGRISENSE_SYSTEM_PROMPT + context_overlay
 
         config = types.GenerateContentConfig(

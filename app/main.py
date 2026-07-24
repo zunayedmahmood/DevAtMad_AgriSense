@@ -8,7 +8,7 @@ from typing import Any
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import ORJSONResponse
+from fastapi.responses import JSONResponse
 
 from app.api.routes import router
 from app.config import BASE_DIR, get_settings
@@ -45,7 +45,7 @@ app = FastAPI(
         "Tool-calling backend for conversational farm intake, Geoapify geocoding, Open-Meteo weather, "
         "persistent hybrid RAG, crop ranking, dated season planning, financial projection, memory, and visible operational traces."
     ),
-    default_response_class=ORJSONResponse,
+    default_response_class=JSONResponse,
     lifespan=lifespan,
 )
 app.add_middleware(

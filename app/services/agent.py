@@ -19,7 +19,12 @@ class TierZeroAgent:
         db = self.services.database
         memory = self.services.memory
 
-        farmer_id = db.ensure_farmer(request.farmer_id)
+        if request.session_id and not request.farmer_id:
+            existing_sess = db.get_session(request.session_id)
+            farmer_id = existing_sess["farmer_id"] if (existing_sess and existing_sess.get("farmer_id")) else db.ensure_farmer(None)
+        else:
+            farmer_id = db.ensure_farmer(request.farmer_id)
+
         session_id = db.ensure_session(request.session_id, farmer_id=farmer_id, farm_id=request.farm_id)
         session = db.get_session(session_id) or {"profile": {}}
         profile = FarmProfile.model_validate(session.get("profile") or {})
@@ -65,8 +70,21 @@ class TierZeroAgent:
         active_farm_id = request.farm_id or session.get("farm_id")
         current_memory_status = session.get("memory_status") or "none"
 
+        # 1. Parse natural language memory confirmation if memory_action is omitted
+        effective_memory_action = request.memory_action
+        if effective_memory_action is None:
+            msg_lower = request.message.lower().strip()
+            if any(k in msg_lower for k in ["use farm", "use this farm", "use my farm", "use saved farm", "apply farm", "apply memory", "use existing farm", "use it", "use memory"]):
+                effective_memory_action = "apply"
+            elif any(k in msg_lower for k in ["start fresh", "create new farm", "decline farm", "don't use farm", "dont use farm"]):
+                effective_memory_action = "decline"
+            elif msg_lower in {"yes", "sure", "yep", "ok", "okay", "apply"} and (current_memory_status == "offered" or candidates):
+                effective_memory_action = "apply"
+            elif msg_lower in {"no", "nope"} and current_memory_status == "offered":
+                effective_memory_action = "decline"
+
         # Offer memory if candidates exist and no action/attached farm yet
-        if candidates and not active_farm_id and request.memory_action is None and current_memory_status not in {"offered", "declined"}:
+        if candidates and not active_farm_id and effective_memory_action is None and current_memory_status not in {"offered", "declined"}:
             db.set_session_memory_status(session_id, "offered")
             top_cand = candidates[0]
             loc_str = top_cand.location_text or top_cand.district or "your area"
@@ -94,7 +112,7 @@ class TierZeroAgent:
             )
 
         # 2. Handle Explicit Memory Action
-        if request.memory_action == "apply" and (request.farm_id or candidates):
+        if effective_memory_action == "apply" and (request.farm_id or candidates):
             target_farm_id = request.farm_id or candidates[0].farm_id
             saved_farm = db.get_farm(target_farm_id, farmer_id)
             if saved_farm:
@@ -117,10 +135,10 @@ class TierZeroAgent:
                 )
                 active_farm_id = target_farm_id
 
-        elif request.memory_action in {"decline", "create_new"}:
+        elif effective_memory_action in {"decline", "create_new"}:
             db.set_session_memory_status(session_id, "declined")
 
-        elif request.memory_action == "confirm_update" and active_farm_id:
+        elif effective_memory_action == "confirm_update" and active_farm_id:
             existing_farm = db.get_farm(active_farm_id, farmer_id)
             if existing_farm:
                 db.update_farm_profile(

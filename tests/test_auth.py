@@ -16,21 +16,20 @@ def test_account_signup_login_flow(client):
     uid = uuid.uuid4().hex[:8]
     email = f"farmer_karim_{uid}@example.com"
     
-    # 1. Signup Account
+    # 1. Signup Account (Creates subscribed active account)
     signup_resp = client.post(
         "/v1/auth/signup",
         json={
             "email": email,
             "password": "SecretPassword123",
             "full_name": "Karim Hossain",
-            "subscription_tier": "pro",
         },
     )
     assert signup_resp.status_code == 200
     data = signup_resp.json()
     assert data["email"] == email
     assert data["full_name"] == "Karim Hossain"
-    assert data["subscription_tier"] == "pro"
+    assert data["subscription_status"] == "active"
     farmer_id = data["farmer_id"]
 
     # Duplicate Signup Error
@@ -55,7 +54,7 @@ def test_account_signup_login_flow(client):
     assert login_resp.status_code == 200
     login_data = login_resp.json()
     assert login_data["farmer_id"] == farmer_id
-    assert login_data["subscription_tier"] == "pro"
+    assert login_data["subscription_status"] == "active"
 
     # Invalid Password Login
     wrong_resp = client.post(
@@ -66,39 +65,6 @@ def test_account_signup_login_flow(client):
         },
     )
     assert wrong_resp.status_code == 401
-
-
-def test_subscription_upgrade(client):
-    uid = uuid.uuid4().hex[:8]
-    email = f"farmer_rahim_{uid}@example.com"
-
-    signup_resp = client.post(
-        "/v1/auth/signup",
-        json={
-            "email": email,
-            "password": "Password123",
-            "full_name": "Rahim Uddin",
-            "subscription_tier": "free",
-        },
-    )
-    assert signup_resp.status_code == 200
-    farmer_id = signup_resp.json()["farmer_id"]
-
-    # Upgrade to Enterprise
-    sub_resp = client.post(
-        "/v1/auth/subscription",
-        json={
-            "farmer_id": farmer_id,
-            "subscription_tier": "enterprise",
-        },
-    )
-    assert sub_resp.status_code == 200
-    assert sub_resp.json()["subscription_tier"] == "enterprise"
-
-    # Verify via /v1/auth/me
-    me_resp = client.get(f"/v1/auth/me?farmer_id={farmer_id}")
-    assert me_resp.status_code == 200
-    assert me_resp.json()["subscription_tier"] == "enterprise"
 
 
 def test_multi_chat_sessions_per_account(client):

@@ -257,7 +257,7 @@ class SignUpRequest(StrictModel):
     email: str = Field(min_length=3, max_length=255)
     password: str = Field(min_length=4, max_length=100)
     full_name: str = Field(min_length=1, max_length=255)
-    subscription_tier: Literal["free", "pro", "enterprise"] = "free"
+    subscription_tier: str = "standard"
 
 
 class LoginRequest(StrictModel):

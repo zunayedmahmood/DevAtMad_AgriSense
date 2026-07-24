@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from functools import lru_cache
+from typing import Any
 
 from app.config import Settings, get_settings
 from app.db import AppDatabase
@@ -13,6 +14,9 @@ from app.services.planner import SeasonPlanner
 from app.services.rag import HybridRAGStore
 from app.services.recommendation import CropRecommender
 from app.services.weather import OpenMeteoClient
+from app.services.verifier import PlanVerifier
+from app.services.repair import RepairService
+from app.services.scenario import ScenarioSimulator
 
 
 @dataclass
@@ -28,6 +32,11 @@ class Services:
     recommender: CropRecommender
     planner: SeasonPlanner
     memory: MemoryService
+    verifier: PlanVerifier | None = None
+    repair: RepairService | None = None
+    scenario: ScenarioSimulator | None = None
+    controller: Any = None
+    fallback_agent: Any = None
 
 
 @lru_cache(maxsize=1)
@@ -39,7 +48,11 @@ def get_services() -> Services:
     normalizer = LocationNormalizer(kb)
     finance = FinancialCalculator(kb)
     memory = MemoryService(database)
-    return Services(
+    verifier = PlanVerifier()
+    repair = RepairService()
+    scenario = ScenarioSimulator(verifier)
+
+    srv = Services(
         settings=settings,
         database=database,
         kb=kb,
@@ -51,4 +64,18 @@ def get_services() -> Services:
         recommender=CropRecommender(kb, rag, finance),
         planner=SeasonPlanner(kb, rag, finance),
         memory=memory,
+        verifier=verifier,
+        repair=repair,
+        scenario=scenario,
     )
+
+    from app.services.agent import TierZeroAgent
+    from app.services.gemini_agent import GeminiAgenticEngine
+    from app.agent.controller import AgentController
+
+    tier_zero = TierZeroAgent(srv)
+    gemini_engine = GeminiAgenticEngine(srv)
+    srv.fallback_agent = gemini_engine  # agentic-turn uses Gemini; it falls back to tier_zero internally
+    srv.controller = AgentController(srv)
+
+    return srv

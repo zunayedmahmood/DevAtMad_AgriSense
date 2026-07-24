@@ -54,18 +54,18 @@ def health() -> dict[str, Any]:
 
 @router.post("/v1/agent/turn", response_model=AgentTurnResponse)
 async def agent_turn(payload: AgentTurnRequest) -> AgentTurnResponse:
-    agent = TierZeroAgent(get_services())
+    services = get_services()
     try:
-        return await agent.turn(payload)
+        return await services.controller.execute_turn(payload)
     except Exception as exc:
         raise HTTPException(status_code=500, detail={"type": type(exc).__name__, "message": str(exc)}) from exc
 
 
 @router.post("/v1/agent/agentic-turn", response_model=AgentTurnResponse)
 async def agentic_turn(payload: AgentTurnRequest) -> AgentTurnResponse:
-    engine = GeminiAgenticEngine(get_services())
+    services = get_services()
     try:
-        return await engine.run_turn(payload)
+        return await services.controller.execute_turn(payload)
     except Exception as exc:
         raise HTTPException(status_code=500, detail={"type": type(exc).__name__, "message": str(exc)}) from exc
 

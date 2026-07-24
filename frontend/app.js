@@ -159,15 +159,33 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderAccountUI() {
     if (state.account) {
       els.userDisplayName.textContent = state.account.full_name;
-      els.userSubscriptionBadge.textContent = `${(state.account.subscription_tier || 'free').toUpperCase()} Plan`;
+      if (els.userSubscriptionBadge) {
+        els.userSubscriptionBadge.classList.remove('hidden');
+        els.userSubscriptionBadge.textContent = 'Subscribed Member';
+      }
       els.btnAuthAction.textContent = 'Log Out';
+      if (els.chatInput) {
+        els.chatInput.disabled = false;
+        els.chatInput.placeholder = "Tell AgriSense about your plot (e.g. '2 acres in Moulovibazar with BDT 60k budget for boro season')...";
+      }
+      if (els.btnSend) els.btnSend.disabled = false;
     } else {
-      els.userDisplayName.textContent = 'Guest';
-      els.userSubscriptionBadge.textContent = 'FREE Plan';
-      els.btnAuthAction.textContent = 'Log In';
+      els.userDisplayName.textContent = 'Sign In Required';
+      if (els.userSubscriptionBadge) els.userSubscriptionBadge.classList.add('hidden');
+      els.btnAuthAction.textContent = 'Log In / Sign Up';
+      if (els.chatInput) {
+        els.chatInput.disabled = true;
+        els.chatInput.placeholder = '🔒 Please Log In or Sign Up to start chatting with AgriSense...';
+      }
+      if (els.btnSend) els.btnSend.disabled = true;
     }
   }
   renderAccountUI();
+
+  // Prompt Auth on initial load if unauthenticated
+  if (!state.account && els.modalAuth) {
+    els.modalAuth.classList.remove('hidden');
+  }
 
   if (els.farmerIdBadge) {
     els.farmerIdBadge.textContent = state.farmerId.slice(0, 14);
@@ -175,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Multi-Chat Session Management
   async function loadSavedChats() {
+    if (!state.account) return;
     try {
       const res = await fetch(`/v1/farmers/${state.farmerId}/chats`);
       if (res.ok) {
@@ -235,6 +254,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function createChatSession(customTitle = null) {
+    if (!state.account) {
+      if (els.modalAuth) els.modalAuth.classList.remove('hidden');
+      return;
+    }
     try {
       const title = customTitle || 'New Farm Chat';
       const res = await fetch(`/v1/farmers/${state.farmerId}/chats`, {
@@ -246,8 +269,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await res.json();
         const newSessionId = data.session?.session_id;
         if (newSessionId) {
+          state.sessionId = newSessionId;
+          state.profile = {};
+          state.recommendations = [];
+          state.selectedCropId = null;
+          state.plan = null;
+          state.traces = [];
+          els.chatContainer.innerHTML = '';
+          addAssistantMessage('New chat session started. Tell me about your land location, area, soil texture, irrigation access, or budget.');
+          renderProfile();
+          renderTraces();
+          renderPlan();
           await loadSavedChats();
-          await switchChatSession(newSessionId);
         }
       }
     } catch (e) {
@@ -314,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Auth & Subscription Event Listeners
+  // Auth Event Listeners
   if (els.btnAuthAction) {
     els.btnAuthAction.addEventListener('click', () => {
       if (state.account) {
@@ -322,10 +355,12 @@ document.addEventListener('DOMContentLoaded', () => {
         state.account = null;
         state.farmerId = getOrCreateFarmerId();
         renderAccountUI();
-        loadSavedFarms();
-        loadSavedChats();
+        state.savedChats = [];
+        state.savedFarms = [];
+        renderSavedChats();
+        renderSavedFarms();
         els.chatContainer.innerHTML = '';
-        addAssistantMessage('Logged out successfully. Running in Guest mode.');
+        els.modalAuth.classList.remove('hidden');
       } else {
         els.modalAuth.classList.remove('hidden');
       }
@@ -392,7 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
             full_name: els.signupName.value,
             email: els.signupEmail.value,
             password: els.signupPassword.value,
-            subscription_tier: els.signupTier.value
+            subscription_tier: 'standard'
           })
         });
         if (!res.ok) {
@@ -408,51 +443,12 @@ document.addEventListener('DOMContentLoaded', () => {
         els.modalAuth.classList.add('hidden');
         loadSavedFarms();
         loadSavedChats();
-        addAssistantMessage(`Account created successfully! Welcome to AgriSense, ${acc.full_name}.`);
+        addAssistantMessage(`Account created & subscription activated! Welcome to AgriSense, ${acc.full_name}.`);
       } catch (err) {
         alert(`Signup error: ${err.message}`);
       }
     });
   }
-
-  if (els.userSubscriptionBadge) {
-    els.userSubscriptionBadge.addEventListener('click', () => {
-      els.modalSubscription.classList.remove('hidden');
-    });
-  }
-
-  if (els.modalSubClose) {
-    els.modalSubClose.addEventListener('click', () => els.modalSubscription.classList.add('hidden'));
-  }
-
-  document.querySelectorAll('.btn-select-tier').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const tier = btn.getAttribute('data-tier');
-      if (!state.account) {
-        alert('Please log in or create an account first to update your subscription.');
-        els.modalSubscription.classList.add('hidden');
-        els.modalAuth.classList.remove('hidden');
-        return;
-      }
-      try {
-        const res = await fetch('/v1/auth/subscription', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ farmer_id: state.farmerId, subscription_tier: tier })
-        });
-        if (res.ok) {
-          const updated = await res.json();
-          saveStoredAccount(updated);
-          state.account = updated;
-          renderAccountUI();
-          els.modalSubscription.classList.add('hidden');
-          addAssistantMessage(`Subscription updated to ${tier.toUpperCase()} Tier!`);
-        }
-      } catch (e) {
-        alert(`Failed to update subscription: ${e.message}`);
-      }
-    });
-  });
 
   if (els.btnCreateChat) {
     els.btnCreateChat.addEventListener('click', () => {
@@ -776,6 +772,8 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           session_id: state.sessionId,
+          farmer_id: state.farmerId,
+          farm_id: state.farmId,
           message: cropId,
           profile_patch: { chosen_crop_id: cropId }
         })
@@ -1066,122 +1064,78 @@ document.addEventListener('DOMContentLoaded', () => {
     els.planDetails.classList.remove('hidden');
 
     els.planTitle.textContent = `${plan.crop_name} Season Plan`;
-    els.planSubtitle.textContent = `Sowing: ${plan.planned_sowing_date} → Harvest: ${plan.expected_harvest_date} (${plan.total_duration_days} days)`;
+    const startDate = plan.planned_sowing_date || 'TBD';
+    const endDate = plan.expected_harvest_date || 'TBD';
+    els.planSubtitle.textContent = `Sowing: ${startDate} → Harvest: ${endDate}`;
 
     const fin = plan.financial_projection || {};
     els.planCost.textContent = `BDT ${(fin.total_cost_bdt || 0).toLocaleString()}`;
     els.planProfit.textContent = `BDT ${(fin.net_profit_bdt || 0).toLocaleString()}`;
-    els.planYield.textContent = `${(fin.expected_yield_kg || 0).toLocaleString()} kg`;
+    els.planYield.textContent = `${(fin.total_expected_yield_kg || fin.expected_yield_kg || 0).toLocaleString()} kg`;
     els.planRoi.textContent = `${(fin.roi_percent || 0).toFixed(1)}%`;
 
     // Populate Evidence-to-Decision Audit Card
     const p = state.profile || {};
-    els.evDecision.textContent = `${plan.crop_name} ranked first & selected for dated plan`;
+    els.evDecision.textContent = `${plan.crop_name} selected for dated plan`;
     els.evInputs.innerHTML = `
-      <li>${p.farm_size_acre || 2} acres cultivated area</li>
-      <li>${p.soil_texture || 'loam'} soil texture</li>
-      <li>${p.water_availability || 'reliable'} irrigation access</li>
-      <li>BDT ${(p.budget_bdt || 200000).toLocaleString()} budget capital</li>
-      <li>${p.target_season || 'Rabi'} target cropping season</li>
+      <li>${p.farm_size_acre || '—'} acres cultivated area</li>
+      <li>${p.soil_type || p.soil_texture || '—'} soil type</li>
+      <li>${p.water_availability || '—'} irrigation access</li>
+      <li>BDT ${(p.budget_bdt || 0).toLocaleString()} budget capital</li>
+      <li>${p.target_season || '—'} target cropping season</li>
     `;
     els.evTime.textContent = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
-    els.evWeather.textContent = `7-day rainfall: ${plan.irrigation_summary?.live_rainfall_next_5d_mm_at_plan_time || 0}mm | Live Open-Meteo Ingested`;
-    els.evHorizon.textContent = plan.weather_temporally_relevant ? 'Near-term active (<7 days)' : 'Provisional (Activities >7d scheduled for forecast refresh 3-7d prior)';
-    els.evEvidence.innerHTML = `
-      <li>doc_${(plan.crop_id || 'crop')}_suitability_01 (BARC/AEZ Soil Matrix)</li>
-      <li>doc_${(plan.crop_id || 'crop')}_calendar_02 (DAE Crop Calendar Guidance)</li>
-      <li>doc_barc_frg2024_fertilizer_03 (Fertilizer Policy & Guardrails)</li>
-    `;
+    els.evWeather.textContent = `7-day rainfall: ${plan.irrigation_summary?.live_rainfall_next_5d_mm_at_plan_time || 0}mm | Live Weather Ingested`;
+    els.evHorizon.textContent = plan.weather_temporally_relevant ? 'Near-term active (<7 days)' : 'Provisional (Forecast refresh prior to execution)';
+    
+    const evList = plan.evidence || [];
+    if (evList.length > 0) {
+      els.evEvidence.innerHTML = evList.map(ev => `<li>${escapeHtml(ev.title || ev.document_id || 'Agronomic Record')}</li>`).join('');
+    } else {
+      els.evEvidence.innerHTML = `<li>Agronomic Evidence Record</li>`;
+    }
+
     els.evResult.innerHTML = `
-      <div><span class="text-slate-400">Suitability Score:</span> <span class="text-brand-400 font-semibold font-mono">92/100 (High Fit)</span></div>
-      <div><span class="text-slate-400">Seasonal Water Need:</span> <span class="text-slate-200 font-mono">${plan.irrigation_summary?.seasonal_water_requirement_mm_mock || 450}mm</span></div>
-      <div><span class="text-slate-400">Risk Level:</span> <span class="text-emerald-400 font-mono">Low-Moderate Risk</span></div>
+      <div><span class="text-slate-400 font-medium">Validation Status:</span> <span class="font-semibold font-mono ${plan.validation_status?.passed ? 'text-emerald-400' : 'text-amber-400'}">${plan.validation_status?.passed ? 'Verified' : 'Draft / Unverified'}</span></div>
+      <div><span class="text-slate-400">Seasonal Water Need:</span> <span class="text-slate-200 font-mono">${plan.irrigation_summary?.seasonal_water_requirement_mm_mock || '—'}mm</span></div>
       <div><span class="text-slate-400">Projected Total Cost:</span> <span class="text-slate-200 font-mono">BDT ${(fin.total_cost_bdt || 0).toLocaleString()}</span></div>
       <div><span class="text-slate-400 font-bold">Projected Net Profit:</span> <span class="text-brand-400 font-bold font-mono">BDT ${(fin.net_profit_bdt || 0).toLocaleString()}</span></div>
       <div><span class="text-slate-400">Projected ROI:</span> <span class="text-emerald-400 font-bold font-mono">${(fin.roi_percent || 0).toFixed(1)}%</span></div>
     `;
 
-    // Populate Scenario Comparison Table if scenario detected or budget cut
-    const isScen = state.isScenarioDetected || (p.budget_bdt && p.budget_bdt !== 200000);
-    if (isScen) {
+    // Populate Scenario Comparison Table if scenario result returned from backend
+    const scenario = state.scenario;
+    if (scenario && scenario.deltas) {
       els.scenarioBox.classList.remove('hidden');
-      const baseBgt = 200000;
-      const scenBgt = p.budget_bdt || 120000;
-      const ratio = scenBgt / baseBgt;
-
-      const baseCost = 130000;
-      const scenCost = Math.round(baseCost * ratio);
-
-      const baseRev = 210000;
-      const scenRev = Math.round(baseRev * ratio);
-
-      const baseProfit = baseRev - baseCost;
-      const scenProfit = scenRev - scenCost;
-
-      const baseYield = 6000;
-      const scenYield = Math.round(baseYield * ratio);
-
-      const baseRoi = ((baseProfit / baseCost) * 100).toFixed(1);
-      const scenRoi = ((scenProfit / scenCost) * 100).toFixed(1);
-
-      els.scenBaseBudget.textContent = `BDT ${baseBgt.toLocaleString()}`;
-      els.scenOverrideBudget.textContent = `BDT ${scenBgt.toLocaleString()}`;
-
       const tbodyScen = els.scenarioTable.querySelector('tbody');
-      tbodyScen.innerHTML = `
+      tbodyScen.innerHTML = Object.entries(scenario.deltas).map(([k, v]) => `
         <tr>
-          <td class="p-2 font-medium text-slate-300">Capital Budget</td>
-          <td class="p-2 text-right text-slate-400">BDT ${baseBgt.toLocaleString()}</td>
-          <td class="p-2 text-right text-amber-300">BDT ${scenBgt.toLocaleString()}</td>
-          <td class="p-2 text-right text-red-400">-40.0%</td>
+          <td class="p-2 font-medium text-slate-300 capitalize">${k.replace('_', ' ')}</td>
+          <td class="p-2 text-right text-slate-400">${v.baseline ?? '—'}</td>
+          <td class="p-2 text-right text-amber-300">${v.scenario ?? '—'}</td>
+          <td class="p-2 text-right text-brand-400">${v.delta ?? '—'}</td>
         </tr>
-        <tr>
-          <td class="p-2 font-medium text-slate-300">Total Cost</td>
-          <td class="p-2 text-right text-slate-400">BDT ${baseCost.toLocaleString()}</td>
-          <td class="p-2 text-right text-purple-300">BDT ${scenCost.toLocaleString()}</td>
-          <td class="p-2 text-right text-emerald-400">-40.0%</td>
-        </tr>
-        <tr>
-          <td class="p-2 font-medium text-slate-300">Expected Yield</td>
-          <td class="p-2 text-right text-slate-400">${baseYield.toLocaleString()} kg</td>
-          <td class="p-2 text-right text-purple-300">${scenYield.toLocaleString()} kg</td>
-          <td class="p-2 text-right text-amber-400">-40.0%</td>
-        </tr>
-        <tr>
-          <td class="p-2 font-medium text-slate-300">Gross Revenue</td>
-          <td class="p-2 text-right text-slate-400">BDT ${baseRev.toLocaleString()}</td>
-          <td class="p-2 text-right text-purple-300">BDT ${scenRev.toLocaleString()}</td>
-          <td class="p-2 text-right text-amber-400">-40.0%</td>
-        </tr>
-        <tr>
-          <td class="p-2 font-medium text-slate-300 font-bold">Net Profit</td>
-          <td class="p-2 text-right text-slate-400 font-bold">BDT ${baseProfit.toLocaleString()}</td>
-          <td class="p-2 text-right text-brand-400 font-bold">BDT ${scenProfit.toLocaleString()}</td>
-          <td class="p-2 text-right text-amber-400">-40.0%</td>
-        </tr>
-        <tr>
-          <td class="p-2 font-medium text-slate-300">Projected ROI</td>
-          <td class="p-2 text-right text-slate-400">${baseRoi}%</td>
-          <td class="p-2 text-right text-emerald-400">${scenRoi}%</td>
-          <td class="p-2 text-right text-slate-400">0.0% (Identical ROI efficiency)</td>
-        </tr>
-      `;
+      `).join('');
+    } else {
+      els.scenarioBox.classList.add('hidden');
     }
 
-    // Stages Timeline
-    const stages = plan.stages || [];
-    els.planTimeline.innerHTML = stages.map(s => `
-      <div class="p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50">
-        <div class="flex items-center justify-between text-xs font-semibold text-slate-200 mb-1">
-          <span>${s.stage_name}</span>
-          <span class="font-mono text-[10px] text-brand-400">${s.start_date} → ${s.end_date}</span>
+    // Tasks Timeline
+    const tasks = plan.tasks || plan.stages || [];
+    els.planTimeline.innerHTML = tasks.map(t => {
+      const taskName = t.action_type || t.task_name || t.stage_name || 'Farm Operation';
+      const taskDate = t.start_date ? `${t.start_date}${t.end_date ? ' → ' + t.end_date : ''}` : 'Scheduled';
+      const detail = t.description || t.stage_purpose || (t.quantity ? `${t.quantity.value} ${t.quantity.unit}` : '');
+      return `
+        <div class="p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50">
+          <div class="flex items-center justify-between text-xs font-semibold text-slate-200 mb-1">
+            <span>${escapeHtml(taskName)}</span>
+            <span class="font-mono text-[10px] text-brand-400">${escapeHtml(taskDate)}</span>
+          </div>
+          ${detail ? `<p class="text-[11px] text-slate-400 mb-1.5">${escapeHtml(detail)}</p>` : ''}
         </div>
-        <p class="text-[11px] text-slate-400 mb-1.5">${s.stage_purpose}</p>
-        <div class="text-[10px] text-slate-500 flex flex-wrap gap-1">
-          ${(s.key_tasks || []).map(t => `<span class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">• ${t}</span>`).join('')}
-        </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
 
     // Fertilizer Split Table
     const tbody = els.planFertilizerTable.querySelector('tbody');

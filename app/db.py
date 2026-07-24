@@ -299,9 +299,13 @@ class AppDatabase:
                 "SELECT session_id, farmer_id, farm_id FROM sessions WHERE session_id = ?", (session_id,)
             ).fetchone()
             if row:
-                if (farmer_id and row["farmer_id"] != farmer_id) or (farm_id and row["farm_id"] != farm_id):
+                if farmer_id and row["farmer_id"] and row["farmer_id"] != farmer_id:
+                    raise PermissionError("Session does not belong to this farmer")
+                if farm_id and row["farm_id"] and row["farm_id"] != farm_id:
+                    raise PermissionError("Session is attached to another farm")
+                if (farmer_id and not row["farmer_id"]) or (farm_id and not row["farm_id"]):
                     connection.execute(
-                        "UPDATE sessions SET farmer_id = COALESCE(?, farmer_id), farm_id = COALESCE(?, farm_id), updated_at = ? WHERE session_id = ?",
+                        "UPDATE sessions SET farmer_id = COALESCE(farmer_id, ?), farm_id = COALESCE(farm_id, ?), updated_at = ? WHERE session_id = ?",
                         (farmer_id, farm_id, utc_now_iso(), session_id),
                     )
                 return session_id
