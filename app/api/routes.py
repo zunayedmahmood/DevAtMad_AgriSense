@@ -7,7 +7,20 @@ from typing import Any
 from fastapi import APIRouter, HTTPException, Query, Request
 
 from app.dependencies import get_services
-from app.schemas import AgentTurnRequest, AgentTurnResponse, RAGSearchRequest, ToolInvokeRequest
+from app.schemas import (
+    AgentTurnRequest,
+    AgentTurnResponse,
+    AuthResponse,
+    ChatSessionSummary,
+    CreateChatSessionRequest,
+    LoginRequest,
+    RAGSearchRequest,
+    SignUpRequest,
+    StrictModel,
+    SubscriptionUpdateRequest,
+    ToolInvokeRequest,
+    UpdateSessionTitleRequest,
+)
 from app.services.agent import TierZeroAgent
 from app.services.gemini_agent import GeminiAgenticEngine
 from app.services.ingestion import build_rag
@@ -155,12 +168,79 @@ def kb_stats() -> dict[str, Any]:
     return stats
 
 
-@router.get("/v1/sessions/{session_id}")
-def get_session(session_id: str) -> dict[str, Any]:
+@router.post("/v1/auth/signup", response_model=AuthResponse)
+def signup(payload: SignUpRequest) -> AuthResponse:
     services = get_services()
-    session = services.database.get_session(session_id)
+    try:
+        acc = services.database.create_account(
+            email=payload.email,
+            password=payload.password,
+            full_name=payload.full_name,
+            subscription_tier=payload.subscription_tier,
+        )
+        return AuthResponse(**acc)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.post("/v1/auth/login", response_model=AuthResponse)
+def login(payload: LoginRequest) -> AuthResponse:
+    services = get_services()
+    acc = services.database.authenticate_account(payload.email, payload.password)
+    if not acc:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+    return AuthResponse(**acc)
+
+
+@router.get("/v1/auth/me", response_model=AuthResponse)
+def get_me(farmer_id: str = Query(...)) -> AuthResponse:
+    services = get_services()
+    acc = services.database.get_account(farmer_id)
+    if not acc:
+        raise HTTPException(status_code=404, detail="Account not found")
+    return AuthResponse(**acc)
+
+
+@router.post("/v1/auth/subscription", response_model=AuthResponse)
+def update_subscription(payload: SubscriptionUpdateRequest) -> AuthResponse:
+    services = get_services()
+    acc = services.database.update_subscription(payload.farmer_id, payload.subscription_tier)
+    if not acc:
+        raise HTTPException(status_code=404, detail="Account not found")
+    return AuthResponse(**acc)
+
+
+@router.get("/v1/farmers/{farmer_id}/chats")
+def list_farmer_chats(farmer_id: str) -> dict[str, Any]:
+    services = get_services()
+    chats = services.database.list_sessions_for_farmer(farmer_id)
+    return {"farmer_id": farmer_id, "chats": chats}
+
+
+@router.post("/v1/farmers/{farmer_id}/chats")
+def create_farmer_chat(farmer_id: str, payload: CreateChatSessionRequest) -> dict[str, Any]:
+    services = get_services()
+    fid = services.database.ensure_farmer(farmer_id)
+    session_id = services.database.create_session(farmer_id=fid, farm_id=payload.farm_id, title=payload.title)
+    session = services.database.get_session(session_id, farmer_id=fid)
+    return {"session": session}
+
+
+@router.patch("/v1/sessions/{session_id}/title")
+def update_chat_title(session_id: str, payload: UpdateSessionTitleRequest) -> dict[str, Any]:
+    services = get_services()
+    updated = services.database.update_session_title(session_id, payload.farmer_id, payload.title)
+    if not updated:
+        raise HTTPException(status_code=404, detail="Session not found or ownership check failed")
+    return {"session_id": session_id, "title": payload.title}
+
+
+@router.get("/v1/sessions/{session_id}")
+def get_session(session_id: str, farmer_id: str | None = Query(default=None)) -> dict[str, Any]:
+    services = get_services()
+    session = services.database.get_session(session_id, farmer_id=farmer_id)
     if not session:
-        raise HTTPException(status_code=404, detail="Session not found")
+        raise HTTPException(status_code=404, detail="Session not found or access denied")
     session["messages"] = services.database.list_messages(session_id)
     return session
 
@@ -176,11 +256,69 @@ def get_session_trace(
 
 
 @router.delete("/v1/sessions/{session_id}")
-def delete_session(session_id: str) -> dict[str, Any]:
-    deleted = get_services().database.delete_session(session_id)
+def delete_session(session_id: str, farmer_id: str | None = Query(default=None)) -> dict[str, Any]:
+    deleted = get_services().database.delete_session(session_id, farmer_id=farmer_id)
     if not deleted:
-        raise HTTPException(status_code=404, detail="Session not found")
+        raise HTTPException(status_code=404, detail="Session not found or access denied")
     return {"deleted": True, "session_id": session_id}
+
+
+@router.get("/v1/farmers/{farmer_id}/farms")
+def list_farmer_farms(farmer_id: str) -> dict[str, Any]:
+    services = get_services()
+    farms = services.database.list_farms(farmer_id)
+    return {
+        "farmer_id": farmer_id,
+        "farms": farms,
+    }
+
+
+@router.get("/v1/farms/{farm_id}/history")
+def farm_history(farm_id: str, farmer_id: str = Query(...)) -> dict[str, Any]:
+    services = get_services()
+    farm = services.database.get_farm(farm_id, farmer_id)
+    if not farm:
+        raise HTTPException(status_code=404, detail="Farm not found or access denied")
+    plans = services.database.list_plan_versions(farm_id, limit=10)
+    summaries = services.database.list_recent_session_summaries(farm_id, limit=5)
+    return {
+        "farm": farm,
+        "plan_versions": plans,
+        "session_summaries": summaries,
+    }
+
+
+@router.delete("/v1/farms/{farm_id}")
+def forget_farm(farm_id: str, farmer_id: str = Query(...)) -> dict[str, Any]:
+    services = get_services()
+    archived = services.database.archive_farm(farm_id, farmer_id)
+    if not archived:
+        raise HTTPException(status_code=404, detail="Farm not found or access denied")
+    services.database.add_memory_event(
+        farmer_id=farmer_id,
+        farm_id=farm_id,
+        event_type="memory_forgotten",
+        reason="Farmer requested farm archiving",
+    )
+    return {"archived": True, "farm_id": farm_id}
+
+
+class StartSessionRequest(StrictModel):
+    farmer_id: str
+    farm_id: str | None = None
+
+
+@router.post("/v1/sessions/start")
+def start_session(payload: StartSessionRequest) -> dict[str, Any]:
+    services = get_services()
+    fid = services.database.ensure_farmer(payload.farmer_id)
+    session_id = services.database.create_session(farmer_id=fid, farm_id=payload.farm_id)
+    return {
+        "session_id": session_id,
+        "farmer_id": fid,
+        "farm_id": payload.farm_id,
+        "memory_status": "none",
+    }
 
 
 @router.post("/v1/admin/rebuild-rag")

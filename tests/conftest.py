@@ -10,6 +10,7 @@ from app.dependencies import Services
 from app.services.finance import FinancialCalculator
 from app.services.geocoding import GeoapifyClient, LocationNormalizer
 from app.services.kb import KnowledgeRepository
+from app.services.memory import MemoryService
 from app.services.planner import SeasonPlanner
 from app.services.rag import HybridRAGStore
 from app.services.recommendation import CropRecommender
@@ -36,6 +37,7 @@ def services(tmp_path: Path) -> Services:
     rag = HybridRAGStore(settings.rag_db_path)
     normalizer = LocationNormalizer(kb)
     finance = FinancialCalculator(kb)
+    memory = MemoryService(database)
     return Services(
         settings=settings,
         database=database,
@@ -47,4 +49,5 @@ def services(tmp_path: Path) -> Services:
         finance=finance,
         recommender=CropRecommender(kb, rag, finance),
         planner=SeasonPlanner(kb, rag, finance),
+        memory=memory,
     )

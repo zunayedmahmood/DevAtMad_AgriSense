@@ -8,6 +8,7 @@ from app.db import AppDatabase
 from app.services.finance import FinancialCalculator
 from app.services.geocoding import GeoapifyClient, LocationNormalizer
 from app.services.kb import KnowledgeRepository
+from app.services.memory import MemoryService
 from app.services.planner import SeasonPlanner
 from app.services.rag import HybridRAGStore
 from app.services.recommendation import CropRecommender
@@ -26,6 +27,7 @@ class Services:
     finance: FinancialCalculator
     recommender: CropRecommender
     planner: SeasonPlanner
+    memory: MemoryService
 
 
 @lru_cache(maxsize=1)
@@ -36,6 +38,7 @@ def get_services() -> Services:
     rag = HybridRAGStore(settings.rag_db_path)
     normalizer = LocationNormalizer(kb)
     finance = FinancialCalculator(kb)
+    memory = MemoryService(database)
     return Services(
         settings=settings,
         database=database,
@@ -47,4 +50,5 @@ def get_services() -> Services:
         finance=finance,
         recommender=CropRecommender(kb, rag, finance),
         planner=SeasonPlanner(kb, rag, finance),
+        memory=memory,
     )

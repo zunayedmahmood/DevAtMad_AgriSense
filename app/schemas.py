@@ -59,8 +59,54 @@ class ProfilePatch(StrictModel):
     risk_tolerance: str | None = None
 
 
+class SavedFarmSummary(StrictModel):
+    farm_id: str
+    farm_name: str
+    location_text: str | None = None
+    district: str | None = None
+    farm_size_acre: float | None = None
+    soil_type: str | None = None
+    water_availability: str | None = None
+    last_used_at: str | None = None
+    last_plan_crop_id: str | None = None
+
+
+class MemoryConflictItem(StrictModel):
+    field_name: str
+    saved_value: Any
+    incoming_value: Any
+    question: str
+
+
+class MemoryContext(StrictModel):
+    status: Literal[
+        "none",
+        "offered",
+        "applied",
+        "declined",
+        "conflict",
+        "updated",
+    ] = "none"
+    farmer_id: str | None = None
+    farm_id: str | None = None
+    saved_farms: list[SavedFarmSummary] = Field(default_factory=list)
+    applied_fields: list[str] = Field(default_factory=list)
+    conflicts: list[MemoryConflictItem] = Field(default_factory=list)
+    recent_session_summaries: list[dict[str, Any]] = Field(default_factory=list)
+
+
 class AgentTurnRequest(StrictModel):
     session_id: str | None = None
+    farmer_id: str | None = None
+    farm_id: str | None = None
+    memory_action: Literal[
+        "apply",
+        "decline",
+        "create_new",
+        "confirm_update",
+        "reject_update",
+        "use_temporarily",
+    ] | None = None
     message: str = Field(min_length=1, max_length=5000)
     profile_patch: ProfilePatch | None = None
     auto_select_top_crop: bool = False
@@ -172,6 +218,8 @@ class AgentTurnResponse(StrictModel):
     status: Literal[
         "collecting_profile",
         "needs_location_confirmation",
+        "needs_memory_confirmation",
+        "needs_memory_conflict_resolution",
         "awaiting_crop_selection",
         "plan_ready",
         "error",
@@ -180,6 +228,7 @@ class AgentTurnResponse(StrictModel):
     missing_fields: list[str] = Field(default_factory=list)
     follow_up_questions: list[str] = Field(default_factory=list)
     profile: FarmProfile
+    memory: MemoryContext = Field(default_factory=MemoryContext)
     recommendations: list[CropRecommendation] = Field(default_factory=list)
     selected_crop_id: str | None = None
     plan: SeasonPlan | None = None
@@ -202,3 +251,52 @@ class RAGSearchRequest(StrictModel):
     upazila: str | None = None
     source_kind: str | None = None
     include_mock: bool = True
+
+
+class SignUpRequest(StrictModel):
+    email: str = Field(min_length=3, max_length=255)
+    password: str = Field(min_length=4, max_length=100)
+    full_name: str = Field(min_length=1, max_length=255)
+    subscription_tier: Literal["free", "pro", "enterprise"] = "free"
+
+
+class LoginRequest(StrictModel):
+    email: str = Field(min_length=3, max_length=255)
+    password: str = Field(min_length=1, max_length=100)
+
+
+class SubscriptionUpdateRequest(StrictModel):
+    farmer_id: str
+    subscription_tier: Literal["free", "pro", "enterprise"]
+
+
+class AuthResponse(StrictModel):
+    farmer_id: str
+    email: str
+    full_name: str
+    subscription_tier: str
+    subscription_status: str
+    created_at: str
+
+
+class ChatSessionSummary(StrictModel):
+    session_id: str
+    farmer_id: str
+    farm_id: str | None = None
+    title: str
+    memory_status: str = "none"
+    message_count: int = 0
+    last_message: str | None = None
+    created_at: str
+    updated_at: str
+
+
+class CreateChatSessionRequest(StrictModel):
+    farmer_id: str
+    farm_id: str | None = None
+    title: str | None = None
+
+
+class UpdateSessionTitleRequest(StrictModel):
+    farmer_id: str
+    title: str

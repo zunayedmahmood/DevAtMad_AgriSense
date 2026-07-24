@@ -24,7 +24,7 @@ SOIL_ALIASES = {
 }
 
 SEASON_ALIASES = {
-    "rabi": "rabi", "winter": "rabi", "dry season": "rabi", "boro season": "rabi",
+    "rabi": "rabi", "winter": "rabi", "dry season": "rabi", "boro season": "rabi", "boro": "rabi",
     "kharif 1": "kharif_1", "kharif-1": "kharif_1", "pre monsoon": "kharif_1",
     "pre-monsoon": "kharif_1", "aus season": "kharif_1", "aus": "kharif_1",
     "kharif 2": "kharif_2", "kharif-2": "kharif_2", "monsoon": "kharif_2",
@@ -33,10 +33,10 @@ SEASON_ALIASES = {
 }
 
 WATER_PATTERNS = [
-    (r"\b(no|without) (irrigation|water source)\b|\brainfed only\b", "none"),
-    (r"\blimited (irrigation|water)\b|\bwater is limited\b", "limited"),
-    (r"\breliable (irrigation|water)\b|\bdeep tube ?well\b|\bcan irrigate (all|the whole)\b", "reliable"),
-    (r"\brented (pump|irrigation)\b|\bhire (a )?pump\b", "rented"),
+    (r"\b(no|without) (irrigation|water source)\b|\brainfed( only)?\b", "none"),
+    (r"\blimited( (irrigation|water))?\b|\bwater is limited\b", "limited"),
+    (r"\breliable( (irrigation|water))?\b|\bdeep tube ?well\b|\btube ?well\b|\bcan irrigate (all|the whole)\b|\bcanal( water)?\b|\briver\b", "reliable"),
+    (r"\brented( (pump|irrigation))?\b|\bhire (a )?pump\b", "rented"),
 ]
 
 CROP_ALIASES = {

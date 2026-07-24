@@ -1,8 +1,46 @@
 // AgriSense Frontend Application Logic (Vanilla JS)
 document.addEventListener('DOMContentLoaded', () => {
+  // Account Management State
+  function getStoredAccount() {
+    try {
+      const data = localStorage.getItem('agrisense_account');
+      return data ? JSON.parse(data) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function saveStoredAccount(acc) {
+    if (acc) {
+      localStorage.setItem('agrisense_account', JSON.stringify(acc));
+      localStorage.setItem('agrisense_farmer_id', acc.farmer_id);
+    } else {
+      localStorage.removeItem('agrisense_account');
+      localStorage.removeItem('agrisense_farmer_id');
+    }
+  }
+
+  function getOrCreateFarmerId() {
+    const acc = getStoredAccount();
+    if (acc && acc.farmer_id) return acc.farmer_id;
+    const key = 'agrisense_farmer_id';
+    let farmerId = localStorage.getItem(key);
+    if (!farmerId) {
+      farmerId = `farmer_${Math.random().toString(36).substr(2, 9)}`;
+      localStorage.setItem(key, farmerId);
+    }
+    return farmerId;
+  }
+
   // Global State
   const state = {
+    account: getStoredAccount(),
+    farmerId: getOrCreateFarmerId(),
     sessionId: `session_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`,
+    farmId: null,
+    savedFarms: [],
+    savedChats: [],
+    memoryStatus: 'none',
     engine: 'agentic', // 'agentic' or 'tier0'
     messages: [],
     profile: {},
@@ -19,7 +57,35 @@ document.addEventListener('DOMContentLoaded', () => {
     engineTier0: document.getElementById('engine-tier0'),
     backendStatus: document.getElementById('backend-status'),
     backendText: document.getElementById('backend-text'),
-    btnNewSession: document.getElementById('btn-new-session'),
+    farmerIdBadge: document.getElementById('farmer-id-badge'),
+    savedFarmsList: document.getElementById('saved-farms-list'),
+
+    // Account & Subscription UI
+    userSubscriptionBadge: document.getElementById('btn-subscription-badge'),
+    userDisplayName: document.getElementById('user-display-name'),
+    btnAuthAction: document.getElementById('btn-auth-action'),
+    
+    // Saved Chats
+    btnCreateChat: document.getElementById('btn-create-chat'),
+    chatsList: document.getElementById('chats-list'),
+
+    // Auth Modal
+    modalAuth: document.getElementById('modal-auth'),
+    modalAuthClose: document.getElementById('modal-auth-close'),
+    authTabLogin: document.getElementById('auth-tab-login'),
+    authTabSignup: document.getElementById('auth-tab-signup'),
+    formLogin: document.getElementById('form-login'),
+    formSignup: document.getElementById('form-signup'),
+    loginEmail: document.getElementById('login-email'),
+    loginPassword: document.getElementById('login-password'),
+    signupName: document.getElementById('signup-name'),
+    signupEmail: document.getElementById('signup-email'),
+    signupPassword: document.getElementById('signup-password'),
+    signupTier: document.getElementById('signup-tier'),
+
+    // Subscription Modal
+    modalSubscription: document.getElementById('modal-subscription'),
+    modalSubClose: document.getElementById('modal-sub-close'),
     
     // Profile
     profileStatus: document.getElementById('profile-status-badge'),
@@ -81,13 +147,408 @@ document.addEventListener('DOMContentLoaded', () => {
     scenOverrideBudget: document.getElementById('scen-override-budget'),
     scenarioTable: document.getElementById('scenario-table'),
 
-    // Modal
+    // Modal Trace
     modalTrace: document.getElementById('modal-trace'),
     modalTraceTitle: document.getElementById('modal-trace-title'),
     modalTraceParams: document.getElementById('modal-trace-params'),
     modalTraceResult: document.getElementById('modal-trace-result'),
     modalTraceClose: document.getElementById('modal-trace-close')
   };
+
+  // Render Account UI
+  function renderAccountUI() {
+    if (state.account) {
+      els.userDisplayName.textContent = state.account.full_name;
+      els.userSubscriptionBadge.textContent = `${(state.account.subscription_tier || 'free').toUpperCase()} Plan`;
+      els.btnAuthAction.textContent = 'Log Out';
+    } else {
+      els.userDisplayName.textContent = 'Guest';
+      els.userSubscriptionBadge.textContent = 'FREE Plan';
+      els.btnAuthAction.textContent = 'Log In';
+    }
+  }
+  renderAccountUI();
+
+  if (els.farmerIdBadge) {
+    els.farmerIdBadge.textContent = state.farmerId.slice(0, 14);
+  }
+
+  // Multi-Chat Session Management
+  async function loadSavedChats() {
+    try {
+      const res = await fetch(`/v1/farmers/${state.farmerId}/chats`);
+      if (res.ok) {
+        const data = await res.json();
+        state.savedChats = data.chats || [];
+        renderSavedChats();
+      }
+    } catch (e) {
+      console.warn('Could not load saved chats:', e);
+    }
+  }
+  loadSavedChats();
+
+  function renderSavedChats() {
+    if (!els.chatsList) return;
+    if (!state.savedChats || state.savedChats.length === 0) {
+      els.chatsList.innerHTML = `<div class="text-[11px] text-slate-500 italic p-1">No saved chats yet.</div>`;
+      return;
+    }
+
+    els.chatsList.innerHTML = state.savedChats.map(c => {
+      const isActive = state.sessionId === c.session_id;
+      const title = escapeHtml(c.title || 'Farm Advisory Session');
+      return `
+        <div class="chat-item group flex items-center justify-between p-1.5 px-2 rounded-lg border text-xs cursor-pointer transition ${
+          isActive ? 'bg-brand-600/20 border-brand-500 text-white font-semibold' : 'bg-slate-800/40 border-slate-700/50 text-slate-300 hover:bg-slate-800'
+        }" data-session-id="${c.session_id}">
+          <div class="flex items-center gap-1.5 truncate flex-1 pointer-events-none">
+            <i data-lucide="${isActive ? 'message-square' : 'message-circle'}" class="w-3.5 h-3.5 ${isActive ? 'text-brand-400' : 'text-slate-500'} shrink-0"></i>
+            <span class="truncate">${title}</span>
+          </div>
+          <button class="chat-delete-btn p-0.5 text-slate-500 hover:text-red-400 rounded transition opacity-0 group-hover:opacity-100 ml-1" data-session-id="${c.session_id}" title="Delete Chat">
+            <i data-lucide="trash-2" class="w-3 h-3"></i>
+          </button>
+        </div>
+      `;
+    }).join('');
+
+    if (window.lucide) window.lucide.createIcons();
+
+    els.chatsList.querySelectorAll('.chat-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (e.target.closest('.chat-delete-btn')) return;
+        const sid = item.getAttribute('data-session-id');
+        if (sid && sid !== state.sessionId) {
+          switchChatSession(sid);
+        }
+      });
+    });
+
+    els.chatsList.querySelectorAll('.chat-delete-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const sid = btn.getAttribute('data-session-id');
+        deleteChatSession(sid);
+      });
+    });
+  }
+
+  async function createChatSession(customTitle = null) {
+    try {
+      const title = customTitle || 'New Farm Chat';
+      const res = await fetch(`/v1/farmers/${state.farmerId}/chats`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ farmer_id: state.farmerId, title })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const newSessionId = data.session?.session_id;
+        if (newSessionId) {
+          await loadSavedChats();
+          await switchChatSession(newSessionId);
+        }
+      }
+    } catch (e) {
+      console.error('Failed to create chat session:', e);
+    }
+  }
+
+  async function switchChatSession(sessionId) {
+    setLoading(true);
+    try {
+      const res = await fetch(`/v1/sessions/${sessionId}?farmer_id=${state.farmerId}`);
+      if (!res.ok) throw new Error('Session not found or forbidden');
+      const data = await res.json();
+      state.sessionId = data.session_id;
+      state.profile = data.profile || {};
+      state.recommendations = data.recommendations || [];
+      state.selectedCropId = data.selected_crop_id;
+      state.plan = data.plan;
+
+      els.chatContainer.innerHTML = '';
+      const messages = data.messages || [];
+      if (messages.length === 0) {
+        addAssistantMessage('Session initialized. Ready for your farm details.');
+      } else {
+        messages.forEach(m => {
+          if (m.role === 'user') {
+            addUserMessage(m.content);
+          } else {
+            addAssistantMessage(m.content);
+          }
+        });
+      }
+
+      renderProfile();
+      renderTraces();
+      renderPlan();
+      renderSavedChats();
+    } catch (e) {
+      addAssistantMessage(`Could not switch chat: ${e.message}`);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function deleteChatSession(sessionId) {
+    if (!confirm('Are you sure you want to delete this chat history?')) return;
+    try {
+      const res = await fetch(`/v1/sessions/${sessionId}?farmer_id=${state.farmerId}`, { method: 'DELETE' });
+      if (res.ok) {
+        if (state.sessionId === sessionId) {
+          state.sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+          els.chatContainer.innerHTML = '';
+          state.profile = {};
+          state.recommendations = [];
+          state.selectedCropId = null;
+          state.plan = null;
+          state.traces = [];
+          addAssistantMessage('Previous chat deleted. Ready for your farm details.');
+        }
+        await loadSavedChats();
+      }
+    } catch (e) {
+      console.error('Failed to delete chat:', e);
+    }
+  }
+
+  // Auth & Subscription Event Listeners
+  if (els.btnAuthAction) {
+    els.btnAuthAction.addEventListener('click', () => {
+      if (state.account) {
+        saveStoredAccount(null);
+        state.account = null;
+        state.farmerId = getOrCreateFarmerId();
+        renderAccountUI();
+        loadSavedFarms();
+        loadSavedChats();
+        els.chatContainer.innerHTML = '';
+        addAssistantMessage('Logged out successfully. Running in Guest mode.');
+      } else {
+        els.modalAuth.classList.remove('hidden');
+      }
+    });
+  }
+
+  if (els.modalAuthClose) {
+    els.modalAuthClose.addEventListener('click', () => els.modalAuth.classList.add('hidden'));
+  }
+
+  if (els.authTabLogin && els.authTabSignup) {
+    els.authTabLogin.addEventListener('click', () => {
+      els.authTabLogin.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition';
+      els.authTabSignup.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition';
+      els.formLogin.classList.remove('hidden');
+      els.formSignup.classList.add('hidden');
+    });
+
+    els.authTabSignup.addEventListener('click', () => {
+      els.authTabSignup.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition';
+      els.authTabLogin.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition';
+      els.formSignup.classList.remove('hidden');
+      els.formLogin.classList.add('hidden');
+    });
+  }
+
+  if (els.formLogin) {
+    els.formLogin.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        const res = await fetch('/v1/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: els.loginEmail.value, password: els.loginPassword.value })
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          alert(err.detail || 'Login failed');
+          return;
+        }
+        const acc = await res.json();
+        saveStoredAccount(acc);
+        state.account = acc;
+        state.farmerId = acc.farmer_id;
+        renderAccountUI();
+        els.modalAuth.classList.add('hidden');
+        loadSavedFarms();
+        loadSavedChats();
+        addAssistantMessage(`Welcome back, ${acc.full_name}!`);
+      } catch (err) {
+        alert(`Login error: ${err.message}`);
+      }
+    });
+  }
+
+  if (els.formSignup) {
+    els.formSignup.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      try {
+        const res = await fetch('/v1/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            full_name: els.signupName.value,
+            email: els.signupEmail.value,
+            password: els.signupPassword.value,
+            subscription_tier: els.signupTier.value
+          })
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          alert(err.detail || 'Signup failed');
+          return;
+        }
+        const acc = await res.json();
+        saveStoredAccount(acc);
+        state.account = acc;
+        state.farmerId = acc.farmer_id;
+        renderAccountUI();
+        els.modalAuth.classList.add('hidden');
+        loadSavedFarms();
+        loadSavedChats();
+        addAssistantMessage(`Account created successfully! Welcome to AgriSense, ${acc.full_name}.`);
+      } catch (err) {
+        alert(`Signup error: ${err.message}`);
+      }
+    });
+  }
+
+  if (els.userSubscriptionBadge) {
+    els.userSubscriptionBadge.addEventListener('click', () => {
+      els.modalSubscription.classList.remove('hidden');
+    });
+  }
+
+  if (els.modalSubClose) {
+    els.modalSubClose.addEventListener('click', () => els.modalSubscription.classList.add('hidden'));
+  }
+
+  document.querySelectorAll('.btn-select-tier').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const tier = btn.getAttribute('data-tier');
+      if (!state.account) {
+        alert('Please log in or create an account first to update your subscription.');
+        els.modalSubscription.classList.add('hidden');
+        els.modalAuth.classList.remove('hidden');
+        return;
+      }
+      try {
+        const res = await fetch('/v1/auth/subscription', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ farmer_id: state.farmerId, subscription_tier: tier })
+        });
+        if (res.ok) {
+          const updated = await res.json();
+          saveStoredAccount(updated);
+          state.account = updated;
+          renderAccountUI();
+          els.modalSubscription.classList.add('hidden');
+          addAssistantMessage(`Subscription updated to ${tier.toUpperCase()} Tier!`);
+        }
+      } catch (e) {
+        alert(`Failed to update subscription: ${e.message}`);
+      }
+    });
+  });
+
+  if (els.btnCreateChat) {
+    els.btnCreateChat.addEventListener('click', () => {
+      createChatSession();
+    });
+  }
+
+  async function loadSavedFarms() {
+    try {
+      const res = await fetch(`/v1/farmers/${state.farmerId}/farms`);
+      if (res.ok) {
+        const data = await res.json();
+        state.savedFarms = data.farms || [];
+        renderSavedFarms();
+      }
+    } catch (e) {
+      console.warn('Could not load saved farms:', e);
+    }
+  }
+  loadSavedFarms();
+
+  function renderSavedFarms() {
+    if (!els.savedFarmsList) return;
+    if (!state.savedFarms || state.savedFarms.length === 0) {
+      els.savedFarmsList.innerHTML = `<div class="text-[11px] text-slate-500 italic">No saved farms yet.</div>`;
+      return;
+    }
+
+    els.savedFarmsList.innerHTML = state.savedFarms.map(f => {
+      const p = f.profile || {};
+      const isSelected = state.farmId === f.farm_id;
+      return `
+        <div class="p-2 rounded-lg border transition ${
+          isSelected ? 'bg-brand-500/10 border-brand-500 text-white' : 'bg-slate-800/60 border-slate-700/60 text-slate-300'
+        }">
+          <div class="flex items-center justify-between font-semibold mb-0.5">
+            <span>🏡 ${escapeHtml(f.farm_name)}</span>
+            <span class="text-[10px] font-mono text-slate-400">v${f.profile_version}</span>
+          </div>
+          <p class="text-[10px] text-slate-400 mb-1.5">
+            ${p.farm_size_acre || 2} acres • ${p.soil_type || 'loam'} • ${p.water_availability || 'rainfed'}
+          </p>
+          <div class="flex gap-1">
+            <button class="use-farm-btn flex-1 py-0.5 text-[10px] font-semibold rounded bg-brand-600 hover:bg-brand-500 text-white" data-id="${f.farm_id}">
+              ${isSelected ? 'Active' : 'Use Farm'}
+            </button>
+            <button class="forget-farm-btn px-2 py-0.5 text-[10px] font-semibold rounded bg-slate-700 hover:bg-red-600 text-slate-300 hover:text-white" data-id="${f.farm_id}">
+              Forget
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    els.savedFarmsList.querySelectorAll('.use-farm-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        sendMemoryAction('apply', id);
+      });
+    });
+
+    els.savedFarmsList.querySelectorAll('.forget-farm-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-id');
+        await fetch(`/v1/farms/${id}?farmer_id=${state.farmerId}`, { method: 'DELETE' });
+        if (state.farmId === id) state.farmId = null;
+        loadSavedFarms();
+      });
+    });
+  }
+
+  // Send Memory Action API Helper
+  async function sendMemoryAction(action, farmId = null) {
+    setLoading(true);
+    try {
+      const endpoint = state.engine === 'agentic' ? '/v1/agent/agentic-turn' : '/v1/agent/turn';
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          session_id: state.sessionId,
+          farmer_id: state.farmerId,
+          farm_id: farmId || state.farmId,
+          memory_action: action,
+          message: `Memory confirmation: ${action}`
+        })
+      });
+      const turn = await res.json();
+      handleTurnResponse(turn);
+      loadSavedFarms();
+    } catch (e) {
+      addAssistantMessage(`Failed memory action: ${e.message}`);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   // Initialize Lucide Icons
   if (window.lucide) {
@@ -113,51 +574,47 @@ document.addEventListener('DOMContentLoaded', () => {
   checkHealth();
 
   // Engine Switcher
-  els.engineAgentic.addEventListener('click', () => {
-    state.engine = 'agentic';
-    els.engineAgentic.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 bg-brand-600 text-white shadow';
-    els.engineTier0.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5';
-  });
+  if (els.engineAgentic) {
+    els.engineAgentic.addEventListener('click', () => {
+      state.engine = 'agentic';
+      els.engineAgentic.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 bg-brand-600 text-white shadow';
+      if (els.engineTier0) els.engineTier0.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5';
+    });
+  }
 
-  els.engineTier0.addEventListener('click', () => {
-    state.engine = 'tier0';
-    els.engineTier0.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 bg-brand-600 text-white shadow';
-    els.engineAgentic.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5';
-  });
+  if (els.engineTier0) {
+    els.engineTier0.addEventListener('click', () => {
+      state.engine = 'tier0';
+      els.engineTier0.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 bg-brand-600 text-white shadow';
+      if (els.engineAgentic) els.engineAgentic.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5';
+    });
+  }
 
   // Reset Session
-  els.btnNewSession.addEventListener('click', () => {
-    state.sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
-    state.messages = [];
-    state.profile = {};
-    state.recommendations = [];
-    state.selectedCropId = null;
-    state.plan = null;
-    state.traces = [];
-    state.missingFields = [];
-    
-    els.chatContainer.innerHTML = '';
-    renderProfile();
-    renderTraces();
-    renderPlan();
-    els.cropBar.classList.add('hidden');
-    addAssistantMessage('Session reset. Ready for your farm details.');
-  });
+  if (els.btnNewSession) {
+    els.btnNewSession.addEventListener('click', () => {
+      createChatSession();
+    });
+  }
 
   // Tab Switcher
-  els.tabTracesBtn.addEventListener('click', () => {
-    els.tabTracesBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-brand-400 border-b-2 border-brand-500 flex items-center justify-center gap-1.5';
-    els.tabPlanBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center justify-center gap-1.5';
-    els.tabTracesContent.classList.remove('hidden');
-    els.tabPlanContent.classList.add('hidden');
-  });
+  if (els.tabTracesBtn) {
+    els.tabTracesBtn.addEventListener('click', () => {
+      els.tabTracesBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-brand-400 border-b-2 border-brand-500 flex items-center justify-center gap-1.5';
+      if (els.tabPlanBtn) els.tabPlanBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center justify-center gap-1.5';
+      if (els.tabTracesContent) els.tabTracesContent.classList.remove('hidden');
+      if (els.tabPlanContent) els.tabPlanContent.classList.add('hidden');
+    });
+  }
 
-  els.tabPlanBtn.addEventListener('click', () => {
-    els.tabPlanBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-brand-400 border-b-2 border-brand-500 flex items-center justify-center gap-1.5';
-    els.tabTracesBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center justify-center gap-1.5';
-    els.tabPlanContent.classList.remove('hidden');
-    els.tabTracesContent.classList.add('hidden');
-  });
+  if (els.tabPlanBtn) {
+    els.tabPlanBtn.addEventListener('click', () => {
+      els.tabPlanBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-brand-400 border-b-2 border-brand-500 flex items-center justify-center gap-1.5';
+      if (els.tabTracesBtn) els.tabTracesBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center justify-center gap-1.5';
+      if (els.tabPlanContent) els.tabPlanContent.classList.remove('hidden');
+      if (els.tabTracesContent) els.tabTracesContent.classList.add('hidden');
+    });
+  }
 
   // Sample Prompt Buttons
   document.querySelectorAll('.sample-prompt').forEach(btn => {
@@ -166,6 +623,22 @@ document.addEventListener('DOMContentLoaded', () => {
       els.chatInput.focus();
     });
   });
+
+  // Handle Enter key in textarea (Enter sends message, Shift+Enter adds newline)
+  if (els.chatInput) {
+    els.chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        if (els.chatForm) {
+          if (typeof els.chatForm.requestSubmit === 'function') {
+            els.chatForm.requestSubmit();
+          } else {
+            els.chatForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+          }
+        }
+      }
+    });
+  }
 
   // Submit Turn Form
   els.chatForm.addEventListener('submit', async (e) => {
@@ -184,6 +657,8 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           session_id: state.sessionId,
+          farmer_id: state.farmerId,
+          farm_id: state.farmId,
           message: message
         })
       });
@@ -216,12 +691,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (turn.plan) state.plan = turn.plan;
     if (turn.trace) state.traces = turn.trace;
 
+    if (turn.memory) {
+      state.memoryStatus = turn.memory.status;
+      if (turn.memory.farm_id) state.farmId = turn.memory.farm_id;
+    }
+
     renderProfile();
     renderTraces();
     renderPlan();
+    loadSavedFarms();
+    loadSavedChats();
 
-    // Add assistant reply with decision summary proof of thinking
-    addAssistantMessage(turn.message, turn.decision_summary);
+    // Render Assistant reply with Memory controls if needed
+    addAssistantMessage(turn.message, turn.decision_summary, turn.status, turn.memory);
 
     // Render crop recommendations if available
     if (state.recommendations && state.recommendations.length > 0) {
@@ -684,24 +1166,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <td class="p-2 text-right text-slate-400">0.0% (Identical ROI efficiency)</td>
         </tr>
       `;
-    } else {
-      els.scenarioBox.classList.add('hidden');
     }
-
-      return;
-    }
-
-    els.planEmpty.classList.add('hidden');
-    els.planDetails.classList.remove('hidden');
-
-    els.planTitle.textContent = `${plan.crop_name} Season Plan`;
-    els.planSubtitle.textContent = `Sowing: ${plan.planned_sowing_date} → Harvest: ${plan.expected_harvest_date} (${plan.total_duration_days} days)`;
-
-    const fin = plan.financial_projection || {};
-    els.planCost.textContent = `BDT ${(fin.total_cost_bdt || 0).toLocaleString()}`;
-    els.planProfit.textContent = `BDT ${(fin.net_profit_bdt || 0).toLocaleString()}`;
-    els.planYield.textContent = `${(fin.expected_yield_kg || 0).toLocaleString()} kg`;
-    els.planRoi.textContent = `${(fin.roi_percent || 0).toFixed(1)}%`;
 
     // Stages Timeline
     const stages = plan.stages || [];
@@ -746,20 +1211,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Markdown Renderer Helper
+  function renderMarkdown(text) {
+    if (!text) return '';
+    try {
+      if (window.marked) {
+        if (typeof window.marked.setOptions === 'function') {
+          window.marked.setOptions({ breaks: true, gfm: true });
+        }
+        if (typeof window.marked.parse === 'function') {
+          return window.marked.parse(text);
+        } else if (typeof window.marked === 'function') {
+          return window.marked(text);
+        }
+      }
+    } catch (e) {
+      console.warn('Markdown parse error:', e);
+    }
+    return escapeHtml(text);
+  }
+
   // Add Messages to Chat UI
   function addUserMessage(text) {
+    const welcome = document.getElementById('welcome-banner');
+    if (welcome) welcome.remove();
     const msg = document.createElement('div');
     msg.className = 'flex justify-end animate-fade-in';
     msg.innerHTML = `
-      <div class="max-w-xl p-3.5 rounded-2xl bg-brand-600 text-white text-sm shadow-md rounded-tr-none">
-        ${escapeHtml(text)}
+      <div class="max-w-xl p-3.5 rounded-2xl bg-brand-600 text-white text-sm shadow-md rounded-tr-none markdown-content">
+        ${renderMarkdown(text)}
       </div>
     `;
     els.chatContainer.appendChild(msg);
     scrollToBottom();
   }
 
-  function addAssistantMessage(text, decisionSummary) {
+  function addAssistantMessage(text, decisionSummary, status = null, memoryContext = null) {
+    const welcome = document.getElementById('welcome-banner');
+    if (welcome) welcome.remove();
     const msg = document.createElement('div');
     msg.className = 'flex items-start gap-3 animate-fade-in';
 
@@ -777,17 +1266,63 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }
 
+    let memoryActionControlsHtml = '';
+    if (status === 'needs_memory_confirmation') {
+      const topCand = memoryContext?.saved_farms?.[0];
+      const farmId = topCand?.farm_id;
+      memoryActionControlsHtml = `
+        <div class="mt-3 p-3 rounded-xl bg-brand-950/40 border border-brand-500/30 flex flex-col gap-2">
+          <p class="text-xs text-brand-200 font-medium">Persistent Memory Confirmation Required:</p>
+          <div class="flex gap-2">
+            <button class="mem-action-btn flex-1 py-1.5 px-3 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold shadow transition" data-action="apply" data-farm-id="${farmId || ''}">
+              ✓ Use Saved Farm
+            </button>
+            <button class="mem-action-btn flex-1 py-1.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 transition" data-action="decline">
+              ✕ Start Fresh
+            </button>
+          </div>
+        </div>
+      `;
+    } else if (status === 'needs_memory_conflict_resolution') {
+      memoryActionControlsHtml = `
+        <div class="mt-3 p-3 rounded-xl bg-amber-950/40 border border-amber-500/30 flex flex-col gap-2">
+          <p class="text-xs text-amber-200 font-medium">Memory Conflict Resolution Required:</p>
+          <div class="flex flex-wrap gap-2">
+            <button class="mem-action-btn py-1.5 px-3 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold transition" data-action="confirm_update">
+              Permanent Update
+            </button>
+            <button class="mem-action-btn py-1.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 transition" data-action="use_temporarily">
+              Use Temporarily
+            </button>
+            <button class="mem-action-btn py-1.5 px-3 rounded-lg bg-purple-900 hover:bg-purple-800 text-purple-200 text-xs font-medium border border-purple-700 transition" data-action="create_new">
+              Create Another Farm
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
     msg.innerHTML = `
       <div class="w-8 h-8 rounded-xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center shrink-0 mt-0.5">
         <i data-lucide="bot" class="w-5 h-5"></i>
       </div>
       <div class="max-w-2xl p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-sm text-slate-200 shadow-md rounded-tl-none space-y-2">
         ${summaryHtml}
-        <div class="leading-relaxed whitespace-pre-wrap">${escapeHtml(text)}</div>
+        <div class="leading-relaxed markdown-content">${renderMarkdown(text)}</div>
+        ${memoryActionControlsHtml}
       </div>
     `;
 
     els.chatContainer.appendChild(msg);
+
+    msg.querySelectorAll('.mem-action-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const action = btn.getAttribute('data-action');
+        const farmId = btn.getAttribute('data-farm-id');
+        sendMemoryAction(action, farmId);
+      });
+    });
+
     if (window.lucide) window.lucide.createIcons();
     scrollToBottom();
   }

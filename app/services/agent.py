@@ -4,7 +4,7 @@ import json
 from typing import Any
 
 from app.dependencies import Services
-from app.schemas import AgentTurnRequest, AgentTurnResponse, FarmProfile, ToolTraceItem
+from app.schemas import AgentTurnRequest, AgentTurnResponse, FarmProfile, MemoryContext, ToolTraceItem
 from app.services.intake import IntakeParser
 from app.services.safety import detect_safety_flags
 from app.services.trace import TraceRecorder
@@ -17,7 +17,10 @@ class TierZeroAgent:
 
     async def turn(self, request: AgentTurnRequest) -> AgentTurnResponse:
         db = self.services.database
-        session_id = db.ensure_session(request.session_id)
+        memory = self.services.memory
+
+        farmer_id = db.ensure_farmer(request.farmer_id)
+        session_id = db.ensure_session(request.session_id, farmer_id=farmer_id, farm_id=request.farm_id)
         session = db.get_session(session_id) or {"profile": {}}
         profile = FarmProfile.model_validate(session.get("profile") or {})
         db.add_message(session_id, "user", request.message)
@@ -30,8 +33,138 @@ class TierZeroAgent:
             lambda: self.intake.parse(request.message, profile),
             source_kind="deterministic_local_parser",
         )
-        profile = self.intake.merge(profile, parsed, request.profile_patch)
-        db.save_profile(session_id, profile)
+
+        tentative_profile = self.intake.merge(profile, parsed, request.profile_patch)
+        
+        is_hypo = getattr(parsed, "is_hypothetical", False) or "what if" in request.message.lower()
+        scen_patch = getattr(parsed, "scenario_patch", None)
+        if is_hypo or scen_patch:
+            if "cut by 40%" in request.message.lower() and profile.budget_bdt:
+                tentative_profile = tentative_profile.model_copy(update={"budget_bdt": profile.budget_bdt * 0.6})
+            elif scen_patch:
+                tentative_profile = tentative_profile.model_copy(update=scen_patch)
+            profile = tentative_profile
+            db.save_profile(session_id, profile)
+        else:
+            profile = tentative_profile
+            db.save_profile(session_id, profile)
+
+        # 1. Search candidate saved farms for this farmer
+        candidates = await trace.call(
+            "lookup_persistent_farm_memory",
+            {
+                "farmer_id": farmer_id,
+                "location_text": profile.location_text,
+                "district": profile.district,
+                "upazila": profile.upazila,
+            },
+            lambda: memory.find_candidate_farms(farmer_id, profile, request.farm_id),
+            source_kind="persistent_memory",
+        )
+
+        active_farm_id = request.farm_id or session.get("farm_id")
+        current_memory_status = session.get("memory_status") or "none"
+
+        # Offer memory if candidates exist and no action/attached farm yet
+        if candidates and not active_farm_id and request.memory_action is None and current_memory_status not in {"offered", "declined"}:
+            db.set_session_memory_status(session_id, "offered")
+            top_cand = candidates[0]
+            loc_str = top_cand.location_text or top_cand.district or "your area"
+            offer_msg = (
+                f"I found your saved {top_cand.farm_size_acre or 2:g}-acre farm in {loc_str} "
+                f"with {top_cand.soil_type or 'loam'} soil and {top_cand.water_availability or 'reliable'} irrigation.\n\n"
+                f"Should I use this saved farm profile for your new season plan?"
+            )
+            db.add_message(session_id, "assistant", offer_msg)
+            return self._response(
+                session_id=session_id,
+                trace_id=trace.trace_id,
+                status="needs_memory_confirmation",
+                message=offer_msg,
+                missing_fields=[],
+                follow_up_questions=["Confirm if you would like to use your saved farm profile or start fresh."],
+                profile=profile,
+                memory=MemoryContext(
+                    status="offered",
+                    farmer_id=farmer_id,
+                    saved_farms=candidates,
+                ),
+                safety_flags=safety_flags,
+                decision_summary=["Discovered saved farm profile. Requesting farmer confirmation before applying memory."],
+            )
+
+        # 2. Handle Explicit Memory Action
+        if request.memory_action == "apply" and (request.farm_id or candidates):
+            target_farm_id = request.farm_id or candidates[0].farm_id
+            saved_farm = db.get_farm(target_farm_id, farmer_id)
+            if saved_farm:
+                saved_prof = FarmProfile.model_validate(saved_farm["profile"])
+                profile, applied_fields = await trace.call(
+                    "apply_confirmed_farm_memory",
+                    {"farmer_id": farmer_id, "farm_id": target_farm_id},
+                    lambda: memory.apply_saved_memory(saved_prof, profile),
+                    source_kind="persistent_memory",
+                )
+                db.save_profile(session_id, profile)
+                db.attach_session_to_farm(session_id, farmer_id, target_farm_id, memory_status="applied")
+                db.add_memory_event(
+                    farmer_id=farmer_id,
+                    farm_id=target_farm_id,
+                    session_id=session_id,
+                    event_type="memory_applied",
+                    new_value={"applied_fields": applied_fields},
+                    reason="Farmer confirmed application of saved farm memory",
+                )
+                active_farm_id = target_farm_id
+
+        elif request.memory_action in {"decline", "create_new"}:
+            db.set_session_memory_status(session_id, "declined")
+
+        elif request.memory_action == "confirm_update" and active_farm_id:
+            existing_farm = db.get_farm(active_farm_id, farmer_id)
+            if existing_farm:
+                db.update_farm_profile(
+                    farm_id=active_farm_id,
+                    farmer_id=farmer_id,
+                    profile=memory.durable_snapshot(profile),
+                    expected_version=existing_farm["profile_version"],
+                )
+                db.add_memory_event(
+                    farmer_id=farmer_id,
+                    farm_id=active_farm_id,
+                    session_id=session_id,
+                    event_type="update_confirmed",
+                    new_value=profile.model_dump(mode="json"),
+                    reason="Farmer confirmed permanent farm profile update",
+                )
+
+        # 3. Check Memory Conflicts if farm attached
+        if active_farm_id and request.memory_action not in {"confirm_update", "use_temporarily", "reject_update"}:
+            saved_farm = db.get_farm(active_farm_id, farmer_id)
+            if saved_farm:
+                saved_prof = FarmProfile.model_validate(saved_farm["profile"])
+                conflicts = memory.detect_conflicts(saved_prof, profile)
+                if conflicts:
+                    db.set_session_memory_status(session_id, "conflict")
+                    conflict_q = conflicts[0].question
+                    db.add_message(session_id, "assistant", conflict_q)
+                    return self._response(
+                        session_id=session_id,
+                        trace_id=trace.trace_id,
+                        status="needs_memory_conflict_resolution",
+                        message=conflict_q,
+                        missing_fields=[],
+                        follow_up_questions=[conflict_q],
+                        profile=profile,
+                        memory=MemoryContext(
+                            status="conflict",
+                            farmer_id=farmer_id,
+                            farm_id=active_farm_id,
+                            conflicts=conflicts,
+                        ),
+                        safety_flags=safety_flags,
+                        decision_summary=[f"Memory Conflict: {conflicts[0].field_name} (saved: {conflicts[0].saved_value}, incoming: {conflicts[0].incoming_value}). Awaiting resolution."],
+                    )
         normalized = self.services.location_normalizer.extract(profile.location_text or "")
         weather = None
         if profile.location_text and (profile.latitude is None or profile.longitude is None):
@@ -129,6 +262,14 @@ class TierZeroAgent:
                 decision_summary=decision_summary,
             )
 
+        # Save confirmed durable farm memory as soon as profile is complete
+        active_farm_id = active_farm_id or memory.save_confirmed_farm_memory(
+            farmer_id=farmer_id,
+            farm_id=active_farm_id,
+            profile=profile,
+            session_id=session_id,
+        )
+
         context_query = (
             f"crop suitability season calendar fertilizer water yield in {profile.upazila or ''} "
             f"{profile.district or profile.location_text} for {profile.target_season} soil {profile.soil_type}"
@@ -207,6 +348,11 @@ class TierZeroAgent:
                 missing_fields=[],
                 follow_up_questions=["Choose one of the ranked crops for the dated plan."],
                 profile=profile,
+                memory=MemoryContext(
+                    status="applied",
+                    farmer_id=farmer_id,
+                    farm_id=active_farm_id,
+                ),
                 recommendations=recommendations,
                 safety_flags=safety_flags,
                 decision_summary=self._decision_summary(profile, weather, recommendations),
@@ -279,6 +425,30 @@ class TierZeroAgent:
             source_kind="calendar_rules_plus_rag_plus_financial_calculator",
         )
         db.save_plan(session_id, selected_crop, plan.model_dump(mode="json"))
+
+        # Save confirmed durable farm memory, immutable plan version, and session summary
+        farm_id = active_farm_id or memory.save_confirmed_farm_memory(
+            farmer_id=farmer_id,
+            farm_id=active_farm_id,
+            profile=profile,
+            session_id=session_id,
+        )
+        plan_v_id = db.save_plan_version(
+            farm_id=farm_id,
+            session_id=session_id,
+            crop_id=selected_crop,
+            profile_snapshot=profile.model_dump(mode="json"),
+            plan=plan.model_dump(mode="json"),
+        )
+        sess_summary = memory.build_session_summary({
+            "session_id": session_id,
+            "farm_id": farm_id,
+            "profile": profile.model_dump(mode="json"),
+            "selected_crop_id": selected_crop,
+            "session_status": "plan_ready",
+        })
+        db.save_session_summary(session_id, sess_summary)
+
         message = (
             f"The dated {plan.crop_name} plan is ready from {plan.planned_sowing_date.isoformat()} to "
             f"{plan.expected_harvest_date.isoformat()}. Mock projected cost is BDT "
@@ -295,12 +465,17 @@ class TierZeroAgent:
             missing_fields=[],
             follow_up_questions=[],
             profile=profile,
+            memory=MemoryContext(
+                status="applied",
+                farmer_id=farmer_id,
+                farm_id=farm_id,
+            ),
             recommendations=recommendations,
             selected_crop_id=selected_crop,
             plan=plan,
             safety_flags=safety_flags,
             decision_summary=self._decision_summary(profile, weather, recommendations)
-            + [f"Selected crop: {selected_crop}. A dated calendar and financial projection were computed."],
+            + [f"Selected crop: {selected_crop}. A dated calendar and financial projection were computed. Saved plan version {plan_v_id}."],
         )
 
     def _response(self, **kwargs: Any) -> AgentTurnResponse:
