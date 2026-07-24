@@ -305,8 +305,7 @@ class TierZeroAgent:
 
     def _response(self, **kwargs: Any) -> AgentTurnResponse:
         session_id = kwargs["session_id"]
-        trace_id = kwargs["trace_id"]
-        trace_rows = self.services.database.get_trace(session_id, trace_id)
+        trace_rows = self.services.database.get_trace(session_id, None)
         kwargs["trace"] = [
             ToolTraceItem.model_validate(
                 {

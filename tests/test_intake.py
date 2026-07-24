@@ -46,3 +46,25 @@ def test_single_small_pump_does_not_become_reliable_irrigation(services):
     assert profile.water_availability is None
     assert parsed.clarifications
     assert "cover all 5 acres" in parsed.clarifications[0]
+
+
+def test_bangladeshi_budget_wording_variations_and_safety(services):
+    parser = IntakeParser(services.kb, services.location_normalizer)
+    
+    examples = [
+        "budget BDT 200000",
+        "BDT 200000 budget",
+        "200000 taka budget",
+        "budget Tk 200,000",
+        "budget ৳2,00,000",
+        "my budget is 2 lakh",
+        "I can spend 200k",
+        "budget: BDT 2,00,000!!!",
+        "budget ৳2,00,000???",
+        "bdt ,,, 200k",
+    ]
+
+    for example in examples:
+        parsed = parser.parse(example, FarmProfile())
+        assert parsed.patch.get("budget_bdt") == 200000.0, f"Failed on example: '{example}'"
+

@@ -33,6 +33,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="h-full flex flex-col font-sans antialiased overflow-hidden selection:bg-brand-500 selection:text-white">
@@ -237,14 +238,14 @@
 
     </main>
 
-    <!-- RIGHT COLUMN: OPERATIONAL TOOL TRACES & DATED PLAN -->
+    <!-- RIGHT COLUMN: AGENT ACTIVITY PANEL -->
     <aside class="w-96 border-l border-slate-800 bg-slate-900/50 flex flex-col shrink-0">
       
       <!-- TABS HEADER -->
       <div class="flex border-b border-slate-800 bg-slate-900">
         <button id="tab-btn-traces" class="flex-1 py-3 text-xs font-bold uppercase tracking-wider text-brand-400 border-b-2 border-brand-500 flex items-center justify-center gap-1.5">
           <i data-lucide="activity" class="w-4 h-4"></i>
-          Tool Traces (<span id="trace-count">0</span>)
+          Agent Activity (<span id="trace-count">0</span>)
         </button>
         <button id="tab-btn-plan" class="flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center justify-center gap-1.5">
           <i data-lucide="calendar" class="w-4 h-4"></i>
@@ -252,9 +253,44 @@
         </button>
       </div>
 
-      <!-- TAB CONTENT 1: OPERATIONAL TRACES LIST -->
+      <!-- TAB CONTENT 1: AGENT ACTIVITY PANEL -->
       <div id="tab-content-traces" class="flex-1 overflow-y-auto p-4 space-y-3">
-        <div id="traces-empty" class="text-center py-12 text-slate-500 text-xs">
+        <!-- CURRENT GOAL & WORKFLOW STAGE CARD -->
+        <div id="goal-card" class="p-3.5 rounded-xl bg-slate-800/90 border border-slate-700/80 shadow-md">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-brand-400 flex items-center gap-1">
+              <i data-lucide="target" class="w-3.5 h-3.5"></i>
+              Current Goal
+            </span>
+            <span id="goal-disclaimer" class="text-[9px] text-slate-500 font-mono">Operational evidence only</span>
+          </div>
+          <p class="text-xs text-slate-200 font-medium mb-3 leading-snug">
+            Produce a grounded, explained, costed season plan for this farm.
+          </p>
+
+          <div class="space-y-2 text-[11px]">
+            <div class="flex justify-between items-center py-1 border-b border-slate-700/50">
+              <span class="text-slate-400">Current Stage</span>
+              <span id="goal-stage" class="font-semibold text-amber-400">Collecting Farm Facts</span>
+            </div>
+            
+            <div class="py-1 border-b border-slate-700/50">
+              <span class="text-slate-400 block mb-1">Completed Milestones:</span>
+              <div id="goal-milestones" class="space-y-1 text-[10px] text-slate-300">
+                <div class="flex items-center gap-1.5"><i data-lucide="circle" class="w-3 h-3 text-slate-600"></i> Location resolved</div>
+                <div class="flex items-center gap-1.5"><i data-lucide="circle" class="w-3 h-3 text-slate-600"></i> Weather retrieved</div>
+                <div class="flex items-center gap-1.5"><i data-lucide="circle" class="w-3 h-3 text-slate-600"></i> RAG Evidence retrieved</div>
+              </div>
+            </div>
+
+            <div class="pt-1">
+              <span class="text-slate-400 block mb-1">Next Action Required:</span>
+              <span id="goal-next-action" class="font-medium text-slate-200 block text-[10px]">Provide location, land size, soil, water, budget & season.</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="traces-empty" class="text-center py-8 text-slate-500 text-xs">
           <i data-lucide="cpu" class="w-8 h-8 mx-auto mb-2 text-slate-600"></i>
           No tool calls recorded yet.<br>Send a prompt to observe live tool execution traces.
         </div>
@@ -313,6 +349,65 @@
                 </thead>
                 <tbody class="divide-y divide-slate-800/60"></tbody>
               </table>
+            </div>
+          </div>
+
+          <!-- EVIDENCE CLASSIFICATION BLOCK -->
+          <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-700/80 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-brand-400 flex items-center gap-1.5">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+                Evidence Classification & Authority
+              </h4>
+              <span class="px-2 py-0.5 text-[9px] font-mono rounded bg-brand-500/10 text-brand-300 border border-brand-500/20">Part VI Audit</span>
+            </div>
+
+            <div class="space-y-2.5 text-[11px]">
+              <!-- REAL / REVIEWED -->
+              <div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                <span class="font-bold text-emerald-300 block mb-1 text-[10px] uppercase tracking-wider">🟢 REAL / REVIEWED</span>
+                <ul class="space-y-0.5 text-slate-300 text-[10px] list-disc pl-3.5">
+                  <li>farmer-provided farm facts</li>
+                  <li>geocoding provider result</li>
+                  <li>live weather values</li>
+                  <li>reviewed crop suitability evidence</li>
+                  <li>reviewed crop-calendar guidance</li>
+                  <li>reviewed fertilizer timing/guardrail evidence</li>
+                </ul>
+              </div>
+
+              <!-- SEEDED DEMONSTRATION ASSUMPTIONS -->
+              <div class="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                <span class="font-bold text-amber-300 block mb-1 text-[10px] uppercase tracking-wider">🟡 SEEDED DEMONSTRATION ASSUMPTIONS</span>
+                <ul class="space-y-0.5 text-slate-300 text-[10px] list-disc pl-3.5">
+                  <li>exact fertilizer quantities where not backed by a soil test or AEZ-specific table</li>
+                  <li>expected yield</li>
+                  <li>input prices</li>
+                  <li>crop selling price</li>
+                  <li>pest-prevention cost</li>
+                  <li>some irrigation cost values</li>
+                </ul>
+              </div>
+
+              <!-- CALCULATED BY CODE -->
+              <div class="p-2.5 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                <span class="font-bold text-blue-300 block mb-1 text-[10px] uppercase tracking-wider">🔵 CALCULATED BY CODE</span>
+                <ul class="space-y-0.5 text-slate-300 text-[10px] list-disc pl-3.5">
+                  <li>suitability components</li>
+                  <li>total cost</li>
+                  <li>expected revenue</li>
+                  <li>net profit</li>
+                  <li>ROI</li>
+                  <li>break-even price</li>
+                  <li>break-even yield</li>
+                  <li>scenario deltas</li>
+                  <li>validation status</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-slate-800 text-[10px] text-slate-400 italic leading-relaxed">
+              "AgriSense never promotes seeded demonstration assumptions into public evidence. Every output carries a classification so the farmer and judge can see its authority."
             </div>
           </div>
 

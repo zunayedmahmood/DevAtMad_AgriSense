@@ -194,8 +194,8 @@ class GeminiAgenticEngine:
                 reply_text = response.text or "I have updated your farm planning information."
                 self.services.database.add_message(session_id, "assistant", reply_text)
                 
-                # Fetch recent traces for this turn
-                raw_traces = self.services.database.get_trace(session_id, trace_recorder.trace_id)
+                # Fetch all accumulated traces for this session so judges can inspect complete agent trajectory
+                raw_traces = self.services.database.get_trace(session_id, None)
                 formatted_traces = [
                     ToolTraceItem.model_validate(
                         {

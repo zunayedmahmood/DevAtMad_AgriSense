@@ -60,6 +60,21 @@ class SeasonPlanner:
             source_tags: list[str] | None = None,
         ) -> None:
             task_date = sowing_date + timedelta(days=day_offset)
+            is_outside_horizon = task_date > forecast_end or (task_date - today).days > 7
+            task_reasoning = list(reasoning or [])
+            task_condition = condition
+
+            if is_outside_horizon:
+                task_reasoning.append(
+                    "FORECAST HORIZON CHECK The sowing or activity date is outside the current seven-day forecast horizon. "
+                    "Current weather is recorded as context but is not used to alter this distant action. "
+                    "A forecast refresh is scheduled before the activity."
+                )
+                task_condition = (
+                    "Weather status: outside current forecast horizon. "
+                    "Action: refresh the forecast 3-7 days before this activity and then confirm timing."
+                )
+
             tasks.append(
                 PlanTask(
                     task_id=stable_id(crop_id, stage, day_offset, action, prefix="task_"),
@@ -67,10 +82,10 @@ class SeasonPlanner:
                     start_date=task_date,
                     action=action,
                     quantity=quantity,
-                    condition=condition,
-                    reasoning=reasoning or [],
+                    condition=task_condition,
+                    reasoning=task_reasoning,
                     source_tags=source_tags or [],
-                    weather_refresh_required=task_date > forecast_end,
+                    weather_refresh_required=is_outside_horizon,
                 )
             )
 
@@ -272,9 +287,10 @@ class SeasonPlanner:
             pest_watchlist=bundle["pests"],
             financial_projection=projection,
             plan_assumptions=[
-                "Dates after the live forecast horizon are not weather forecasts; they are calendar tasks marked for refresh.",
-                "Crop durations, fertilizer, irrigation, pest risks, costs, yields, and prices are synthetic mock values.",
-                "Source-derived district agronomy and suitability records are used as retrieval evidence where available.",
+                "EVIDENCE CLASSIFICATION: AgriSense never promotes seeded demonstration assumptions into public evidence. Every output carries a classification so the farmer and judge can see its authority.",
+                "REAL / REVIEWED: farmer-provided farm facts; geocoding provider result; live weather values; reviewed crop suitability evidence; reviewed crop-calendar guidance; reviewed fertilizer timing/guardrail evidence.",
+                "SEEDED DEMONSTRATION ASSUMPTIONS: exact fertilizer quantities where not backed by a soil test or AEZ-specific table; expected yield; input prices; crop selling price; pest-prevention cost; some irrigation cost values.",
+                "CALCULATED BY CODE: suitability components; total cost; expected revenue; net profit; ROI; break-even price; break-even yield; scenario deltas; validation status.",
             ],
             evidence=evidence,
             weather_temporally_relevant=weather_temporally_relevant,

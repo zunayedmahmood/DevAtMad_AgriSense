@@ -103,6 +103,13 @@ class IntakeParser:
         budget = self._parse_budget(lowered)
         if budget is not None:
             result.patch["budget_bdt"] = budget
+        else:
+            pct_cut = re.search(r"\b(?:cut|reduce|decrease|drop)\s*(?:by|to)?\s*(\d+(?:\.\d+)?)\s*%", lowered)
+            if pct_cut and current.budget_bdt:
+                cut_pct = float(pct_cut.group(1))
+                new_budget = current.budget_bdt * (1.0 - cut_pct / 100.0)
+                result.patch["budget_bdt"] = round(new_budget, 2)
+                result.extraction_notes.append(f"Applied budget reduction of {cut_pct:g}% to current BDT {current.budget_bdt:,.0f}.")
 
         month = self._parse_month(lowered)
         season = self._parse_season(lowered)
@@ -189,26 +196,36 @@ class IntakeParser:
 
     @staticmethod
     def _parse_budget(text: str) -> float | None:
-        patterns = [
-            r"(?:budget(?: is| of)?|have|spend|tk|taka|bdt)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*(lakh|lac|k|thousand)?",
-            r"\b(\d+(?:\.\d+)?)\s*(lakh|lac|k|thousand)\s*(?:tk|taka|bdt)?\b",
-            r"(?:tk|taka|bdt)\s*(\d+(?:\.\d+)?)",
-            r"\b(\d+(?:\.\d+)?)\s*(?:tk|taka|bdt)\b",
-        ]
-        for pattern in patterns:
-            match = re.search(pattern, text)
-            if not match:
-                continue
-            value = float(match.group(1))
-            suffix = (match.group(2) if match.lastindex and match.lastindex >= 2 else None) or ""
-            if suffix in {"lakh", "lac"}:
-                value *= 100_000
-            elif suffix in {"k", "thousand"}:
-                value *= 1_000
-            # Avoid confusing tiny unqualified numbers such as acre counts with a budget.
-            if value >= 1000 or suffix:
-                return round(value, 2)
-        return None
+        try:
+            cleaned = text.replace("৳", " taka ")
+            cleaned = re.sub(r"(?<=\d),(?=\d)", "", cleaned)
+
+            patterns = [
+                r"(?:budget(?: is| of)?|spend|have|cost|tk|taka|bdt)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*(lakh|lac|k|thousand|crore|koti)?\b",
+                r"\b(\d+(?:\.\d+)?)\s*(lakh|lac|k|thousand|crore|koti)?\s*(?:bdt|tk|taka|budget|spend|cost)\b",
+                r"\b(\d+(?:\.\d+)?)\s*(lakh|lac|k|thousand|crore|koti)\b",
+                r"(?:tk|taka|bdt)\s*(\d+(?:\.\d+)?)",
+                r"\b(\d+(?:\.\d+)?)\s*(?:tk|taka|bdt)\b",
+            ]
+            for pattern in patterns:
+                match = re.search(pattern, cleaned, re.IGNORECASE)
+                if not match:
+                    continue
+                value = float(match.group(1))
+                suffix = (match.group(2) if match.lastindex and match.lastindex >= 2 and match.group(2) else "").lower()
+
+                if suffix in {"lakh", "lac"}:
+                    value *= 100_000
+                elif suffix in {"k", "thousand"}:
+                    value *= 1_000
+                elif suffix in {"crore", "koti"}:
+                    value *= 10_000_000
+
+                if value >= 1000 or suffix:
+                    return round(value, 2)
+            return None
+        except Exception:
+            return None
 
     @staticmethod
     def _parse_month(text: str) -> int | None:

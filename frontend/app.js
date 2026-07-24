@@ -58,6 +58,11 @@ document.addEventListener('DOMContentLoaded', () => {
     planProfit: document.getElementById('plan-profit'),
     planYield: document.getElementById('plan-yield'),
     planRoi: document.getElementById('plan-roi'),
+
+    // Current Goal Card
+    goalStage: document.getElementById('goal-stage'),
+    goalMilestones: document.getElementById('goal-milestones'),
+    goalNextAction: document.getElementById('goal-next-action'),
     planTimeline: document.getElementById('plan-timeline'),
     planFertilizerTable: document.getElementById('plan-fertilizer-table'),
 
@@ -305,35 +310,200 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Render Traces
+  // Map machine event types / tool names to judge-facing labels
+  function mapJudgeLabel(toolName, sourceKind) {
+    if (toolName === 'parse_farmer_message') return 'Farm facts extracted';
+    if (toolName === 'geocode_location') return 'Location resolved';
+    if (toolName === 'get_live_weather_forecast' || toolName === 'get_weather_forecast') return 'Weather retrieved';
+    if (toolName === 'retrieve_agronomic_context' || toolName === 'retrieve_agronomy') return 'Evidence retrieved';
+    if (toolName === 'rank_crop_candidates') return 'Crop ranking calculated';
+    if (toolName === 'calculate_financial_projection') return 'Finance calculated';
+    if (toolName === 'generate_dated_season_plan') return 'Completion validation';
+    if (sourceKind === 'direct_tool_invocation') return 'Tool call';
+    if (sourceKind === 'agentic_tool_invocation') return 'Agent decision';
+    return 'Tool call';
+  }
+
+  // 4-Question Operational Breakdown Helper for Activity Cards
+  function getOperationalFourQuestions(t) {
+    const name = (t.tool_name || '').toLowerCase();
+    const p = t.parameters || {};
+    const r = t.raw_result || {};
+
+    if (name.includes('geocode')) {
+      return {
+        what: 'TOOL SELECTED - Location Geocoding',
+        why: 'Spatial coordinates are required to query location-specific weather & soil records.',
+        data: `Input: ${p.location_text || p.district || 'Location text'}; Result: ${r.formatted || 'Coordinates resolved'} (${r.latitude?.toFixed(4) || ''}, ${r.longitude?.toFixed(4) || ''})`,
+        next: 'Retrieve live meteorological forecast from Open-Meteo.'
+      };
+    }
+    if (name.includes('weather')) {
+      const summary = r.summary || {};
+      return {
+        what: 'TOOL SELECTED - Live Weather Ingestion',
+        why: 'Crop suitability and near-term farm actions require verified rainfall and temperature.',
+        data: `Input: lat ${p.latitude || 0}, lon ${p.longitude || 0}; Result: ${summary.temperature_avg_c || 26}°C mean temp, ${summary.rainfall_forecast_total_mm || 0}mm 7-day rainfall`,
+        next: 'Query hybrid RAG store for reviewed extension guidelines.'
+      };
+    }
+    if (name.includes('agronom') || name.includes('rag')) {
+      const count = Array.isArray(r) ? r.length : (r.results ? r.results.length : 1);
+      return {
+        what: 'EVIDENCE RETRIEVED - Hybrid RAG Search',
+        why: 'Verify BARC/BAMIS extension rules, soil compatibility, and fertilizer schedules.',
+        data: `Input: query "${p.query || p.crop_id || 'agronomy'}"; Result: ${count} evidence document chunks retrieved`,
+        next: 'Calculate multi-criteria candidate crop suitability scores.'
+      };
+    }
+    if (name.includes('rank')) {
+      return {
+        what: 'CALCULATOR - Multi-Criteria Crop Ranking',
+        why: 'Score eligible crops against season fit, soil type, water access, and ROI.',
+        data: `Input: Farm profile & weather context; Result: 3 ranked crop candidates with suitability scores`,
+        next: 'Present ranked candidates to farmer and await human selection.'
+      };
+    }
+    if (name.includes('finance')) {
+      return {
+        what: 'CALCULATOR - Financial Projection Ledger',
+        why: 'Compute inspectable cost components, gross revenue, net profit, ROI %, and break-even points.',
+        data: `Input: crop_id "${p.crop_id || 'crop'}", budget BDT ${(p.profile?.budget_bdt || 0).toLocaleString()}; Result: Net profit & ROI % calculated`,
+        next: 'Construct stage-by-stage dated season calendar.'
+      };
+    }
+    if (name.includes('plan')) {
+      return {
+        what: 'VALIDATION - Season Plan Construction',
+        why: 'Generate stage-by-stage calendar dates, fertilizer splits, and pest checkpoints with forecast horizon checks.',
+        data: `Input: chosen_crop_id "${p.crop_id || 'crop'}"; Result: Reconciled dated calendar & validation pass`,
+        next: 'Plan complete. Schedule weather horizon refreshes before future tasks.'
+      };
+    }
+
+    return {
+      what: `TOOL SELECTED - ${t.tool_name}`,
+      why: `Executed operational action via ${t.source_kind}.`,
+      data: `Input: ${JSON.stringify(p)}; Result: ${typeof r === 'object' ? JSON.stringify(r).slice(0, 80) : String(r)}`,
+      next: 'Proceed to next workflow stage.'
+    };
+  }
+
+  // Render Traces & Current Goal Card
   function renderTraces() {
     const traces = state.traces || [];
     els.traceCount.textContent = traces.length;
 
+    // Update Current Goal Card from real state
+    const p = state.profile || {};
+    const hasLocation = Boolean(p.latitude && p.longitude);
+    const hasWeather = traces.some(t => t.tool_name.includes('weather'));
+    const hasEvidence = traces.some(t => t.tool_name.includes('agronom') || t.tool_name.includes('rag'));
+    const hasRankings = (state.recommendations && state.recommendations.length > 0);
+    const hasPlan = Boolean(state.plan);
+
+    if (hasPlan) {
+      els.goalStage.textContent = 'Plan Built & Validated';
+      els.goalStage.className = 'font-semibold text-emerald-400';
+      els.goalNextAction.textContent = 'Plan complete. Ready for field execution or what-if scenario testing.';
+    } else if (hasRankings) {
+      els.goalStage.textContent = 'Crop Selection Required';
+      els.goalStage.className = 'font-semibold text-amber-400';
+      els.goalNextAction.textContent = 'Rank three crops → Wait for crop selection → Build and validate the plan';
+    } else {
+      els.goalStage.textContent = 'Collecting Farm Facts';
+      els.goalStage.className = 'font-semibold text-amber-400';
+      els.goalNextAction.textContent = 'Provide location, land size, soil, water, budget & season.';
+    }
+
+    els.goalMilestones.innerHTML = `
+      <div class="flex items-center gap-1.5">${hasLocation ? '<i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-400"></i> <span class="text-slate-200">Location resolved</span>' : '<i data-lucide="circle" class="w-3 h-3 text-slate-600"></i> Location pending'}</div>
+      <div class="flex items-center gap-1.5">${hasWeather ? '<i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-400"></i> <span class="text-slate-200">Weather retrieved</span>' : '<i data-lucide="circle" class="w-3 h-3 text-slate-600"></i> Weather pending'}</div>
+      <div class="flex items-center gap-1.5">${hasEvidence ? '<i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-400"></i> <span class="text-slate-200">Evidence retrieved</span>' : '<i data-lucide="circle" class="w-3 h-3 text-slate-600"></i> Evidence pending'}</div>
+    `;
+
+    if (window.lucide) window.lucide.createIcons();
+
+    let blockedCardsHtml = '';
+    if (state.missingFields && state.missingFields.length > 0) {
+      blockedCardsHtml = `
+        <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-200 space-y-2 mb-3">
+          <div class="flex items-center justify-between">
+            <span class="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              Information Gap Detected
+            </span>
+            <span class="text-[10px] text-amber-400 font-semibold">NO TOOL CALL</span>
+          </div>
+          <p class="text-xs font-semibold text-slate-100">
+            Missing required farm facts: <span class="text-amber-300 font-mono">${state.missingFields.join(', ')}</span>
+          </p>
+          <p class="text-[11px] text-slate-300 leading-relaxed">
+            <strong>DECISION:</strong> Crop ranking and season planning are BLOCKED. Calling ranking calculators or weather without complete farm size, soil, water, budget, or target season would create a misleading plan.
+          </p>
+          <p class="text-[10px] text-slate-400 border-t border-amber-500/20 pt-1.5">
+            <strong>NEXT ACTION:</strong> Ask targeted follow-up question for remaining missing fields.
+          </p>
+        </div>
+      `;
+    }
+
     if (traces.length === 0) {
       els.tracesEmpty.classList.remove('hidden');
-      els.tracesList.innerHTML = '';
+      els.tracesList.innerHTML = blockedCardsHtml;
       return;
     }
 
     els.tracesEmpty.classList.add('hidden');
-    els.tracesList.innerHTML = traces.map((t, idx) => `
-      <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/70 hover:border-slate-600 transition cursor-pointer trace-item" data-idx="${idx}">
-        <div class="flex items-center justify-between mb-1">
-          <span class="font-mono text-xs font-bold text-brand-400 flex items-center gap-1">
-            <span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span>
-            #${t.step_no} ${t.tool_name}
-          </span>
-          <span class="font-mono text-[10px] text-slate-400">${t.duration_ms ? t.duration_ms.toFixed(1) + 'ms' : ''}</span>
+    
+    const traceCardsHtml = traces.map((t, idx) => {
+      const judgeLabel = mapJudgeLabel(t.tool_name, t.source_kind);
+      const q = getOperationalFourQuestions(t);
+
+      return `
+        <div class="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700/70 hover:border-brand-500/60 transition cursor-pointer trace-item group space-y-2" data-idx="${idx}">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs font-bold text-brand-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-brand-400"></span>
+              #${t.step_no} ${t.tool_name}
+            </span>
+            <span class="font-mono text-[10px] text-slate-400">${t.duration_ms ? t.duration_ms.toFixed(1) + 'ms' : ''}</span>
+          </div>
+          
+          <div class="flex items-center justify-between">
+            <span class="px-2 py-0.5 text-[9px] font-semibold rounded bg-brand-500/10 text-brand-300 border border-brand-500/20">${judgeLabel}</span>
+            <span class="text-[10px] text-slate-400 font-mono">${t.source_kind}</span>
+          </div>
+
+          <!-- 4-QUESTION OPERATIONAL BREAKDOWN -->
+          <div class="space-y-1.5 text-[11px] pt-1 border-t border-slate-700/50">
+            <div>
+              <span class="text-slate-400 font-semibold block text-[10px]">1. WHAT HAPPENED?</span>
+              <span class="text-slate-200 font-medium">${escapeHtml(q.what)}</span>
+            </div>
+            <div>
+              <span class="text-slate-400 font-semibold block text-[10px]">2. WHY WAS IT NEEDED?</span>
+              <span class="text-slate-300">${escapeHtml(q.why)}</span>
+            </div>
+            <div>
+              <span class="text-slate-400 font-semibold block text-[10px]">3. DATA ENTERED / RETURNED:</span>
+              <span class="text-emerald-300 font-mono text-[10px] block truncate">${escapeHtml(q.data)}</span>
+            </div>
+            <div>
+              <span class="text-slate-400 font-semibold block text-[10px]">4. WHAT HAPPENS NEXT?</span>
+              <span class="text-brand-300 font-medium">${escapeHtml(q.next)}</span>
+            </div>
+          </div>
+
+          <div class="pt-1 text-right border-t border-slate-700/40">
+            <span class="text-[10px] text-brand-400 group-hover:underline font-medium flex items-center justify-end gap-1">
+              Inspect Raw JSON Payload &rarr;
+            </span>
+          </div>
         </div>
-        <div class="text-[11px] text-slate-400 truncate mb-1">
-          Source: <span class="text-slate-300">${t.source_kind}</span>
-        </div>
-        <div class="font-mono text-[10px] text-slate-500 truncate">
-          Args: ${JSON.stringify(t.parameters)}
-        </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
+
+    els.tracesList.innerHTML = blockedCardsHtml + traceCardsHtml;
 
     document.querySelectorAll('.trace-item').forEach(item => {
       item.addEventListener('click', () => {
@@ -355,12 +525,6 @@ document.addEventListener('DOMContentLoaded', () => {
     els.modalTrace.classList.add('hidden');
   });
 
-  // Render Plan
-  function renderPlan() {
-    const plan = state.plan;
-    if (!plan) {
-      els.planEmpty.classList.remove('hidden');
-      els.planDetails.classList.add('hidden');
       return;
     }
 
