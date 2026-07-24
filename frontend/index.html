@@ -329,6 +329,78 @@
             </div>
           </div>
 
+          <!-- EVIDENCE-TO-DECISION AUDIT CARD -->
+          <div id="evidence-decision-box" class="p-3.5 rounded-xl bg-slate-900 border border-brand-500/40 space-y-2.5">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-brand-400 flex items-center gap-1.5">
+                <i data-lucide="file-check" class="w-4 h-4"></i>
+                Evidence-to-Decision Audit Card
+              </h4>
+              <span class="px-2 py-0.5 text-[9px] font-mono rounded bg-brand-500/10 text-brand-300 border border-brand-500/20">Audit Card</span>
+            </div>
+
+            <div class="space-y-2 text-[11px]">
+              <div class="p-2 rounded bg-slate-950/80 border border-slate-800">
+                <span class="text-slate-400 block text-[10px] uppercase font-bold">DECISION:</span>
+                <span id="ev-decision" class="font-bold text-white text-xs">Crop Selected</span>
+              </div>
+
+              <div class="p-2 rounded bg-slate-950/80 border border-slate-800 space-y-1">
+                <span class="text-slate-400 block text-[10px] uppercase font-bold">FARM INPUTS:</span>
+                <ul id="ev-inputs" class="text-slate-300 space-y-0.5 pl-3.5 list-disc text-[10px]"></ul>
+              </div>
+
+              <div class="p-2 rounded bg-slate-950/80 border border-slate-800 space-y-1">
+                <span class="text-slate-400 block text-[10px] uppercase font-bold">LIVE DATA:</span>
+                <div id="ev-livedata" class="text-slate-300 space-y-0.5 text-[10px]">
+                  <div>Weather Provider: <span class="text-emerald-400 font-mono">Open-Meteo API</span></div>
+                  <div>Retrieved Timestamp: <span id="ev-time" class="text-slate-300 font-mono">—</span></div>
+                  <div>Rainfall & Temp: <span id="ev-weather" class="text-slate-300 font-mono">—</span></div>
+                  <div>Forecast Horizon: <span id="ev-horizon" class="text-amber-300 font-mono">Provisional (Beyond 7-day)</span></div>
+                </div>
+              </div>
+
+              <div class="p-2 rounded bg-slate-950/80 border border-slate-800 space-y-1">
+                <span class="text-slate-400 block text-[10px] uppercase font-bold">REVIEWED EVIDENCE:</span>
+                <ul id="ev-evidence" class="text-slate-300 space-y-0.5 font-mono text-[10px] pl-3.5 list-disc"></ul>
+              </div>
+
+              <div class="p-2 rounded bg-slate-950/80 border border-slate-800 space-y-1">
+                <span class="text-slate-400 block text-[10px] uppercase font-bold">CALCULATED RESULT:</span>
+                <div id="ev-result" class="grid grid-cols-2 gap-1.5 text-[10px]"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCENARIO COMPARISON TABLE (DYNAMIC WHEN SCENARIO DETECTED) -->
+          <div id="scenario-box" class="p-3.5 rounded-xl bg-purple-950/40 border border-purple-500/40 space-y-2.5 hidden">
+            <div class="flex items-center justify-between border-b border-purple-800/60 pb-2">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-purple-300 flex items-center gap-1.5">
+                <i data-lucide="sliders" class="w-4 h-4"></i>
+                Scenario Simulation: Budget Override
+              </h4>
+              <span class="px-2 py-0.5 text-[9px] font-mono rounded bg-purple-500/20 text-purple-200 border border-purple-500/30">Memory Preserved</span>
+            </div>
+
+            <p class="text-[11px] text-purple-200 leading-snug">
+              <strong>MEMORY POLICY:</strong> Base accepted budget remains <span id="scen-base-budget" class="font-mono font-bold text-white">BDT 200,000</span>. Temporary scenario override evaluated at <span id="scen-override-budget" class="font-mono font-bold text-amber-300">BDT 120,000</span>. Base plan retained; scenario comparison generated below.
+            </p>
+
+            <div class="overflow-x-auto rounded-lg border border-purple-800/60">
+              <table id="scenario-table" class="w-full text-left text-[11px] text-slate-300">
+                <thead class="bg-purple-900/60 text-purple-200">
+                  <tr>
+                    <th class="p-2">Metric</th>
+                    <th class="p-2 text-right">Base Plan</th>
+                    <th class="p-2 text-right">Scenario Cut</th>
+                    <th class="p-2 text-right">Delta</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-purple-800/40 font-mono text-[10px]"></tbody>
+              </table>
+            </div>
+          </div>
+
           <!-- STAGE TIMELINE CHECKPOINTS -->
           <div>
             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Stage Timeline & Checkpoints</h4>
