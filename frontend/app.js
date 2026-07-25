@@ -1161,6 +1161,11 @@ document.addEventListener('DOMContentLoaded', () => {
     els.tracesList.innerHTML = liveStatusBanner + blockedCardsHtml + scenarioCardHtml + traceCardsHtml;
     if (window.lucide) window.lucide.createIcons();
 
+    const tracesTab = document.getElementById('tab-content-traces');
+    if (tracesTab) {
+      tracesTab.scrollTop = tracesTab.scrollHeight;
+    }
+
     document.querySelectorAll('.trace-item').forEach(item => {
       item.addEventListener('click', () => {
         const idx = parseInt(item.getAttribute('data-idx'));
@@ -1318,6 +1323,35 @@ document.addEventListener('DOMContentLoaded', () => {
     return escapeHtml(text);
   }
 
+  // Thinking Animation Helper
+  function showThinkingAnimation() {
+    removeThinkingAnimation();
+    const thinking = document.createElement('div');
+    thinking.id = 'thinking-indicator';
+    thinking.className = 'flex items-start gap-3.5 animate-fade-in my-3';
+    thinking.innerHTML = `
+      <div class="w-9 h-9 rounded-xl bg-brand-700 text-white flex items-center justify-center shrink-0 shadow-md shadow-brand-700/20">
+        <i data-lucide="bot" class="w-5 h-5 animate-pulse"></i>
+      </div>
+      <div class="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm rounded-tl-none flex items-center gap-3">
+        <div class="flex items-center gap-1.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-700 animate-bounce" style="animation-delay: 0ms"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-700 animate-bounce" style="animation-delay: 150ms"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-700 animate-bounce" style="animation-delay: 300ms"></span>
+        </div>
+        <span class="text-xs sm:text-sm font-extrabold text-slate-800 tracking-wide">AgriSense is thinking & analyzing farm conditions...</span>
+      </div>
+    `;
+    els.chatContainer.appendChild(thinking);
+    if (window.lucide) window.lucide.createIcons();
+    scrollToBottom();
+  }
+
+  function removeThinkingAnimation() {
+    const thinking = document.getElementById('thinking-indicator');
+    if (thinking) thinking.remove();
+  }
+
   // Add Messages to Chat UI
   function addUserMessage(text) {
     const welcome = document.getElementById('welcome-banner');
@@ -1325,15 +1359,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const msg = document.createElement('div');
     msg.className = 'flex justify-end animate-fade-in';
     msg.innerHTML = `
-      <div class="max-w-xl p-4 sm:p-5 rounded-2xl bg-brand-700 text-white text-base sm:text-lg font-medium shadow-md rounded-tr-none markdown-content leading-relaxed">
+      <div class="max-w-xl p-4 sm:p-5 rounded-2xl bg-emerald-50/90 border border-emerald-300 text-emerald-950 text-base sm:text-lg font-semibold shadow-sm rounded-tr-none markdown-content leading-relaxed">
         ${renderMarkdown(text)}
       </div>
     `;
     els.chatContainer.appendChild(msg);
+    showThinkingAnimation();
     scrollToBottom();
   }
 
   function addAssistantMessage(text, decisionSummary, status = null, memoryContext = null) {
+    removeThinkingAnimation();
     const welcome = document.getElementById('welcome-banner');
     if (welcome) welcome.remove();
     const msg = document.createElement('div');
