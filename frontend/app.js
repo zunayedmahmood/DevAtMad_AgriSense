@@ -1,4 +1,4 @@
-// AgriSense Frontend Application Logic (Vanilla JS)
+// AgriSense Frontend Application Logic — Light Mode & Real-Time Agentic Traces
 document.addEventListener('DOMContentLoaded', () => {
   // Account Management State
   function getStoredAccount() {
@@ -48,7 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
     selectedCropId: null,
     plan: null,
     traces: [],
-    missingFields: []
+    missingFields: [],
+    isTurnInFlight: false
   };
 
   // DOM Elements
@@ -87,10 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
     signupPassword: document.getElementById('signup-password'),
     signupTier: document.getElementById('signup-tier'),
 
-    // Subscription Modal
-    modalSubscription: document.getElementById('modal-subscription'),
-    modalSubClose: document.getElementById('modal-sub-close'),
-    
     // Profile
     profileStatus: document.getElementById('profile-status-badge'),
     pLocation: document.getElementById('p-location'),
@@ -118,8 +115,14 @@ document.addEventListener('DOMContentLoaded', () => {
     tabTracesContent: document.getElementById('tab-content-traces'),
     tabPlanContent: document.getElementById('tab-content-plan'),
     traceCount: document.getElementById('trace-count'),
+    goalCard: document.getElementById('goal-card'),
+    goalStage: document.getElementById('goal-stage'),
+    goalMilestones: document.getElementById('goal-milestones'),
+    goalNextAction: document.getElementById('goal-next-action'),
     tracesEmpty: document.getElementById('traces-empty'),
     tracesList: document.getElementById('traces-list'),
+
+    // Plan Tab Elements
     planEmpty: document.getElementById('plan-empty'),
     planDetails: document.getElementById('plan-details'),
     planTitle: document.getElementById('plan-title'),
@@ -128,30 +131,21 @@ document.addEventListener('DOMContentLoaded', () => {
     planProfit: document.getElementById('plan-profit'),
     planYield: document.getElementById('plan-yield'),
     planRoi: document.getElementById('plan-roi'),
-
-    // Current Goal Card
-    goalStage: document.getElementById('goal-stage'),
-    goalMilestones: document.getElementById('goal-milestones'),
-    goalNextAction: document.getElementById('goal-next-action'),
-    planTimeline: document.getElementById('plan-timeline'),
-    planFertilizerTable: document.getElementById('plan-fertilizer-table'),
-
-    // Audit Card & Scenario Elements
     evDecision: document.getElementById('ev-decision'),
     evInputs: document.getElementById('ev-inputs'),
-    evLiveData: document.getElementById('ev-livedata'),
     evTime: document.getElementById('ev-time'),
     evWeather: document.getElementById('ev-weather'),
     evHorizon: document.getElementById('ev-horizon'),
     evEvidence: document.getElementById('ev-evidence'),
     evResult: document.getElementById('ev-result'),
-
     scenarioBox: document.getElementById('scenario-box'),
+    scenarioTable: document.getElementById('scenario-table'),
     scenBaseBudget: document.getElementById('scen-base-budget'),
     scenOverrideBudget: document.getElementById('scen-override-budget'),
-    scenarioTable: document.getElementById('scenario-table'),
+    planTimeline: document.getElementById('plan-timeline'),
+    planFertilizerTable: document.getElementById('plan-fertilizer-table'),
 
-    // Modal Trace
+    // Trace Modal
     modalTrace: document.getElementById('modal-trace'),
     modalTraceTitle: document.getElementById('modal-trace-title'),
     modalTraceParams: document.getElementById('modal-trace-params'),
@@ -159,43 +153,24 @@ document.addEventListener('DOMContentLoaded', () => {
     modalTraceClose: document.getElementById('modal-trace-close')
   };
 
-  // Render Account UI
+  // Render Account Badge State
   function renderAccountUI() {
     if (state.account) {
-      els.userDisplayName.textContent = state.account.full_name;
-      if (els.userSubscriptionBadge) {
-        els.userSubscriptionBadge.classList.remove('hidden');
-        els.userSubscriptionBadge.textContent = 'Subscribed Member';
-      }
-      els.btnAuthAction.textContent = 'Log Out';
-      if (els.chatInput) {
-        els.chatInput.disabled = false;
-        els.chatInput.placeholder = "Tell AgriSense about your plot (e.g. '2 acres in Moulovibazar with BDT 60k budget for boro season')...";
-      }
-      if (els.btnSend) els.btnSend.disabled = false;
+      if (els.userDisplayName) els.userDisplayName.textContent = state.account.full_name || 'Farmer';
+      if (els.userSubscriptionBadge) els.userSubscriptionBadge.classList.remove('hidden');
+      if (els.btnAuthAction) els.btnAuthAction.textContent = 'Log Out';
     } else {
-      els.userDisplayName.textContent = 'Sign In Required';
+      if (els.userDisplayName) els.userDisplayName.textContent = 'Guest Farmer';
       if (els.userSubscriptionBadge) els.userSubscriptionBadge.classList.add('hidden');
-      els.btnAuthAction.textContent = 'Log In / Sign Up';
-      if (els.chatInput) {
-        els.chatInput.disabled = true;
-        els.chatInput.placeholder = '🔒 Please Log In or Sign Up to start chatting with AgriSense...';
-      }
-      if (els.btnSend) els.btnSend.disabled = true;
+      if (els.btnAuthAction) els.btnAuthAction.textContent = 'Log In';
+    }
+    if (els.farmerIdBadge) {
+      els.farmerIdBadge.textContent = state.farmerId ? `ID: ${state.farmerId.slice(0, 12)}...` : '';
     }
   }
   renderAccountUI();
 
-  // Prompt Auth on initial load if unauthenticated
-  if (!state.account && els.modalAuth) {
-    els.modalAuth.classList.remove('hidden');
-  }
-
-  if (els.farmerIdBadge) {
-    els.farmerIdBadge.textContent = state.farmerId.slice(0, 14);
-  }
-
-  // Multi-Chat Session Management
+  // Load Saved Chats
   async function loadSavedChats() {
     if (!state.account) return;
     try {
@@ -214,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderSavedChats() {
     if (!els.chatsList) return;
     if (!state.savedChats || state.savedChats.length === 0) {
-      els.chatsList.innerHTML = `<div class="text-[11px] text-slate-500 italic p-1">No saved chats yet.</div>`;
+      els.chatsList.innerHTML = `<div class="text-xs text-slate-400 italic p-1">No saved chats yet.</div>`;
       return;
     }
 
@@ -222,15 +197,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const isActive = state.sessionId === c.session_id;
       const title = escapeHtml(c.title || 'Farm Advisory Session');
       return `
-        <div class="chat-item group flex items-center justify-between p-1.5 px-2 rounded-lg border text-xs cursor-pointer transition ${
-          isActive ? 'bg-brand-600/20 border-brand-500 text-white font-semibold' : 'bg-slate-800/40 border-slate-700/50 text-slate-300 hover:bg-slate-800'
+        <div class="chat-item group flex items-center justify-between p-2 rounded-lg border text-xs cursor-pointer transition ${
+          isActive
+            ? 'bg-emerald-50 border-emerald-500 text-emerald-950 font-bold shadow-sm'
+            : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
         }" data-session-id="${c.session_id}">
-          <div class="flex items-center gap-1.5 truncate flex-1 pointer-events-none">
-            <i data-lucide="${isActive ? 'message-square' : 'message-circle'}" class="w-3.5 h-3.5 ${isActive ? 'text-brand-400' : 'text-slate-500'} shrink-0"></i>
+          <div class="flex items-center gap-2 truncate flex-1 pointer-events-none">
+            <i data-lucide="${isActive ? 'message-square' : 'message-circle'}" class="w-4 h-4 ${isActive ? 'text-emerald-600' : 'text-slate-400'} shrink-0"></i>
             <span class="truncate">${title}</span>
           </div>
-          <button class="chat-delete-btn p-0.5 text-slate-500 hover:text-red-400 rounded transition opacity-0 group-hover:opacity-100 ml-1" data-session-id="${c.session_id}" title="Delete Chat">
-            <i data-lucide="trash-2" class="w-3 h-3"></i>
+          <button class="chat-delete-btn p-1 text-slate-400 hover:text-red-600 rounded transition opacity-0 group-hover:opacity-100 ml-1" data-session-id="${c.session_id}" title="Delete Chat">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
           </button>
         </div>
       `;
@@ -274,16 +251,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const newSessionId = data.session?.session_id;
         if (newSessionId) {
           state.sessionId = newSessionId;
+          state.farmId = null;
           state.profile = {};
           state.recommendations = [];
           state.selectedCropId = null;
           state.plan = null;
           state.traces = [];
+          state.missingFields = [];
           els.chatContainer.innerHTML = '';
           addAssistantMessage('New chat session started. Tell me about your land location, area, soil texture, irrigation access, or budget.');
           renderProfile();
           renderTraces();
           renderPlan();
+          await loadSavedFarms();
           await loadSavedChats();
         }
       }
@@ -299,10 +279,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!res.ok) throw new Error('Session not found or forbidden');
       const data = await res.json();
       state.sessionId = data.session_id;
+      state.farmId = data.farm_id || null;
       state.profile = data.profile || {};
       state.recommendations = data.recommendations || [];
       state.selectedCropId = data.selected_crop_id;
       state.plan = data.plan;
+      state.traces = [];
 
       els.chatContainer.innerHTML = '';
       const messages = data.messages || [];
@@ -319,8 +301,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       renderProfile();
-      renderTraces();
+      await fetchLiveTraces();
       renderPlan();
+      loadSavedFarms();
       renderSavedChats();
     } catch (e) {
       addAssistantMessage(`Could not switch chat: ${e.message}`);
@@ -338,6 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
           state.sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
           els.chatContainer.innerHTML = '';
           state.profile = {};
+          state.farmId = null;
           state.recommendations = [];
           state.selectedCropId = null;
           state.plan = null;
@@ -377,15 +361,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (els.authTabLogin && els.authTabSignup) {
     els.authTabLogin.addEventListener('click', () => {
-      els.authTabLogin.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition';
-      els.authTabSignup.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition';
+      els.authTabLogin.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition shadow-sm';
+      els.authTabSignup.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition';
       els.formLogin.classList.remove('hidden');
       els.formSignup.classList.add('hidden');
     });
 
     els.authTabSignup.addEventListener('click', () => {
-      els.authTabSignup.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition';
-      els.authTabLogin.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition';
+      els.authTabSignup.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition shadow-sm';
+      els.authTabLogin.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition';
       els.formSignup.classList.remove('hidden');
       els.formLogin.classList.add('hidden');
     });
@@ -411,8 +395,8 @@ document.addEventListener('DOMContentLoaded', () => {
         state.farmerId = acc.farmer_id;
         renderAccountUI();
         els.modalAuth.classList.add('hidden');
-        loadSavedFarms();
-        loadSavedChats();
+        await loadSavedFarms();
+        await loadSavedChats();
         addAssistantMessage(`Welcome back, ${acc.full_name}!`);
       } catch (err) {
         alert(`Login error: ${err.message}`);
@@ -445,8 +429,8 @@ document.addEventListener('DOMContentLoaded', () => {
         state.farmerId = acc.farmer_id;
         renderAccountUI();
         els.modalAuth.classList.add('hidden');
-        loadSavedFarms();
-        loadSavedChats();
+        await loadSavedFarms();
+        await loadSavedChats();
         addAssistantMessage(`Account created & subscription activated! Welcome to AgriSense, ${acc.full_name}.`);
       } catch (err) {
         alert(`Signup error: ${err.message}`);
@@ -477,7 +461,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderSavedFarms() {
     if (!els.savedFarmsList) return;
     if (!state.savedFarms || state.savedFarms.length === 0) {
-      els.savedFarmsList.innerHTML = `<div class="text-[11px] text-slate-500 italic">No saved farms yet.</div>`;
+      els.savedFarmsList.innerHTML = `<div class="text-xs text-slate-400 italic">No saved farms yet.</div>`;
       return;
     }
 
@@ -485,21 +469,27 @@ document.addEventListener('DOMContentLoaded', () => {
       const p = f.profile || {};
       const isSelected = state.farmId === f.farm_id;
       return `
-        <div class="p-2 rounded-lg border transition ${
-          isSelected ? 'bg-brand-500/10 border-brand-500 text-white' : 'bg-slate-800/60 border-slate-700/60 text-slate-300'
+        <div class="p-2.5 rounded-xl border transition shadow-sm ${
+          isSelected
+            ? 'bg-emerald-50 border-emerald-500 text-emerald-950 font-medium'
+            : 'bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300'
         }">
-          <div class="flex items-center justify-between font-semibold mb-0.5">
+          <div class="flex items-center justify-between font-bold text-xs mb-1">
             <span>🏡 ${escapeHtml(f.farm_name)}</span>
-            <span class="text-[10px] font-mono text-slate-400">v${f.profile_version}</span>
+            <span class="text-[10px] font-mono text-slate-500">v${f.profile_version}</span>
           </div>
-          <p class="text-[10px] text-slate-400 mb-1.5">
+          <p class="text-xs text-slate-600 mb-2">
             ${p.farm_size_acre || 2} acres • ${p.soil_type || 'loam'} • ${p.water_availability || 'rainfed'}
           </p>
-          <div class="flex gap-1">
-            <button class="use-farm-btn flex-1 py-0.5 text-[10px] font-semibold rounded bg-brand-600 hover:bg-brand-500 text-white" data-id="${f.farm_id}">
-              ${isSelected ? 'Active' : 'Use Farm'}
+          <div class="flex gap-1.5">
+            <button class="use-farm-btn flex-1 py-1 text-xs font-semibold rounded-lg transition ${
+              isSelected
+                ? 'bg-emerald-700 text-white cursor-default'
+                : 'bg-brand-600 hover:bg-brand-700 text-white shadow-sm'
+            }" data-id="${f.farm_id}">
+              ${isSelected ? 'Active Farm' : 'Use Farm'}
             </button>
-            <button class="forget-farm-btn px-2 py-0.5 text-[10px] font-semibold rounded bg-slate-700 hover:bg-red-600 text-slate-300 hover:text-white" data-id="${f.farm_id}">
+            <button class="forget-farm-btn px-2.5 py-1 text-xs font-medium rounded-lg bg-slate-200 hover:bg-red-600 text-slate-700 hover:text-white transition" data-id="${f.farm_id}">
               Forget
             </button>
           </div>
@@ -510,6 +500,12 @@ document.addEventListener('DOMContentLoaded', () => {
     els.savedFarmsList.querySelectorAll('.use-farm-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = btn.getAttribute('data-id');
+        const farmObj = state.savedFarms.find(sf => sf.farm_id === id);
+        if (farmObj && farmObj.profile) {
+          state.profile = { ...farmObj.profile };
+          state.farmId = id;
+          renderProfile();
+        }
         sendMemoryAction('apply', id);
       });
     });
@@ -527,6 +523,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Send Memory Action API Helper
   async function sendMemoryAction(action, farmId = null) {
     setLoading(true);
+    startLiveTracePolling();
     try {
       const endpoint = state.engine === 'agentic' ? '/v1/agent/agentic-turn' : '/v1/agent/turn';
       const res = await fetch(endpoint, {
@@ -546,6 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (e) {
       addAssistantMessage(`Failed memory action: ${e.message}`);
     } finally {
+      stopLiveTracePolling();
       setLoading(false);
     }
   }
@@ -566,8 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (els.catalogCount) {
           els.catalogCount.textContent = `${data.catalog?.authentic_products || 0} real / ${data.catalog?.synthetic_products || 0} synthetic`;
         }
-        els.backendStatus.classList.remove('bg-slate-800');
-        els.backendStatus.classList.add('bg-emerald-950', 'border-emerald-700/60');
+        els.backendStatus.className = 'flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium';
       } else {
         els.backendText.textContent = 'Backend Error';
       }
@@ -577,29 +574,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   checkHealth();
 
-  // Integrated crop catalog lookup (authentic-only by default)
+  // Integrated crop catalog lookup
   let catalogSearchTimer = null;
 
   function renderCatalogProducts(products) {
     if (!els.catalogResults) return;
     if (!products || products.length === 0) {
-      els.catalogResults.innerHTML = '<div class="text-[11px] text-slate-500 italic">No products found under the current safety filter.</div>';
+      els.catalogResults.innerHTML = '<div class="text-xs text-slate-500 italic">No products found under the current safety filter.</div>';
       return;
     }
     els.catalogResults.innerHTML = products.map(product => {
       const synthetic = product.is_synthetic;
       const originBadge = synthetic
-        ? '<span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">Synthetic test</span>'
-        : '<span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Authentic</span>';
+        ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300 font-semibold">Synthetic test</span>'
+        : '<span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300 font-semibold">Authentic</span>';
       const plannerBadge = product.planner_supported
-        ? '<span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">Planner</span>'
-        : '<span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-700/50 text-slate-400 border border-slate-700">Lookup</span>';
+        ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 border border-blue-300 font-semibold">Planner</span>'
+        : '<span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-300">Lookup</span>';
       return `
-        <button class="catalog-product w-full text-left p-2 rounded-lg bg-slate-800/70 hover:bg-slate-800 border border-slate-700/60 transition" data-product-id="${escapeHtml(product.product_id)}" data-product-name="${escapeHtml(product.canonical_name_en)}">
+        <button class="catalog-product w-full text-left p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 transition shadow-sm" data-product-id="${escapeHtml(product.product_id)}" data-product-name="${escapeHtml(product.canonical_name_en)}">
           <div class="flex items-start justify-between gap-2">
             <div class="min-w-0">
-              <div class="text-[11px] font-semibold text-slate-200 truncate">${escapeHtml(product.canonical_name_en)}${product.canonical_name_bn ? ` · ${escapeHtml(product.canonical_name_bn)}` : ''}</div>
-              <div class="text-[9px] text-slate-500 truncate">${escapeHtml(product.category || 'Agricultural product')}</div>
+              <div class="text-xs font-semibold text-slate-900 truncate">${escapeHtml(product.canonical_name_en)}${product.canonical_name_bn ? ` · ${escapeHtml(product.canonical_name_bn)}` : ''}</div>
+              <div class="text-[11px] text-slate-500 truncate">${escapeHtml(product.category || 'Agricultural product')}</div>
             </div>
             <div class="flex gap-1 shrink-0">${originBadge}${plannerBadge}</div>
           </div>
@@ -632,7 +629,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       renderCatalogProducts(data.products || []);
     } catch (error) {
-      els.catalogResults.innerHTML = `<div class="text-[11px] text-red-400">Catalog unavailable: ${escapeHtml(error.message)}</div>`;
+      els.catalogResults.innerHTML = `<div class="text-xs text-red-600">Catalog unavailable: ${escapeHtml(error.message)}</div>`;
     }
   }
 
@@ -651,31 +648,24 @@ document.addEventListener('DOMContentLoaded', () => {
   if (els.engineAgentic) {
     els.engineAgentic.addEventListener('click', () => {
       state.engine = 'agentic';
-      els.engineAgentic.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 bg-brand-600 text-white shadow';
-      if (els.engineTier0) els.engineTier0.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5';
+      els.engineAgentic.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 bg-brand-600 text-white shadow-sm';
+      if (els.engineTier0) els.engineTier0.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5';
     });
   }
 
   if (els.engineTier0) {
     els.engineTier0.addEventListener('click', () => {
       state.engine = 'tier0';
-      els.engineTier0.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 bg-brand-600 text-white shadow';
-      if (els.engineAgentic) els.engineAgentic.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5';
-    });
-  }
-
-  // Reset Session
-  if (els.btnNewSession) {
-    els.btnNewSession.addEventListener('click', () => {
-      createChatSession();
+      els.engineTier0.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 bg-brand-600 text-white shadow-sm';
+      if (els.engineAgentic) els.engineAgentic.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5';
     });
   }
 
   // Tab Switcher
   if (els.tabTracesBtn) {
     els.tabTracesBtn.addEventListener('click', () => {
-      els.tabTracesBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-brand-400 border-b-2 border-brand-500 flex items-center justify-center gap-1.5';
-      if (els.tabPlanBtn) els.tabPlanBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center justify-center gap-1.5';
+      els.tabTracesBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-brand-700 border-b-2 border-brand-600 flex items-center justify-center gap-2';
+      if (els.tabPlanBtn) els.tabPlanBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-600 border-b-2 border-transparent hover:text-slate-900 flex items-center justify-center gap-2';
       if (els.tabTracesContent) els.tabTracesContent.classList.remove('hidden');
       if (els.tabPlanContent) els.tabPlanContent.classList.add('hidden');
     });
@@ -683,8 +673,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (els.tabPlanBtn) {
     els.tabPlanBtn.addEventListener('click', () => {
-      els.tabPlanBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-brand-400 border-b-2 border-brand-500 flex items-center justify-center gap-1.5';
-      if (els.tabTracesBtn) els.tabTracesBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-400 border-b-2 border-transparent hover:text-slate-200 flex items-center justify-center gap-1.5';
+      els.tabPlanBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-brand-700 border-b-2 border-brand-600 flex items-center justify-center gap-2';
+      if (els.tabTracesBtn) els.tabTracesBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-600 border-b-2 border-transparent hover:text-slate-900 flex items-center justify-center gap-2';
       if (els.tabPlanContent) els.tabPlanContent.classList.remove('hidden');
       if (els.tabTracesContent) els.tabTracesContent.classList.add('hidden');
     });
@@ -698,7 +688,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Handle Enter key in textarea (Enter sends message, Shift+Enter adds newline)
+  // Handle Enter key in textarea
   if (els.chatInput) {
     els.chatInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && !e.shiftKey) {
@@ -714,6 +704,46 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // REAL-TIME TRACE POLLING WHILE TURN IN FLIGHT
+  let liveTraceInterval = null;
+
+  function startLiveTracePolling() {
+    state.isTurnInFlight = true;
+    // Auto switch to Agent Activity tab so user sees reasoning happening in real-time!
+    if (els.tabTracesBtn && typeof els.tabTracesBtn.click === 'function') {
+      els.tabTracesBtn.click();
+    }
+    if (liveTraceInterval) clearInterval(liveTraceInterval);
+    liveTraceInterval = setInterval(fetchLiveTraces, 700);
+    fetchLiveTraces();
+  }
+
+  function stopLiveTracePolling() {
+    state.isTurnInFlight = false;
+    if (liveTraceInterval) {
+      clearInterval(liveTraceInterval);
+      liveTraceInterval = null;
+    }
+    fetchLiveTraces();
+  }
+
+  async function fetchLiveTraces() {
+    if (!state.sessionId) return;
+    try {
+      const res = await fetch(`/v1/sessions/${state.sessionId}/trace`);
+      if (res.ok) {
+        const data = await res.json();
+        const incomingTraces = data.trace || [];
+        if (incomingTraces.length >= state.traces.length) {
+          state.traces = incomingTraces;
+          renderTraces();
+        }
+      }
+    } catch (e) {
+      // Ignore polling errors
+    }
+  }
+
   // Submit Turn Form
   els.chatForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -723,6 +753,7 @@ document.addEventListener('DOMContentLoaded', () => {
     els.chatInput.value = '';
     addUserMessage(message);
     setLoading(true);
+    startLiveTracePolling();
 
     try {
       const endpoint = state.engine === 'agentic' ? '/v1/agent/agentic-turn' : '/v1/agent/turn';
@@ -746,6 +777,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       addAssistantMessage(`Error executing turn: ${err.message}. Ensure backend server is running.`);
     } finally {
+      stopLiveTracePolling();
       setLoading(false);
     }
   });
@@ -797,34 +829,34 @@ document.addEventListener('DOMContentLoaded', () => {
       const isSelected = state.selectedCropId === rec.crop_id;
       const isEligible = rec.eligible;
 
-      card.className = `p-3 rounded-xl border transition flex flex-col justify-between ${
+      card.className = `p-3.5 rounded-xl border transition flex flex-col justify-between shadow-sm ${
         isSelected 
-          ? 'bg-brand-500/10 border-brand-500 text-white shadow-lg shadow-brand-500/10' 
+          ? 'bg-emerald-50 border-emerald-500 text-slate-900 shadow-md ring-2 ring-emerald-500/20' 
           : isEligible 
-            ? 'bg-slate-800/80 border-slate-700/80 hover:border-slate-600 text-slate-200' 
-            : 'bg-slate-900/60 border-red-500/30 text-slate-400 opacity-70'
+            ? 'bg-white border-slate-200 hover:border-slate-300 text-slate-800' 
+            : 'bg-slate-100 border-slate-200 text-slate-400 opacity-75'
       }`;
 
       card.innerHTML = `
         <div>
-          <div class="flex items-center justify-between mb-1">
-            <span class="font-bold text-xs flex items-center gap-1">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="font-bold text-sm text-slate-900 flex items-center gap-1">
               #${idx + 1} ${rec.crop_name}
             </span>
-            <span class="px-1.5 py-0.5 text-[10px] font-mono rounded ${
-              isEligible ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'
+            <span class="px-2 py-0.5 text-xs font-mono font-bold rounded ${
+              isEligible ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-red-100 text-red-800 border border-red-300'
             }">
               Score: ${rec.suitability_score_0_100}/100
             </span>
           </div>
-          <p class="text-[10px] text-slate-400 line-clamp-2 mb-2">${rec.hard_eligibility_reasons?.join(' ') || rec.summary}</p>
+          <p class="text-xs text-slate-600 line-clamp-2 mb-3 leading-relaxed">${rec.hard_eligibility_reasons?.join(' ') || rec.summary}</p>
         </div>
-        <button class="select-crop-btn w-full py-1.5 text-xs font-semibold rounded-lg transition ${
+        <button class="select-crop-btn w-full py-2 text-xs font-semibold rounded-lg transition ${
           isSelected 
-            ? 'bg-brand-500 text-white cursor-default' 
+            ? 'bg-emerald-700 text-white cursor-default' 
             : isEligible 
-              ? 'bg-slate-700 hover:bg-brand-600 text-slate-100 hover:text-white' 
-              : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+              ? 'bg-brand-600 hover:bg-brand-700 text-white shadow-sm' 
+              : 'bg-slate-200 text-slate-400 cursor-not-allowed'
         }" ${!isEligible ? 'disabled' : ''} data-crop="${rec.crop_id}">
           ${isSelected ? 'Selected' : isEligible ? 'Select Crop' : 'Ineligible'}
         </button>
@@ -843,6 +875,7 @@ document.addEventListener('DOMContentLoaded', () => {
   async function selectCrop(cropId) {
     addUserMessage(`Select crop: ${cropId}`);
     setLoading(true);
+    startLiveTracePolling();
     try {
       const endpoint = state.engine === 'agentic' ? '/v1/agent/agentic-turn' : '/v1/agent/turn';
       const res = await fetch(endpoint, {
@@ -861,13 +894,14 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (e) {
       addAssistantMessage(`Failed to select crop: ${e.message}`);
     } finally {
+      stopLiveTracePolling();
       setLoading(false);
     }
   }
 
   // Render Profile
   function renderProfile() {
-    const p = state.profile;
+    const p = state.profile || {};
     els.pLocation.textContent = p.location_text ? `${p.location_text}${p.district ? ', ' + p.district : ''}` : 'Not provided';
     els.pCoords.textContent = (p.latitude && p.longitude) ? `${p.latitude.toFixed(4)}°, ${p.longitude.toFixed(4)}°` : 'Unmapped';
     els.pArea.textContent = p.farm_size_acre ? `${p.farm_size_acre} acres` : '—';
@@ -879,12 +913,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (state.missingFields && state.missingFields.length > 0) {
       els.profileStatus.textContent = 'Collecting';
-      els.profileStatus.className = 'px-2 py-0.5 text-[10px] font-semibold rounded bg-amber-500/10 text-amber-400 border border-amber-500/20';
+      els.profileStatus.className = 'px-2 py-0.5 text-[10px] font-semibold rounded bg-amber-100 text-amber-800 border border-amber-300';
       els.missingBox.classList.remove('hidden');
-      els.missingTags.innerHTML = state.missingFields.map(f => `<span class="px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-300 text-[10px] border border-amber-500/20">${f}</span>`).join('');
+      els.missingTags.innerHTML = state.missingFields.map(f => `<span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 text-xs font-semibold border border-amber-300">${f}</span>`).join('');
     } else {
       els.profileStatus.textContent = 'Complete';
-      els.profileStatus.className = 'px-2 py-0.5 text-[10px] font-semibold rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+      els.profileStatus.className = 'px-2 py-0.5 text-[10px] font-semibold rounded bg-emerald-100 text-emerald-800 border border-emerald-300';
       els.missingBox.classList.add('hidden');
     }
   }
@@ -897,7 +931,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (toolName === 'retrieve_agronomic_context' || toolName === 'retrieve_agronomy') return 'Evidence retrieved';
     if (toolName === 'rank_crop_candidates') return 'Crop ranking calculated';
     if (toolName === 'calculate_financial_projection') return 'Finance calculated';
-    if (toolName === 'generate_dated_season_plan') return 'Completion validation';
+    if (toolName === 'generate_dated_season_plan' || toolName === 'generate_season_plan') return 'Completion validation';
     if (sourceKind === 'direct_tool_invocation') return 'Tool call';
     if (sourceKind === 'agentic_tool_invocation') return 'Agent decision';
     return 'Tool call';
@@ -911,17 +945,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (name.includes('geocode')) {
       return {
-        what: 'TOOL SELECTED - Location Geocoding',
+        what: 'TOOL EXECUTED — Location Geocoding',
         why: 'Spatial coordinates are required to query location-specific weather & soil records.',
         data: `Input: ${p.location_text || p.district || 'Location text'}; Result: ${r.formatted || 'Coordinates resolved'} (${r.latitude?.toFixed(4) || ''}, ${r.longitude?.toFixed(4) || ''})`,
-        next: 'Retrieve live meteorological forecast from Open-Meteo.'
+        next: 'Retrieve live meteorological forecast from Open-Meteo API.'
       };
     }
     if (name.includes('weather')) {
       const summary = r.summary || {};
       return {
-        what: 'TOOL SELECTED - Live Weather Ingestion',
-        why: 'Crop suitability and near-term farm actions require verified rainfall and temperature.',
+        what: 'TOOL EXECUTED — Live Weather Ingestion',
+        why: 'Crop suitability and near-term farm actions require verified rainfall and temperature values.',
         data: `Input: lat ${p.latitude || 0}, lon ${p.longitude || 0}; Result: ${summary.temperature_avg_c || 26}°C mean temp, ${summary.rainfall_forecast_total_mm || 0}mm 7-day rainfall`,
         next: 'Query hybrid RAG store for reviewed extension guidelines.'
       };
@@ -929,15 +963,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (name.includes('agronom') || name.includes('rag')) {
       const count = Array.isArray(r) ? r.length : (r.results ? r.results.length : 1);
       return {
-        what: 'EVIDENCE RETRIEVED - Hybrid RAG Search',
+        what: 'EVIDENCE RETRIEVED — Hybrid RAG Search',
         why: 'Verify BARC/BAMIS extension rules, soil compatibility, and fertilizer schedules.',
         data: `Input: query "${p.query || p.crop_id || 'agronomy'}"; Result: ${count} evidence document chunks retrieved`,
         next: 'Calculate multi-criteria candidate crop suitability scores.'
       };
     }
+    if (name.includes('catalog')) {
+      const count = Array.isArray(r) ? r.length : (r.products ? r.products.length : 1);
+      return {
+        what: 'CATALOG SEARCH — Integrated Product Lookup',
+        why: 'Check product availability, provenance, and planner support in 60/40 database.',
+        data: `Input: query "${p.query || 'product'}"; Result: ${count} product matches returned`,
+        next: 'Proceed to agronomic compatibility and financial modeling.'
+      };
+    }
     if (name.includes('rank')) {
       return {
-        what: 'CALCULATOR - Multi-Criteria Crop Ranking',
+        what: 'CALCULATOR — Multi-Criteria Crop Ranking',
         why: 'Score eligible crops against season fit, soil type, water access, and ROI.',
         data: `Input: Farm profile & weather context; Result: 3 ranked crop candidates with suitability scores`,
         next: 'Present ranked candidates to farmer and await human selection.'
@@ -945,7 +988,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (name.includes('finance')) {
       return {
-        what: 'CALCULATOR - Financial Projection Ledger',
+        what: 'CALCULATOR — Financial Projection Ledger',
         why: 'Compute inspectable cost components, gross revenue, net profit, ROI %, and break-even points.',
         data: `Input: crop_id "${p.crop_id || 'crop'}", budget BDT ${(p.profile?.budget_bdt || 0).toLocaleString()}; Result: Net profit & ROI % calculated`,
         next: 'Construct stage-by-stage dated season calendar.'
@@ -953,7 +996,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (name.includes('plan')) {
       return {
-        what: 'VALIDATION - Season Plan Construction',
+        what: 'VALIDATION — Season Plan Construction',
         why: 'Generate stage-by-stage calendar dates, fertilizer splits, and pest checkpoints with forecast horizon checks.',
         data: `Input: chosen_crop_id "${p.crop_id || 'crop'}"; Result: Reconciled dated calendar & validation pass`,
         next: 'Plan complete. Schedule weather horizon refreshes before future tasks.'
@@ -961,9 +1004,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     return {
-      what: `TOOL SELECTED - ${t.tool_name}`,
+      what: `TOOL EXECUTED — ${t.tool_name}`,
       why: `Executed operational action via ${t.source_kind}.`,
-      data: `Input: ${JSON.stringify(p)}; Result: ${typeof r === 'object' ? JSON.stringify(r).slice(0, 80) : String(r)}`,
+      data: `Input: ${JSON.stringify(p)}; Result: ${typeof r === 'object' ? JSON.stringify(r).slice(0, 90) : String(r)}`,
       next: 'Proceed to next workflow stage.'
     };
   }
@@ -976,51 +1019,61 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update Current Goal Card from real state
     const p = state.profile || {};
     const hasLocation = Boolean(p.latitude && p.longitude);
-    const hasWeather = traces.some(t => t.tool_name.includes('weather'));
-    const hasEvidence = traces.some(t => t.tool_name.includes('agronom') || t.tool_name.includes('rag'));
+    const hasWeather = traces.some(t => (t.tool_name || '').includes('weather'));
+    const hasEvidence = traces.some(t => (t.tool_name || '').includes('agronom') || (t.tool_name || '').includes('rag'));
     const hasRankings = (state.recommendations && state.recommendations.length > 0);
     const hasPlan = Boolean(state.plan);
 
     if (hasPlan) {
       els.goalStage.textContent = 'Plan Built & Validated';
-      els.goalStage.className = 'font-semibold text-emerald-400';
-      els.goalNextAction.textContent = 'Plan complete. Ready for field execution or what-if scenario testing.';
+      els.goalStage.className = 'font-bold text-emerald-700';
+      els.goalNextAction.textContent = 'Plan complete. Ready for field execution or scenario testing.';
     } else if (hasRankings) {
       els.goalStage.textContent = 'Crop Selection Required';
-      els.goalStage.className = 'font-semibold text-amber-400';
-      els.goalNextAction.textContent = 'Rank three crops → Wait for crop selection → Build and validate the plan';
+      els.goalStage.className = 'font-bold text-amber-700';
+      els.goalNextAction.textContent = 'Rank three crops → Select candidate → Construct season plan';
     } else {
       els.goalStage.textContent = 'Collecting Farm Facts';
-      els.goalStage.className = 'font-semibold text-amber-400';
+      els.goalStage.className = 'font-bold text-amber-700';
       els.goalNextAction.textContent = 'Provide location, land size, soil, water, budget & season.';
     }
 
     els.goalMilestones.innerHTML = `
-      <div class="flex items-center gap-1.5">${hasLocation ? '<i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-400"></i> <span class="text-slate-200">Location resolved</span>' : '<i data-lucide="circle" class="w-3 h-3 text-slate-600"></i> Location pending'}</div>
-      <div class="flex items-center gap-1.5">${hasWeather ? '<i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-400"></i> <span class="text-slate-200">Weather retrieved</span>' : '<i data-lucide="circle" class="w-3 h-3 text-slate-600"></i> Weather pending'}</div>
-      <div class="flex items-center gap-1.5">${hasEvidence ? '<i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-400"></i> <span class="text-slate-200">Evidence retrieved</span>' : '<i data-lucide="circle" class="w-3 h-3 text-slate-600"></i> Evidence pending'}</div>
+      <div class="flex items-center gap-1.5">${hasLocation ? '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> <span class="text-slate-900 font-semibold">Location resolved</span>' : '<i data-lucide="circle" class="w-4 h-4 text-slate-400"></i> Location pending'}</div>
+      <div class="flex items-center gap-1.5">${hasWeather ? '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> <span class="text-slate-900 font-semibold">Weather retrieved</span>' : '<i data-lucide="circle" class="w-4 h-4 text-slate-400"></i> Weather pending'}</div>
+      <div class="flex items-center gap-1.5">${hasEvidence ? '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> <span class="text-slate-900 font-semibold">Evidence retrieved</span>' : '<i data-lucide="circle" class="w-4 h-4 text-slate-400"></i> Evidence pending'}</div>
     `;
 
-    if (window.lucide) window.lucide.createIcons();
+    let liveStatusBanner = '';
+    if (state.isTurnInFlight) {
+      liveStatusBanner = `
+        <div class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 space-y-1 mb-3 animate-live-pulse shadow-sm">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping"></span>
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">⚡ Reasoning & Tool Execution in Progress...</span>
+          </div>
+          <p class="text-xs text-emerald-950 font-medium">
+            Gemini is invoking tools in real-time. Traces appear below as executed.
+          </p>
+        </div>
+      `;
+    }
 
     let blockedCardsHtml = '';
     if (state.missingFields && state.missingFields.length > 0) {
       blockedCardsHtml = `
-        <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-200 space-y-2 mb-3">
+        <div class="p-4 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 space-y-2 mb-3.5 shadow-sm">
           <div class="flex items-center justify-between">
-            <span class="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+            <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded bg-amber-100 text-amber-900 border border-amber-300">
               Information Gap Detected
             </span>
-            <span class="text-[10px] text-amber-400 font-semibold">NO TOOL CALL</span>
+            <span class="text-xs text-amber-800 font-bold">NO TOOL CALL</span>
           </div>
-          <p class="text-xs font-semibold text-slate-100">
-            Missing required farm facts: <span class="text-amber-300 font-mono">${state.missingFields.join(', ')}</span>
+          <p class="text-xs font-bold text-slate-900">
+            Missing required farm facts: <span class="text-amber-900 font-mono font-bold">${state.missingFields.join(', ')}</span>
           </p>
-          <p class="text-[11px] text-slate-300 leading-relaxed">
-            <strong>DECISION:</strong> Crop ranking and season planning are BLOCKED. Calling ranking calculators or weather without complete farm size, soil, water, budget, or target season would create a misleading plan.
-          </p>
-          <p class="text-[10px] text-slate-400 border-t border-amber-500/20 pt-1.5">
-            <strong>NEXT ACTION:</strong> Ask targeted follow-up question for remaining missing fields.
+          <p class="text-xs text-slate-800 leading-relaxed">
+            <strong>DECISION:</strong> Crop ranking and season planning are BLOCKED until remaining farm facts are collected.
           </p>
         </div>
       `;
@@ -1031,29 +1084,28 @@ document.addEventListener('DOMContentLoaded', () => {
     if (state.isScenarioDetected || (pProfile.budget_bdt && pProfile.budget_bdt !== 200000)) {
       const currentBgt = pProfile.budget_bdt || 120000;
       scenarioCardHtml = `
-        <div class="p-3.5 rounded-xl bg-purple-950/60 border border-purple-500/40 text-purple-200 space-y-2 mb-3">
+        <div class="p-4 rounded-xl bg-purple-50 border border-purple-300 text-purple-900 space-y-2 mb-3.5 shadow-sm">
           <div class="flex items-center justify-between">
-            <span class="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded bg-purple-500/20 text-purple-200 border border-purple-500/30">
+            <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded bg-purple-100 text-purple-900 border border-purple-300">
               SCENARIO DETECTED
             </span>
-            <span class="text-[10px] text-purple-300 font-mono">Memory Preserved</span>
+            <span class="text-xs text-purple-800 font-mono font-bold">Memory Preserved</span>
           </div>
-          <p class="text-xs font-semibold text-white">
-            Temporary budget override: <span class="text-amber-300 font-mono">BDT ${currentBgt.toLocaleString()}</span>
+          <p class="text-xs font-bold text-slate-900">
+            Temporary budget override: <span class="text-purple-900 font-mono font-bold">BDT ${currentBgt.toLocaleString()}</span>
           </p>
-          <div class="text-[11px] text-purple-200 space-y-1.5 leading-snug">
-            <p><strong>MEMORY POLICY:</strong> The accepted farm budget remains <span class="text-white font-mono">BDT 200,000</span>.</p>
-            <p><strong>DEPENDENCY ANALYSIS:</strong> Affected components: affordable planted area / input allocation, total cost, expected yield, revenue, profit, ROI.</p>
-            <p><strong>RECALCULATION:</strong> Only dependent outputs are recalculated.</p>
-            <p><strong>RESULT:</strong> Base plan retained; scenario comparison generated.</p>
+          <div class="text-xs text-slate-800 space-y-1 leading-snug">
+            <p><strong>MEMORY POLICY:</strong> Base farm budget remains <span class="font-mono font-bold">BDT 200,000</span>.</p>
+            <p><strong>RECALCULATION:</strong> Budget-dependent outputs updated for what-if comparison.</p>
           </div>
         </div>
       `;
     }
 
-    if (traces.length === 0) {
+    if (traces.length === 0 && !state.isTurnInFlight) {
       els.tracesEmpty.classList.remove('hidden');
       els.tracesList.innerHTML = blockedCardsHtml + scenarioCardHtml;
+      if (window.lucide) window.lucide.createIcons();
       return;
     }
 
@@ -1064,42 +1116,42 @@ document.addEventListener('DOMContentLoaded', () => {
       const q = getOperationalFourQuestions(t);
 
       return `
-        <div class="p-3.5 rounded-xl bg-slate-800/80 border border-slate-700/70 hover:border-brand-500/60 transition cursor-pointer trace-item group space-y-2" data-idx="${idx}">
-          <div class="flex items-center justify-between">
-            <span class="font-mono text-xs font-bold text-brand-400 flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-brand-400"></span>
+        <div class="p-4 sm:p-4.5 rounded-xl bg-white border border-slate-200 hover:border-brand-500 transition cursor-pointer trace-item group space-y-3 shadow-sm hover:shadow-md" data-idx="${idx}">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+            <span class="font-mono text-xs sm:text-sm font-bold text-brand-700 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-600"></span>
               #${t.step_no} ${t.tool_name}
             </span>
-            <span class="font-mono text-[10px] text-slate-400">${t.duration_ms ? t.duration_ms.toFixed(1) + 'ms' : ''}</span>
+            <span class="font-mono text-xs font-semibold text-slate-500">${t.duration_ms ? t.duration_ms.toFixed(1) + 'ms' : ''}</span>
           </div>
           
           <div class="flex items-center justify-between">
-            <span class="px-2 py-0.5 text-[9px] font-semibold rounded bg-brand-500/10 text-brand-300 border border-brand-500/20">${judgeLabel}</span>
-            <span class="text-[10px] text-slate-400 font-mono">${t.source_kind}</span>
+            <span class="px-2.5 py-0.5 text-xs font-bold rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200">${judgeLabel}</span>
+            <span class="text-xs text-slate-500 font-mono font-medium">${t.source_kind}</span>
           </div>
 
-          <!-- 4-QUESTION OPERATIONAL BREAKDOWN -->
-          <div class="space-y-1.5 text-[11px] pt-1 border-t border-slate-700/50">
+          <!-- 4-QUESTION OPERATIONAL BREAKDOWN FOR HIGH LEGIBILITY -->
+          <div class="space-y-2.5 text-xs pt-1 border-t border-slate-100">
             <div>
-              <span class="text-slate-400 font-semibold block text-[10px]">1. WHAT HAPPENED?</span>
-              <span class="text-slate-200 font-medium">${escapeHtml(q.what)}</span>
+              <span class="text-slate-500 font-bold block text-[11px] uppercase tracking-wider mb-0.5">1. WHAT HAPPENED?</span>
+              <span class="text-slate-900 font-bold text-xs sm:text-sm leading-relaxed">${escapeHtml(q.what)}</span>
             </div>
             <div>
-              <span class="text-slate-400 font-semibold block text-[10px]">2. WHY WAS IT NEEDED?</span>
-              <span class="text-slate-300">${escapeHtml(q.why)}</span>
+              <span class="text-slate-500 font-bold block text-[11px] uppercase tracking-wider mb-0.5">2. WHY WAS IT NEEDED?</span>
+              <span class="text-slate-700 font-medium text-xs sm:text-sm leading-relaxed">${escapeHtml(q.why)}</span>
             </div>
             <div>
-              <span class="text-slate-400 font-semibold block text-[10px]">3. DATA ENTERED / RETURNED:</span>
-              <span class="text-emerald-300 font-mono text-[10px] block truncate">${escapeHtml(q.data)}</span>
+              <span class="text-slate-500 font-bold block text-[11px] uppercase tracking-wider mb-0.5">3. DATA ENTERED / RETURNED:</span>
+              <span class="text-emerald-800 font-mono text-xs block bg-emerald-50/80 p-2 rounded-md border border-emerald-200/80 overflow-x-auto font-semibold">${escapeHtml(q.data)}</span>
             </div>
             <div>
-              <span class="text-slate-400 font-semibold block text-[10px]">4. WHAT HAPPENS NEXT?</span>
-              <span class="text-brand-300 font-medium">${escapeHtml(q.next)}</span>
+              <span class="text-slate-500 font-bold block text-[11px] uppercase tracking-wider mb-0.5">4. WHAT HAPPENS NEXT?</span>
+              <span class="text-brand-800 font-semibold text-xs sm:text-sm leading-relaxed">${escapeHtml(q.next)}</span>
             </div>
           </div>
 
-          <div class="pt-1 text-right border-t border-slate-700/40">
-            <span class="text-[10px] text-brand-400 group-hover:underline font-medium flex items-center justify-end gap-1">
+          <div class="pt-2 text-right border-t border-slate-100">
+            <span class="text-xs text-brand-700 group-hover:underline font-bold flex items-center justify-end gap-1">
               Inspect Raw JSON Payload &rarr;
             </span>
           </div>
@@ -1107,27 +1159,30 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }).join('');
 
-    els.tracesList.innerHTML = blockedCardsHtml + scenarioCardHtml + traceCardsHtml;
+    els.tracesList.innerHTML = liveStatusBanner + blockedCardsHtml + scenarioCardHtml + traceCardsHtml;
+    if (window.lucide) window.lucide.createIcons();
 
     document.querySelectorAll('.trace-item').forEach(item => {
       item.addEventListener('click', () => {
         const idx = parseInt(item.getAttribute('data-idx'));
-        showTraceModal(traces[idx]);
+        if (traces[idx]) showTraceModal(traces[idx]);
       });
     });
   }
 
   // Show Trace Modal
   function showTraceModal(t) {
-    els.modalTraceTitle.textContent = `Tool Trace #${t.step_no}: ${t.tool_name}`;
+    els.modalTraceTitle.textContent = `Tool Trace #${t.step_no || 'DIRECT'}: ${t.tool_name}`;
     els.modalTraceParams.textContent = JSON.stringify(t.parameters, null, 2);
     els.modalTraceResult.textContent = JSON.stringify(t.raw_result, null, 2);
     els.modalTrace.classList.remove('hidden');
   }
 
-  els.modalTraceClose.addEventListener('click', () => {
-    els.modalTrace.classList.add('hidden');
-  });
+  if (els.modalTraceClose) {
+    els.modalTraceClose.addEventListener('click', () => {
+      els.modalTrace.classList.add('hidden');
+    });
+  }
 
   // Render Plan & Audit Cards
   function renderPlan() {
@@ -1174,24 +1229,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     els.evResult.innerHTML = `
-      <div><span class="text-slate-400 font-medium">Validation Status:</span> <span class="font-semibold font-mono ${plan.validation_status?.passed ? 'text-emerald-400' : 'text-amber-400'}">${plan.validation_status?.passed ? 'Verified' : 'Draft / Unverified'}</span></div>
-      <div><span class="text-slate-400">Seasonal Water Need:</span> <span class="text-slate-200 font-mono">${plan.irrigation_summary?.seasonal_water_requirement_mm_mock || '—'}mm</span></div>
-      <div><span class="text-slate-400">Projected Total Cost:</span> <span class="text-slate-200 font-mono">BDT ${(fin.total_cost_bdt || 0).toLocaleString()}</span></div>
-      <div><span class="text-slate-400 font-bold">Projected Net Profit:</span> <span class="text-brand-400 font-bold font-mono">BDT ${(fin.net_profit_bdt || 0).toLocaleString()}</span></div>
-      <div><span class="text-slate-400">Projected ROI:</span> <span class="text-emerald-400 font-bold font-mono">${(fin.roi_percent || 0).toFixed(1)}%</span></div>
+      <div><span class="text-slate-500 font-medium">Validation Status:</span> <span class="font-bold font-mono ${plan.validation_status?.passed ? 'text-emerald-700' : 'text-amber-700'}">${plan.validation_status?.passed ? 'Verified' : 'Draft / Unverified'}</span></div>
+      <div><span class="text-slate-500 font-medium">Seasonal Water Need:</span> <span class="text-slate-800 font-mono font-semibold">${plan.irrigation_summary?.seasonal_water_requirement_mm_mock || '—'}mm</span></div>
+      <div><span class="text-slate-500 font-medium">Projected Total Cost:</span> <span class="text-slate-800 font-mono font-semibold">BDT ${(fin.total_cost_bdt || 0).toLocaleString()}</span></div>
+      <div><span class="text-slate-500 font-bold">Projected Net Profit:</span> <span class="text-brand-700 font-bold font-mono">BDT ${(fin.net_profit_bdt || 0).toLocaleString()}</span></div>
+      <div><span class="text-slate-500 font-medium">Projected ROI:</span> <span class="text-emerald-700 font-bold font-mono">${(fin.roi_percent || 0).toFixed(1)}%</span></div>
     `;
 
-    // Populate Scenario Comparison Table if scenario result returned from backend
+    // Populate Scenario Comparison Table if scenario result returned
     const scenario = state.scenario;
     if (scenario && scenario.deltas) {
       els.scenarioBox.classList.remove('hidden');
       const tbodyScen = els.scenarioTable.querySelector('tbody');
       tbodyScen.innerHTML = Object.entries(scenario.deltas).map(([k, v]) => `
         <tr>
-          <td class="p-2 font-medium text-slate-300 capitalize">${k.replace('_', ' ')}</td>
-          <td class="p-2 text-right text-slate-400">${v.baseline ?? '—'}</td>
-          <td class="p-2 text-right text-amber-300">${v.scenario ?? '—'}</td>
-          <td class="p-2 text-right text-brand-400">${v.delta ?? '—'}</td>
+          <td class="p-2 font-medium text-slate-800 capitalize">${k.replace('_', ' ')}</td>
+          <td class="p-2 text-right text-slate-600">${v.baseline ?? '—'}</td>
+          <td class="p-2 text-right text-amber-800 font-bold">${v.scenario ?? '—'}</td>
+          <td class="p-2 text-right text-brand-700 font-bold">${v.delta ?? '—'}</td>
         </tr>
       `).join('');
     } else {
@@ -1205,12 +1260,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const taskDate = t.start_date ? `${t.start_date}${t.end_date ? ' → ' + t.end_date : ''}` : 'Scheduled';
       const detail = t.description || t.stage_purpose || (t.quantity ? `${t.quantity.value} ${t.quantity.unit}` : '');
       return `
-        <div class="p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50">
-          <div class="flex items-center justify-between text-xs font-semibold text-slate-200 mb-1">
+        <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between text-xs font-bold text-slate-900 mb-1">
             <span>${escapeHtml(taskName)}</span>
-            <span class="font-mono text-[10px] text-brand-400">${escapeHtml(taskDate)}</span>
+            <span class="font-mono text-xs text-brand-700">${escapeHtml(taskDate)}</span>
           </div>
-          ${detail ? `<p class="text-[11px] text-slate-400 mb-1.5">${escapeHtml(detail)}</p>` : ''}
+          ${detail ? `<p class="text-xs text-slate-600 leading-relaxed">${escapeHtml(detail)}</p>` : ''}
         </div>
       `;
     }).join('');
@@ -1218,6 +1273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fertilizer Split Table
     const tbody = els.planFertilizerTable.querySelector('tbody');
     const fertilizerList = [];
+    const stages = plan.stages || [];
     stages.forEach(s => {
       (s.fertilizer_tasks || []).forEach(ft => {
         (ft.products || []).forEach(p => {
@@ -1231,13 +1287,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (fertilizerList.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-slate-500">No split fertilizer applications recorded.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-slate-500 italic">No split fertilizer applications recorded.</td></tr>`;
     } else {
       tbody.innerHTML = fertilizerList.map(item => `
         <tr>
-          <td class="p-2 font-medium text-slate-300">${item.stage}</td>
-          <td class="p-2 text-slate-400">${item.product}</td>
-          <td class="p-2 text-right font-mono font-semibold text-brand-400">${item.kg} kg</td>
+          <td class="p-2.5 font-medium text-slate-800">${item.stage}</td>
+          <td class="p-2.5 text-slate-600">${item.product}</td>
+          <td class="p-2.5 text-right font-mono font-bold text-brand-700">${item.kg} kg</td>
         </tr>
       `).join('');
     }
@@ -1270,7 +1326,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const msg = document.createElement('div');
     msg.className = 'flex justify-end animate-fade-in';
     msg.innerHTML = `
-      <div class="max-w-xl p-3.5 rounded-2xl bg-brand-600 text-white text-sm shadow-md rounded-tr-none markdown-content">
+      <div class="max-w-xl p-4 rounded-2xl bg-brand-600 text-white text-sm sm:text-base font-medium shadow-sm rounded-tr-none markdown-content leading-relaxed">
         ${renderMarkdown(text)}
       </div>
     `;
@@ -1287,11 +1343,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let summaryHtml = '';
     if (decisionSummary && decisionSummary.length > 0) {
       summaryHtml = `
-        <details class="mb-3 rounded-xl bg-slate-900 border border-slate-800 p-2 text-xs">
-          <summary class="font-medium text-brand-400 cursor-pointer flex items-center gap-1.5 select-none">
+        <details class="mb-3 rounded-xl bg-slate-50 border border-slate-200 p-2.5 text-xs">
+          <summary class="font-bold text-brand-700 cursor-pointer flex items-center gap-1.5 select-none">
             <span>🧠 Proof of Thinking & Decision Process</span>
           </summary>
-          <ul class="mt-2 space-y-1 text-slate-400 pl-4 list-disc text-[11px]">
+          <ul class="mt-2 space-y-1 text-slate-700 pl-4 list-disc text-xs leading-relaxed">
             ${decisionSummary.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
           </ul>
         </details>
@@ -1303,13 +1359,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const topCand = memoryContext?.saved_farms?.[0];
       const farmId = topCand?.farm_id;
       memoryActionControlsHtml = `
-        <div class="mt-3 p-3 rounded-xl bg-brand-950/40 border border-brand-500/30 flex flex-col gap-2">
-          <p class="text-xs text-brand-200 font-medium">Persistent Memory Confirmation Required:</p>
+        <div class="mt-3 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex flex-col gap-2 shadow-sm">
+          <p class="text-xs text-emerald-900 font-bold">Persistent Memory Confirmation Required:</p>
           <div class="flex gap-2">
-            <button class="mem-action-btn flex-1 py-1.5 px-3 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold shadow transition" data-action="apply" data-farm-id="${farmId || ''}">
+            <button class="mem-action-btn flex-1 py-2 px-3 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold shadow transition" data-action="apply" data-farm-id="${farmId || ''}">
               ✓ Use Saved Farm
             </button>
-            <button class="mem-action-btn flex-1 py-1.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 transition" data-action="decline">
+            <button class="mem-action-btn flex-1 py-2 px-3 rounded-lg bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-300 transition shadow-sm" data-action="decline">
               ✕ Start Fresh
             </button>
           </div>
@@ -1317,16 +1373,16 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     } else if (status === 'needs_memory_conflict_resolution') {
       memoryActionControlsHtml = `
-        <div class="mt-3 p-3 rounded-xl bg-amber-950/40 border border-amber-500/30 flex flex-col gap-2">
-          <p class="text-xs text-amber-200 font-medium">Memory Conflict Resolution Required:</p>
+        <div class="mt-3 p-3.5 rounded-xl bg-amber-50 border border-amber-200 flex flex-col gap-2 shadow-sm">
+          <p class="text-xs text-amber-900 font-bold">Memory Conflict Resolution Required:</p>
           <div class="flex flex-wrap gap-2">
-            <button class="mem-action-btn py-1.5 px-3 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold transition" data-action="confirm_update">
+            <button class="mem-action-btn py-2 px-3 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold transition shadow-sm" data-action="confirm_update">
               Permanent Update
             </button>
-            <button class="mem-action-btn py-1.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 transition" data-action="use_temporarily">
+            <button class="mem-action-btn py-2 px-3 rounded-lg bg-white hover:bg-slate-100 text-slate-800 text-xs font-semibold border border-slate-300 transition shadow-sm" data-action="use_temporarily">
               Use Temporarily
             </button>
-            <button class="mem-action-btn py-1.5 px-3 rounded-lg bg-purple-900 hover:bg-purple-800 text-purple-200 text-xs font-medium border border-purple-700 transition" data-action="create_new">
+            <button class="mem-action-btn py-2 px-3 rounded-lg bg-purple-100 hover:bg-purple-200 text-purple-900 text-xs font-semibold border border-purple-300 transition shadow-sm" data-action="create_new">
               Create Another Farm
             </button>
           </div>
@@ -1335,10 +1391,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     msg.innerHTML = `
-      <div class="w-8 h-8 rounded-xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center shrink-0 mt-0.5">
+      <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
         <i data-lucide="bot" class="w-5 h-5"></i>
       </div>
-      <div class="max-w-2xl p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-sm text-slate-200 shadow-md rounded-tl-none space-y-2">
+      <div class="max-w-2xl p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 text-sm sm:text-base text-slate-800 shadow-sm rounded-tl-none space-y-2">
         ${summaryHtml}
         <div class="leading-relaxed markdown-content">${renderMarkdown(text)}</div>
         ${memoryActionControlsHtml}

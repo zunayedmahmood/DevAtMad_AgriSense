@@ -1,34 +1,36 @@
-/* AgriSense UI Styles */
+/* AgriSense UI Styles — Light Mode Theme */
 body {
   font-family: 'Inter', sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
 }
 
 code, pre, .font-mono {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar for Light Mode */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(51, 65, 85, 0.8);
+  background: #cbd5e1;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(71, 85, 105, 1);
+  background: #94a3b8;
 }
 
 /* Pulse Glow Effects */
 .glow-emerald {
-  box-shadow: 0 0 20px -5px rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 20px -5px rgba(22, 163, 74, 0.25);
 }
 
 /* Message Animation */
@@ -41,9 +43,19 @@ code, pre, .font-mono {
   animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Pulse animation for live reasoning status */
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.97); }
+}
+.animate-live-pulse {
+  animation: livePulse 1.5s ease-in-out infinite;
+}
+
 /* Markdown Content Styles inside Chat Messages */
 .markdown-content p {
   margin-bottom: 0.5rem;
+  line-height: 1.6;
 }
 .markdown-content p:last-child {
   margin-bottom: 0;
@@ -62,63 +74,63 @@ code, pre, .font-mono {
 }
 .markdown-content li {
   margin-bottom: 0.25rem;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 .markdown-content strong, .markdown-content b {
   font-weight: 600;
-  color: #f8fafc;
+  color: #0f172a;
 }
 .markdown-content em, .markdown-content i {
   font-style: italic;
-  color: #cbd5e1;
+  color: #334155;
 }
 .markdown-content h1 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #f8fafc;
-  margin-top: 0.75rem;
-  margin-bottom: 0.375rem;
+  color: #0f172a;
+  margin-top: 0.875rem;
+  margin-bottom: 0.5rem;
 }
 .markdown-content h2 {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #f8fafc;
-  margin-top: 0.75rem;
-  margin-bottom: 0.375rem;
+  color: #0f172a;
+  margin-top: 0.875rem;
+  margin-bottom: 0.5rem;
 }
 .markdown-content h3 {
   font-size: 1rem;
   font-weight: 600;
-  color: #4ade80;
-  margin-top: 0.5rem;
-  margin-bottom: 0.25rem;
+  color: #15803d;
+  margin-top: 0.75rem;
+  margin-bottom: 0.375rem;
 }
 .markdown-content h4, .markdown-content h5, .markdown-content h6 {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #e2e8f0;
+  color: #334155;
   margin-top: 0.5rem;
   margin-bottom: 0.25rem;
 }
 .markdown-content code {
   font-family: 'JetBrains Mono', monospace;
-  background-color: rgba(15, 23, 42, 0.8);
-  color: #86efac;
-  padding: 0.125rem 0.375rem;
+  background-color: #f1f5f9;
+  color: #15803d;
+  padding: 0.15rem 0.4rem;
   border-radius: 0.25rem;
-  border: 1px solid rgba(51, 65, 85, 0.5);
+  border: 1px solid #e2e8f0;
   font-size: 0.8125rem;
 }
 .markdown-content pre {
   font-family: 'JetBrains Mono', monospace;
-  background-color: #0f172a;
-  color: #e2e8f0;
-  padding: 0.75rem;
+  background-color: #f8fafc;
+  color: #0f172a;
+  padding: 0.875rem;
   border-radius: 0.5rem;
-  border: 1px solid #334155;
+  border: 1px solid #e2e8f0;
   overflow-x: auto;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
 }
 .markdown-content pre code {
   background-color: transparent;
@@ -128,34 +140,34 @@ code, pre, .font-mono {
   color: inherit;
 }
 .markdown-content blockquote {
-  border-left: 3px solid #22c55e;
+  border-left: 3px solid #16a34a;
   padding-left: 0.75rem;
   font-style: italic;
-  color: #94a3b8;
+  color: #475569;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
 .markdown-content table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
   font-size: 0.8125rem;
 }
 .markdown-content th {
-  background-color: rgba(30, 41, 59, 0.8);
-  border: 1px solid #334155;
-  padding: 0.375rem 0.625rem;
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem 0.75rem;
   text-align: left;
   font-weight: 600;
-  color: #cbd5e1;
+  color: #334155;
 }
 .markdown-content td {
-  border: 1px solid #334155;
-  padding: 0.375rem 0.625rem;
-  color: #94a3b8;
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem 0.75rem;
+  color: #475569;
 }
 .markdown-content a {
-  color: #4ade80;
+  color: #16a34a;
   text-decoration: underline;
 }
