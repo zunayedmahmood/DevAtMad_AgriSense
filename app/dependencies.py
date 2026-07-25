@@ -74,12 +74,12 @@ def get_services() -> Services:
     )
 
     from app.services.agent import TierZeroAgent
-    from app.services.gemini_agent import GeminiAgenticEngine
+    from app.services.openai_agent import OpenAIAgenticEngine
     from app.agent.controller import AgentController
 
     tier_zero = TierZeroAgent(srv)
-    gemini_engine = GeminiAgenticEngine(srv)
-    srv.fallback_agent = gemini_engine  # agentic-turn uses Gemini; it falls back to tier_zero internally
+    openai_engine = OpenAIAgenticEngine(srv)
+    srv.fallback_agent = openai_engine
     srv.controller = AgentController(srv)
 
     return srv

@@ -10,7 +10,7 @@ from app.schemas import AgentTurnRequest, FarmProfile, MemoryContext
 from app.services.agent import TierZeroAgent
 from app.services.finance import FinancialCalculator
 from app.services.geocoding import GeoapifyClient, LocationNormalizer
-from app.services.gemini_agent import GeminiAgenticEngine
+from app.services.openai_agent import OpenAIAgenticEngine
 from app.services.kb import KnowledgeRepository
 from app.services.memory import MemoryService
 from app.services.planner import SeasonPlanner
@@ -351,8 +351,8 @@ async def test_accepted_plans_are_immutable(test_services: Services):
 
 
 @pytest.mark.asyncio
-async def test_gemini_fallback_does_not_duplicate_messages(test_services: Services):
-    engine = GeminiAgenticEngine(test_services)
+async def test_openai_fallback_does_not_duplicate_messages(test_services: Services):
+    engine = OpenAIAgenticEngine(test_services)
     session_id = "sess_dedup_1"
 
     # Execute fallback turn

@@ -29,15 +29,11 @@ class Settings(BaseSettings):
     geocode_cache_ttl_seconds: int = 2_592_000
     geoapify_min_confidence: float = 0.45
 
-    # LLM Provider Configuration
-    llm_provider: str = "gemini"
-    gemini_api_key: str | None = None
-    gemini_api_key_2: str | None = None
-    gemini_api_key_3: str | None = None
-    gemini_api_key_4: str | None = None
-    gemini_api_keys: str | None = None
-    gemini_model: str = "gemini-2.0-flash"
+    # LLM Provider Configuration (OpenAI Multi-Key Pool)
+    llm_provider: str = "openai"
     openai_api_key: str | None = None
+    openai_api_key_2: str | None = None
+    openai_api_keys: str | None = None
     openai_model: str = "gpt-4o-mini"
     agrisense_backend_url: str = "http://localhost:8000"
 

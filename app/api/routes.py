@@ -22,7 +22,7 @@ from app.schemas import (
     UpdateSessionTitleRequest,
 )
 from app.services.agent import TierZeroAgent
-from app.services.gemini_agent import GeminiAgenticEngine
+from app.services.openai_agent import OpenAIAgenticEngine
 from app.services.ingestion import build_rag
 from app.services.trace import TraceRecorder
 from app.tools.registry import ToolRegistry
@@ -47,7 +47,7 @@ def health() -> dict[str, Any]:
         "environment": services.settings.app_env,
         "external_mode": services.settings.external_mode,
         "llm_provider": services.settings.llm_provider,
-        "gemini_configured": bool(services.settings.gemini_api_key or os.environ.get("GEMINI_API_KEY")),
+        "openai_configured": bool(services.settings.openai_api_key or os.environ.get("OPENAI_API_KEY")),
         "geoapify_configured": bool(services.settings.geoapify_api_key),
         "rag": rag_stats,
         "catalog": catalog_stats,

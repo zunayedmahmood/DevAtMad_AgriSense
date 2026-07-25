@@ -1052,7 +1052,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-900">⚡ AGENT REASONING IN PROGRESS...</span>
           </div>
           <p class="text-xs sm:text-sm text-emerald-950 font-bold">
-            Gemini is executing live tool calls. Real-time traces update below as completed.
+            OpenAI is executing live tool calls. Real-time traces update below as completed.
           </p>
         </div>
       `;
