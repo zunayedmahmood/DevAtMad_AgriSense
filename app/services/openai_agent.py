@@ -109,7 +109,7 @@ class OpenAIAgenticEngine:
     ) -> AgentTurnResponse:
         from openai import AsyncOpenAI
 
-        model_name = self.settings.openai_model or "gpt-4o-mini"
+        model_name = self.settings.openai_model or "gpt-5.5"
         openai_tools = self._convert_catalog_to_openai_tools()
 
         # Construct conversation history

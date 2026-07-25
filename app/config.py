@@ -34,7 +34,7 @@ class Settings(BaseSettings):
     openai_api_key: str | None = None
     openai_api_key_2: str | None = None
     openai_api_keys: str | None = None
-    openai_model: str = "gpt-4o-mini"
+    openai_model: str = "gpt-5.5"
     agrisense_backend_url: str = "http://localhost:8000"
 
     rag_db_path: Path = BASE_DIR / "data/processed/rag.sqlite3"

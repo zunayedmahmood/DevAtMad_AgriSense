@@ -19,7 +19,7 @@ class OpenAIKeyPool:
     - Handles rate-limit errors (429 / RateLimitError) with instant key failover.
     """
 
-    def __init__(self, keys: List[str], max_req_per_min_per_key: int = 30):
+    def __init__(self, keys: List[str], max_req_per_min_per_key: int = 1700):
         clean_keys = []
         for k in keys:
             if k and isinstance(k, str):
@@ -56,7 +56,7 @@ class OpenAIKeyPool:
             if val and isinstance(val, str) and val.strip():
                 collected.append(val.strip())
 
-        return cls(keys=collected, max_req_per_min_per_key=30)
+        return cls(keys=collected, max_req_per_min_per_key=1700)
 
     def has_valid_keys(self) -> bool:
         return len(self.keys) > 0
