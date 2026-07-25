@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-100 text-slate-900">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriSense AI — Part VIII Failure Recovery & Audit Log</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="h-full flex flex-col font-sans antialiased bg-slate-100 text-slate-900 overflow-y-auto">
+
+  <!-- TOP HEADER -->
+  <header class="h-16 border-b border-slate-200 bg-white px-6 flex items-center justify-between shrink-0 shadow-sm">
+    <div class="flex items-center gap-3">
+      <a href="/ui/" class="w-10 h-10 rounded-xl bg-brand-700 flex items-center justify-center text-white shadow-md">
+        <i data-lucide="shield-check" class="w-6 h-6"></i>
+      </a>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="font-extrabold text-lg text-slate-900">AgriSense Failure Recovery & Audit Dashboard</h1>
+          <span class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">Part VIII Compliant</span>
+        </div>
+        <p class="text-xs text-slate-500 font-medium">Controlled Geolocation Fallbacks, Failclosed Paths, & Provenance Classification</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a href="/ui/" class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-800 border border-slate-300 transition">
+        ← Back to Main Advisory UI
+      </a>
+      <a href="/ui/testing.html" class="px-3.5 py-1.5 rounded-lg bg-brand-700 hover:bg-brand-800 text-xs font-bold text-white shadow-sm transition">
+        View Automated Tests Dashboard →
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-6xl mx-auto w-full p-6 space-y-6 flex-1">
+    
+    <!-- OVERVIEW BANNER -->
+    <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2">
+      <h2 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+        <i data-lucide="life-buoy" class="w-5 h-5 text-amber-700"></i>
+        Part VIII Failure Recovery & Audit Discipline
+      </h2>
+      <p class="text-sm text-slate-700 font-medium leading-relaxed">
+        AgriSense strictly enforces controlled fallback mechanisms and failclosed paths. If an external API fails (such as Geoapify geocoding or rate-limited Gemini LLM keys), the system uses explicit, approved fallbacks without inventing data or hallucinating unverified weather.
+      </p>
+    </div>
+
+    <!-- RECOVERY DISCIPLINE CARDS -->
+    <div class="grid grid-cols-2 gap-6">
+      
+      <!-- CARD 1: GEOLOCATION FALLBACK -->
+      <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+          <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
+            <i data-lucide="map-pin-off" class="w-5 h-5 text-amber-700"></i>
+            Controlled Geolocation Fallback
+          </h3>
+          <span class="px-2.5 py-0.5 text-xs font-mono font-bold rounded bg-amber-100 text-amber-900 border border-amber-300">GEOAPIFY → GAZETTEER</span>
+        </div>
+        <div class="space-y-2 text-xs font-mono">
+          <div class="p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <strong class="text-slate-900 block mb-1 font-sans">1. PRIMARY CALL: Geoapify Geocoding API</strong>
+            <span class="text-slate-600">Request: geocode_location("Shibchar, Madaripur") → Timeout / Provider Error</span>
+          </div>
+          <div class="p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <strong class="text-slate-900 block mb-1 font-sans">2. RECOVERY ACTION: Approved Gazetteer Fallback</strong>
+            <span class="text-slate-600">Lookup: mock_location_centroids.json → Centroid (23.3500°, 90.1500°)</span>
+          </div>
+          <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200">
+            <strong class="text-emerald-900 block mb-1 font-sans">3. RESULT: Plan Weather Weather Grounded</strong>
+            <span class="text-emerald-800">Weather API called with verified centroid coordinates. Plan remains grounded.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2: RATE LIMIT FAILOVER -->
+      <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+          <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
+            <i data-lucide="rotate-cw" class="w-5 h-5 text-brand-700"></i>
+            LLM Rate Limit Failover (429 Recovery)
+          </h3>
+          <span class="px-2.5 py-0.5 text-xs font-mono font-bold rounded bg-emerald-100 text-emerald-900 border border-emerald-300">4-KEY POOL</span>
+        </div>
+        <div class="space-y-2 text-xs font-mono">
+          <div class="p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <strong class="text-slate-900 block mb-1 font-sans">1. PRIMARY CALL: Key #1</strong>
+            <span class="text-slate-600">Gemini generateContent → HTTP 429 RESOURCE_EXHAUSTED</span>
+          </div>
+          <div class="p-3 rounded-lg bg-slate-50 border border-slate-200">
+            <strong class="text-slate-900 block mb-1 font-sans">2. RECOVERY ACTION: Instant Key Rotation</strong>
+            <span class="text-slate-600">Key #1 put into 15s cooldown → Key #2 acquired instantly</span>
+          </div>
+          <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200">
+            <strong class="text-emerald-900 block mb-1 font-sans">3. RESULT: Zero User Interruption</strong>
+            <span class="text-emerald-800">Turn executes seamlessly at 45+ req/min aggregate capacity.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PROVENANCE EVIDENCE CLASSIFICATION AUDIT -->
+    <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+      <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2 border-b border-slate-200 pb-3">
+        <i data-lucide="shield-alert" class="w-5 h-5 text-emerald-700"></i>
+        Three-Tier Evidence Provenance Classification
+      </h2>
+
+      <div class="grid grid-cols-3 gap-4 text-xs font-medium">
+        <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-300 space-y-2">
+          <span class="font-extrabold text-emerald-900 text-sm block">🟢 REAL / REVIEWED</span>
+          <ul class="space-y-1 text-slate-800 list-disc pl-4">
+            <li>Farmer profile inputs</li>
+            <li>Geoapify spatial coordinates</li>
+            <li>Open-Meteo live weather data</li>
+            <li>BARC FRG-2024 extension evidence</li>
+            <li>BAMIS crop calendar guidance</li>
+          </ul>
+        </div>
+
+        <div class="p-4 rounded-xl bg-amber-50 border border-amber-300 space-y-2">
+          <span class="font-extrabold text-amber-900 text-sm block">🟡 SEEDED DEMO ASSUMPTIONS</span>
+          <ul class="space-y-1 text-slate-800 list-disc pl-4">
+            <li>Fertilizer rates without soil test</li>
+            <li>Baseline yield expectations</li>
+            <li>Input market prices</li>
+            <li>Crop selling price defaults</li>
+            <li>Pest prevention costs</li>
+          </ul>
+        </div>
+
+        <div class="p-4 rounded-xl bg-blue-50 border border-blue-300 space-y-2">
+          <span class="font-extrabold text-blue-900 text-sm block">🔵 CALCULATED BY CODE</span>
+          <ul class="space-y-1 text-slate-800 list-disc pl-4">
+            <li>Suitability score components</li>
+            <li>Total input costs</li>
+            <li>Gross revenue & net profit</li>
+            <li>ROI % & break-even price</li>
+            <li>Scenario delta comparisons</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    if (window.lucide) window.lucide.createIcons();
+  </script>
+</body>
+</html>

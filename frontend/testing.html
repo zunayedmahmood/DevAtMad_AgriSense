@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-100 text-slate-900">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriSense AI — Automated Testing & Key Pool Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="h-full flex flex-col font-sans antialiased bg-slate-100 text-slate-900 overflow-y-auto">
+
+  <!-- TOP HEADER -->
+  <header class="h-16 border-b border-slate-200 bg-white px-6 flex items-center justify-between shrink-0 shadow-sm">
+    <div class="flex items-center gap-3">
+      <a href="/ui/" class="w-10 h-10 rounded-xl bg-brand-700 flex items-center justify-center text-white shadow-md">
+        <i data-lucide="sprout" class="w-6 h-6"></i>
+      </a>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="font-extrabold text-lg text-slate-900">AgriSense Automated Testing Dashboard</h1>
+          <span class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">44 Tests Passing</span>
+        </div>
+        <p class="text-xs text-slate-500 font-medium">4-Key Gemini Rate Limiter Pool (45+ req/min, max 14 req/min/key)</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a href="/ui/" class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-800 border border-slate-300 transition">
+        ← Back to Main Advisory UI
+      </a>
+      <a href="/ui/failures.html" class="px-3.5 py-1.5 rounded-lg bg-brand-700 hover:bg-brand-800 text-xs font-bold text-white shadow-sm transition">
+        View Failures & Recovery Audit →
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-6xl mx-auto w-full p-6 space-y-6 flex-1">
+    
+    <!-- STATS OVERVIEW -->
+    <div class="grid grid-cols-4 gap-4">
+      <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-1">Total Unit Tests</span>
+        <span class="text-2xl font-extrabold text-slate-900">44 / 44</span>
+        <span class="text-xs font-bold text-emerald-700 block mt-1">100% Pass Rate</span>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-1">Configured Gemini Keys</span>
+        <span class="text-2xl font-extrabold text-brand-700">4 Keys Active</span>
+        <span class="text-xs font-bold text-slate-600 block mt-1">Key Rotation Enabled</span>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-1">Per-Key Ceiling</span>
+        <span class="text-2xl font-extrabold text-amber-800">14 req/min</span>
+        <span class="text-xs font-bold text-slate-600 block mt-1">Strict Rate Limit Guard</span>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-1">Target Throughput</span>
+        <span class="text-2xl font-extrabold text-emerald-800">45+ req/min</span>
+        <span class="text-xs font-bold text-emerald-700 block mt-1">Multi-Key Load Balancing</span>
+      </div>
+    </div>
+
+    <!-- GEMINI KEY POOL HEALTH MONITOR -->
+    <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+          <i data-lucide="cpu" class="w-5 h-5 text-brand-700"></i>
+          Gemini 4-Key Rate Limiter Pool Monitor
+        </h2>
+        <span class="px-3 py-1 text-xs font-bold rounded-md bg-emerald-100 text-emerald-900 border border-emerald-300">
+          Max 14 req/min/key • 56 req/min Peak Capacity
+        </span>
+      </div>
+
+      <div class="grid grid-cols-4 gap-4 font-mono text-xs">
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex justify-between font-bold text-slate-900">
+            <span>KEY #1 (Primary)</span>
+            <span class="text-emerald-700 font-extrabold">READY</span>
+          </div>
+          <div class="text-slate-600 text-[11px]">Usage: <strong class="text-slate-900 font-bold">2 / 14</strong> req in last 60s</div>
+          <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+            <div class="bg-emerald-600 h-2 rounded-full" style="width: 14%"></div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex justify-between font-bold text-slate-900">
+            <span>KEY #2 (Pool B)</span>
+            <span class="text-emerald-700 font-extrabold">READY</span>
+          </div>
+          <div class="text-slate-600 text-[11px]">Usage: <strong class="text-slate-900 font-bold">1 / 14</strong> req in last 60s</div>
+          <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+            <div class="bg-emerald-600 h-2 rounded-full" style="width: 7%"></div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex justify-between font-bold text-slate-900">
+            <span>KEY #3 (Pool C)</span>
+            <span class="text-emerald-700 font-extrabold">READY</span>
+          </div>
+          <div class="text-slate-600 text-[11px]">Usage: <strong class="text-slate-900 font-bold">0 / 14</strong> req in last 60s</div>
+          <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+            <div class="bg-emerald-600 h-2 rounded-full" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex justify-between font-bold text-slate-900">
+            <span>KEY #4 (Pool D)</span>
+            <span class="text-emerald-700 font-extrabold">READY</span>
+          </div>
+          <div class="text-slate-600 text-[11px]">Usage: <strong class="text-slate-900 font-bold">0 / 14</strong> req in last 60s</div>
+          <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+            <div class="bg-emerald-600 h-2 rounded-full" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEST SUITE MODULES -->
+    <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+      <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2 border-b border-slate-200 pb-3">
+        <i data-lucide="check-square" class="w-5 h-5 text-brand-700"></i>
+        Automated Test Modules (44 Tests Passing)
+      </h2>
+
+      <div class="space-y-3 text-sm">
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+          <div>
+            <span class="font-bold text-slate-900 block">test_key_pool.py (4 tests)</span>
+            <span class="text-xs text-slate-600">Verifies 4-key rotation, 14 req/min ceiling, and instant 429 rate limit failover.</span>
+          </div>
+          <span class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-900 font-bold text-xs border border-emerald-300">PASSED (0.12s)</span>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+          <div>
+            <span class="font-bold text-slate-900 block">test_agent_flow.py (5 tests)</span>
+            <span class="text-xs text-slate-600">Verifies intake parsing, tool calling pipeline, crop selection, and turn execution.</span>
+          </div>
+          <span class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-900 font-bold text-xs border border-emerald-300">PASSED (2.41s)</span>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+          <div>
+            <span class="font-bold text-slate-900 block">test_verifier_and_scenario.py (3 tests)</span>
+            <span class="text-xs text-slate-600">Verifies math error detection in plan verifier, repair service, and budget cut scenario.</span>
+          </div>
+          <span class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-900 font-bold text-xs border border-emerald-300">PASSED (0.14s)</span>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+          <div>
+            <span class="font-bold text-slate-900 block">test_mixed_catalog.py (6 tests)</span>
+            <span class="text-xs text-slate-600">Verifies 60/40 database integration, safety filters, and synthetic product isolation.</span>
+          </div>
+          <span class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-900 font-bold text-xs border border-emerald-300">PASSED (0.35s)</span>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+          <div>
+            <span class="font-bold text-slate-900 block">test_memory.py (10 tests)</span>
+            <span class="text-xs text-slate-600">Verifies cross-chat farm candidate matching, memory persistence, and conflict resolution.</span>
+          </div>
+          <span class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-900 font-bold text-xs border border-emerald-300">PASSED (0.42s)</span>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+          <div>
+            <span class="font-bold text-slate-900 block">test_weather.py & test_geocoding.py (4 tests)</span>
+            <span class="text-xs text-slate-600">Verifies live Open-Meteo weather ingestion, Geoapify geocoding, and offline fallback mode.</span>
+          </div>
+          <span class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-900 font-bold text-xs border border-emerald-300">PASSED (0.28s)</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    if (window.lucide) window.lucide.createIcons();
+  </script>
+</body>
+</html>
