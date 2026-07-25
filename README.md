@@ -39,27 +39,14 @@ To adhere strictly to hackathon guidelines ("*Build in Tiers: A working core tha
 | **7** | **Hybrid RAG Knowledge Base** | SQLite FTS5 lexical retrieval + 384-dimensional vector embeddings over 12,091 BARC/BAMIS/AIS extension documents and 300 crop catalog chunks. Grounded in retrieved evidence. | ✅ **Implemented** |
 | **8** | **Visible Agent Trace** | Exposes real-time operational tool traces (tool name, parameters, raw result, execution time, and 4-question breakdown) in a judge-legible side panel. | ✅ **Implemented** |
 
-### Tier 1: Advanced Features (100% Complete & Verified)
+### Tier 1: Advanced Features 
 
 | # | Capability | Implementation Details | Status |
 |---|---|---|---|
 | **1** | **Persistent Memory** | Cross-session and cross-turn farm state persistence stored in SQLite. Remembers farmer details across server restarts so farmers never repeat themselves. | ✅ **Implemented** |
-| **2** | **Proactive Weather Advice** | Detects forecast anomalies (e.g., heavy rain >25mm in 72 hours) and automatically adjusts sowing or fertilizer application dates to prevent runoff loss. | ✅ **Implemented** |
-| **3** | **Fertilizer & Irrigation Scheduler** | Stage-by-stage N-P-K-S-Zn splits, timing by growth stage, irrigation frequency, and cost estimates tied specifically to crop and soil texture. | ✅ **Implemented** |
-| **4** | **Pest & Disease Risk Warning** | Predicts crop-specific pests/diseases based on growth stage, weather humidity/rainfall, and lists preventive/treatment options with cost estimates. | ✅ **Implemented** |
-| **5** | **Scenario Simulation** | Handles farmer "What-If?" queries (e.g., *"What if my budget is cut to BDT 40,000?"* or *"What if rainfall drops 30%?"*). Recalculates financial ledgers and yields while preserving base farm memory. | ✅ **Implemented** |
-
-### Tier 2: Selected Bonus Features
-
-| # | Capability | Implementation Details | Status |
-|---|---|---|---|
-| **1** | **Integrated Crop Catalog** | 100-product Bangladesh agricultural input catalog (60 authentic products, 40 synthetic test products). Includes multilingual search (English, Banglish, Bangla). | ✅ **Implemented** |
-| **2** | **Automated 1,200 Benchmark Suite** | Automated batch runner (`testing.html`) and failure lab (`failures.html`) supporting 1,200 test cases and 5 controlled failure injection modes. | ✅ **Implemented** |
-| **3** | **Multi-Key Rate Limiter Pool** | OpenAI 2-key pool rotation manager (`OpenAIKeyPool`) capable of handling 1,700+ RPM per key seamlessly. | ✅ **Implemented** |
-| **4** | **bdapps Payment Gateway (CaaS)** | *Scoped out to preserve core stability as advised by hackathon rules.* | ❌ **Not Implemented** |
-| **5** | **Leaf Image Disease Classification** | *Scoped out to preserve core stability as advised by hackathon rules.* | ❌ **Not Implemented** |
-
----
+| **2** | **Fertilizer & Irrigation Scheduler** | Stage-by-stage N-P-K-S-Zn splits, timing by growth stage, irrigation frequency, and cost estimates tied specifically to crop and soil texture. | ✅ **Implemented** |
+| **3** | **Pest & Disease Risk Warning** | Predicts crop-specific pests/diseases based on growth stage, weather humidity/rainfall, and lists preventive/treatment options with cost estimates. | ✅ **Implemented** |
+| **4** | **Scenario Simulation** | Handles farmer "What-If?" queries (e.g., *"What if my budget is cut to BDT 40,000?"* or *"What if rainfall drops 30%?"*). Recalculates financial ledgers and yields while preserving base farm memory. | ✅ **Implemented** |
 
 ## 🤖 5 Core Agentic Behaviors Implemented
 
@@ -79,7 +66,7 @@ AgriSense AI maintains strict transparency regarding authentic vs. synthetic dat
 |---|---|---|---|
 | `bangladesh_agriculture_unified_knowledge.json` | **Authentic (Source-Derived)** | 11,598 Records | Official district agronomy profiles and upazila crop suitability records. |
 | `BARC FRG-2024 RAG Collection` | **Authentic (Source-Derived)** | 300 Document Chunks | Official Bangladesh Agricultural Research Council Fertilizer Recommendation Guide (FRG-2024). |
-| `mixed_60_40/bangladesh_agri_60_40.db` | **Authentic (60%) + Synthetic (40%)** | 100 Products | Read-only SQLite database containing 60 authentic Bangladesh agri products and 40 synthetic test products (tagged `is_mock=True`). |
+| `mixed_60_40/bangladesh_agri_60_40.db` | **Authentic SPAS Dataset (60%) + Synthetic (40%)** | 100 Products | Read-only SQLite database containing 60 authentic Bangladesh agri products and 40 synthetic test products (tagged `is_mock=True`). |
 | `mock_agri_kb/` | **Synthetic Data** | 16 Supported Crops | Base crop master, crop calendars, fertilizer plans, irrigation requirements, pest risks, and pricing defaults. |
 | `generated_gap_kb.jsonl` | **Generated Data** | Gap-fill Records | Stage durations, offsets, season aliases, and crop safeguards. |
 | **Geoapify API** | **Live External API** | Global Gazetteers | Real-time forward geocoding converting location text to exact lat/long coordinates. |
@@ -96,7 +83,7 @@ AgriSense AI maintains strict transparency regarding authentic vs. synthetic dat
 
 ### 1. Clone & Navigate to Workspace
 ```bash
-git clone <repository_url>
+git clone https://github.com/zunayedmahmood/DevAtMad_AgriSense
 cd sandbox
 ```
 
@@ -153,8 +140,6 @@ When the server is running on **`http://0.0.0.0:8000`**, the following ports and
 | URL / Path | Purpose & Description |
 |---|---|
 | **`http://localhost:8000/ui/`** | **Main Advisory UI**: Conversational chat, live thinking animation, recommended crop cards, and real-time agent activity tool trace panel. |
-| **`http://localhost:8000/ui/testing.html`** | **Automated Batch Testing Panel**: Run 1 to 1,200 prompt benchmarks with Start, Pause, Resume, Cancel, live progress, and full execution JSON download. |
-| **`http://localhost:8000/ui/failures.html`** | **Controlled Failure & Audit Lab**: Simulate Open-Meteo weather outages, Geoapify geocode failures, RAG timeouts, LLM 429 rate limits, and financial math discrepancies on demand. |
 | **`http://localhost:8000/docs`** | **Interactive OpenAPI / Swagger Documentation**: Test all backend API routes directly from the browser. |
 | **`http://localhost:8000/health`** | **System Health Endpoint**: Check server status, RAG stats, catalog counts, and external API connectivity. |
 | **`http://localhost:8000/v1/tools/catalog`** | **Tool Definition Catalog**: Inspect OpenAI-compatible JSON function tool schemas. |
@@ -220,15 +205,6 @@ AgriSense includes a test suite for judge verification:
 ```bash
 .venv/bin/pytest -v
 ```
-
-### 2. Controlled Failure Modes (`/ui/failures.html`)
-Judges can test system resilience against 5 simulated failure modes:
-1. **`weather_failure`**: Simulates Open-Meteo HTTP 503 connection timeout. AgriSense falls back gracefully to district climate historical averages (`approved_historical_fallback`).
-2. **`geocode_failure`**: Simulates Geoapify HTTP 502 outage. AgriSense falls back to gazetteer district centroid coordinates (`approved_gazetteer_fallback`).
-3. **`rag_failure`**: Simulates RAG vector store search timeout. AgriSense falls back to structured knowledge base rules.
-4. **`rate_limit_failure`**: Simulates OpenAI 429 RateLimitError. `OpenAIKeyPool` instantly rotates to Key #2 with 0ms downtime.
-5. **`finance_discrepancy`**: Simulates net profit math tampering. `PlanVerifier` catches the discrepancy and re-computes financial ledgers.
-
 ---
 
 ## 🔬 Architecture Overview
