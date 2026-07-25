@@ -1466,35 +1466,50 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Sandbox Buttons
-  document.getElementById('btn-tool-geocode').addEventListener('click', async () => {
-    const text = prompt("Enter location to geocode:", "Moulovibazar, Bangladesh");
-    if (!text) return;
-    invokeDirectTool('geocode_location', { location_text: text });
-  });
-
-  document.getElementById('btn-tool-weather').addEventListener('click', async () => {
-    invokeDirectTool('get_weather_forecast', { latitude: 24.488, longitude: 91.763, days: 7 });
-  });
-
-  document.getElementById('btn-tool-rag').addEventListener('click', async () => {
-    const query = prompt("Enter RAG search query:", "Boro rice fertilizer application timing Moulovibazar");
-    if (!query) return;
-    invokeDirectTool('retrieve_agronomy', { query, district: 'Moulovibazar', top_k: 5, include_mock: false });
-  });
-
-  document.getElementById('btn-tool-catalog').addEventListener('click', async () => {
-    const query = prompt("Search crop catalog (English, Banglish, or Bangla):", "begun");
-    if (!query) return;
-    invokeDirectTool('search_crop_catalog', { query, include_synthetic: false, limit: 10 });
-  });
-
-  document.getElementById('btn-tool-rank').addEventListener('click', async () => {
-    invokeDirectTool('rank_crop_candidates', {
-      profile: state.profile,
-      weather: { summary: { temperature_avg_c: 28.5, rainfall_forecast_total_mm: 22.4 } },
-      top_k: 3
+  const btnGeocode = document.getElementById('btn-tool-geocode');
+  if (btnGeocode) {
+    btnGeocode.addEventListener('click', async () => {
+      const text = prompt("Enter location to geocode:", "Moulovibazar, Bangladesh");
+      if (!text) return;
+      invokeDirectTool('geocode_location', { location_text: text });
     });
-  });
+  }
+
+  const btnWeather = document.getElementById('btn-tool-weather');
+  if (btnWeather) {
+    btnWeather.addEventListener('click', async () => {
+      invokeDirectTool('get_weather_forecast', { latitude: 24.488, longitude: 91.763, days: 7 });
+    });
+  }
+
+  const btnRag = document.getElementById('btn-tool-rag');
+  if (btnRag) {
+    btnRag.addEventListener('click', async () => {
+      const query = prompt("Enter RAG search query:", "Boro rice fertilizer application timing Moulovibazar");
+      if (!query) return;
+      invokeDirectTool('retrieve_agronomy', { query, district: 'Moulovibazar', top_k: 5, include_mock: false });
+    });
+  }
+
+  const btnCatalog = document.getElementById('btn-tool-catalog');
+  if (btnCatalog) {
+    btnCatalog.addEventListener('click', async () => {
+      const query = prompt("Search crop catalog (English, Banglish, or Bangla):", "begun");
+      if (!query) return;
+      invokeDirectTool('search_crop_catalog', { query, include_synthetic: false, limit: 10 });
+    });
+  }
+
+  const btnRank = document.getElementById('btn-tool-rank');
+  if (btnRank) {
+    btnRank.addEventListener('click', async () => {
+      invokeDirectTool('rank_crop_candidates', {
+        profile: state.profile,
+        weather: { summary: { temperature_avg_c: 28.5, rainfall_forecast_total_mm: 22.4 } },
+        top_k: 3
+      });
+    });
+  }
 
   async function invokeDirectTool(name, args) {
     setLoading(true);
