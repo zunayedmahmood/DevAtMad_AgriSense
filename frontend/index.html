@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-50 text-slate-900">
+<html lang="en" class="h-full bg-slate-100 text-slate-900">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgriSense AI — Agentic Agricultural Advisor</title>
+  <title>AgriSense AI — Autonomous Agricultural Advisor & Season Planner</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -20,7 +20,6 @@
               700: '#15803d',
               800: '#166534',
               900: '#14532d',
-              950: '#052e16',
             },
             accent: {
               500: '#2563eb',
@@ -33,54 +32,54 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="h-full flex flex-col font-sans antialiased overflow-hidden selection:bg-brand-500 selection:text-white bg-slate-50 text-slate-900">
+<body class="h-full flex flex-col font-sans antialiased overflow-hidden selection:bg-brand-600 selection:text-white bg-slate-100 text-slate-900">
 
   <!-- TOP NAVIGATION HEADER -->
-  <header class="h-16 border-b border-slate-200 bg-white/95 backdrop-blur px-6 flex items-center justify-between shrink-0 z-20 shadow-sm">
+  <header class="h-16 border-b border-slate-200 bg-white backdrop-blur px-6 flex items-center justify-between shrink-0 z-20 shadow-sm">
     <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-700 to-emerald-500 flex items-center justify-center shadow-md shadow-brand-500/20">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-700 to-emerald-500 flex items-center justify-center shadow-md shadow-brand-600/20">
         <i data-lucide="sprout" class="w-6 h-6 text-white"></i>
       </div>
       <div>
         <div class="flex items-center gap-2">
-          <h1 class="font-bold text-lg text-slate-900 tracking-tight">AgriSense AI</h1>
-          <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">v1.0 Agentic</span>
+          <h1 class="font-extrabold text-lg text-slate-900 tracking-tight">AgriSense AI</h1>
+          <span class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">v1.0 Agentic</span>
         </div>
-        <p class="text-xs text-slate-500">Autonomous Smallholder Farm Advisory & Season Planner</p>
+        <p class="text-xs font-medium text-slate-500">Autonomous Smallholder Farm Advisory & Season Planner</p>
       </div>
     </div>
 
     <!-- CENTER CONTROLS: ENGINE SELECTOR -->
-    <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
-      <button id="engine-agentic" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 bg-brand-600 text-white shadow-sm">
-        <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+    <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 shadow-inner">
+      <button id="engine-agentic" class="px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-brand-700 text-white shadow-sm">
+        <i data-lucide="cpu" class="w-4 h-4"></i>
         Gemini 2.0 Agentic Engine
       </button>
-      <button id="engine-tier0" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5">
-        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+      <button id="engine-tier0" class="px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-2">
+        <i data-lucide="shield-check" class="w-4 h-4"></i>
         Tier-0 Deterministic Engine
       </button>
     </div>
 
     <!-- RIGHT STATUS BADGES & USER ACCOUNT -->
     <div class="flex items-center gap-3">
-      <div id="backend-status" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <div id="backend-status" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-300 text-xs text-emerald-900 font-bold">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse"></span>
         <span id="backend-text">Connecting...</span>
       </div>
 
       <!-- Account Badge & Subscription Pill -->
-      <div id="user-account-bar" class="flex items-center gap-2 bg-slate-100 p-1 px-3 rounded-xl border border-slate-200 text-xs">
-        <span id="btn-subscription-badge" class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 uppercase tracking-wider hidden">
+      <div id="user-account-bar" class="flex items-center gap-2.5 bg-slate-100 p-1 px-3 rounded-xl border border-slate-200 text-xs">
+        <span id="btn-subscription-badge" class="px-2.5 py-0.5 text-[11px] font-extrabold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 uppercase tracking-wider hidden">
           Subscribed
         </span>
-        <span id="user-display-name" class="font-semibold text-slate-700 truncate max-w-[130px]">Guest</span>
-        <button id="btn-auth-action" class="px-3 py-1 text-xs font-semibold rounded-lg bg-brand-600 hover:bg-brand-700 text-white transition shadow-sm">
+        <span id="user-display-name" class="font-bold text-slate-800 truncate max-w-[130px]">Guest Farmer</span>
+        <button id="btn-auth-action" class="px-3.5 py-1 text-xs font-bold rounded-lg bg-brand-700 hover:bg-brand-800 text-white transition shadow-sm">
           Log In
         </button>
       </div>
@@ -91,16 +90,16 @@
   <div class="flex-1 flex overflow-hidden">
 
     <!-- LEFT COLUMN: SAVED CHATS, FARM PROFILE & TOOL DRAWER -->
-    <aside class="w-80 border-r border-slate-200 bg-white flex flex-col shrink-0 overflow-y-auto">
+    <aside class="w-80 border-r border-slate-200 bg-white flex flex-col shrink-0 overflow-y-auto shadow-sm">
       
       <!-- SAVED CHATS SECTION -->
-      <div class="p-3 border-b border-slate-200 bg-slate-50/80">
-        <div class="flex items-center justify-between mb-2">
-          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
-            <i data-lucide="message-square" class="w-4 h-4 text-brand-600"></i>
+      <div class="p-4 border-b border-slate-200 bg-slate-50/80">
+        <div class="flex items-center justify-between mb-2.5">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+            <i data-lucide="message-square" class="w-4 h-4 text-brand-700"></i>
             Saved Chats
           </h2>
-          <button id="btn-create-chat" class="px-2.5 py-1 text-xs font-semibold rounded-md bg-brand-600 hover:bg-brand-700 text-white transition flex items-center gap-1 shadow-sm">
+          <button id="btn-create-chat" class="px-3 py-1 text-xs font-bold rounded-lg bg-brand-700 hover:bg-brand-800 text-white transition flex items-center gap-1 shadow-sm">
             <i data-lucide="plus" class="w-3.5 h-3.5"></i> New Chat
           </button>
         </div>
@@ -112,64 +111,64 @@
       <!-- PROFILE CARD -->
       <div class="p-4 border-b border-slate-200">
         <div class="flex items-center justify-between mb-3">
-          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
-            <i data-lucide="map-pin" class="w-4 h-4 text-brand-600"></i>
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+            <i data-lucide="map-pin" class="w-4 h-4 text-brand-700"></i>
             Active Farm State
           </h2>
-          <span id="profile-status-badge" class="px-2 py-0.5 text-[10px] font-semibold rounded bg-amber-50 text-amber-700 border border-amber-200">Collecting</span>
+          <span id="profile-status-badge" class="px-2.5 py-0.5 text-xs font-bold rounded bg-amber-100 text-amber-900 border border-amber-300">Collecting</span>
         </div>
 
-        <div id="profile-details" class="space-y-2 text-xs">
+        <div id="profile-details" class="space-y-2 text-xs font-medium">
           <div class="flex justify-between py-1 border-b border-slate-100">
-            <span class="text-slate-500 font-medium">Location</span>
-            <span id="p-location" class="font-semibold text-slate-800 text-right">Not provided</span>
+            <span class="text-slate-600">Location</span>
+            <span id="p-location" class="font-bold text-slate-900 text-right">Not provided</span>
           </div>
           <div class="flex justify-between py-1 border-b border-slate-100">
-            <span class="text-slate-500 font-medium">Coordinates</span>
-            <span id="p-coords" class="font-mono text-xs text-slate-600">Unmapped</span>
+            <span class="text-slate-600">Coordinates</span>
+            <span id="p-coords" class="font-mono text-xs font-semibold text-slate-700">Unmapped</span>
           </div>
           <div class="flex justify-between py-1 border-b border-slate-100">
-            <span class="text-slate-500 font-medium">Land Area</span>
-            <span id="p-area" class="font-semibold text-slate-800">—</span>
+            <span class="text-slate-600">Land Area</span>
+            <span id="p-area" class="font-bold text-slate-900">—</span>
           </div>
           <div class="flex justify-between py-1 border-b border-slate-100">
-            <span class="text-slate-500 font-medium">Soil Texture</span>
-            <span id="p-soil" class="font-semibold text-slate-800">—</span>
+            <span class="text-slate-600">Soil Texture</span>
+            <span id="p-soil" class="font-bold text-slate-900">—</span>
           </div>
           <div class="flex justify-between py-1 border-b border-slate-100">
-            <span class="text-slate-500 font-medium">Water / Irrigation</span>
-            <span id="p-water" class="font-semibold text-slate-800">—</span>
+            <span class="text-slate-600">Water / Irrigation</span>
+            <span id="p-water" class="font-bold text-slate-900">—</span>
           </div>
           <div class="flex justify-between py-1 border-b border-slate-100">
-            <span class="text-slate-500 font-medium">Budget</span>
-            <span id="p-budget" class="font-semibold text-slate-800">—</span>
+            <span class="text-slate-600">Budget</span>
+            <span id="p-budget" class="font-bold text-slate-900">—</span>
           </div>
           <div class="flex justify-between py-1 border-b border-slate-100">
-            <span class="text-slate-500 font-medium">Target Season</span>
-            <span id="p-season" class="font-semibold text-slate-800">—</span>
+            <span class="text-slate-600">Target Season</span>
+            <span id="p-season" class="font-bold text-slate-900">—</span>
           </div>
           <div class="flex justify-between py-1">
-            <span class="text-slate-500 font-medium">Selected Crop</span>
-            <span id="p-crop" class="font-bold text-brand-700">—</span>
+            <span class="text-slate-600">Selected Crop</span>
+            <span id="p-crop" class="font-extrabold text-brand-700">—</span>
           </div>
         </div>
 
-        <div id="missing-fields-box" class="mt-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 hidden">
-          <p class="text-xs text-amber-800 font-semibold mb-1 flex items-center gap-1">
-            <i data-lucide="alert-circle" class="w-4 h-4 text-amber-600"></i>
+        <div id="missing-fields-box" class="mt-3 p-3 rounded-lg bg-amber-50 border border-amber-300 hidden">
+          <p class="text-xs text-amber-900 font-bold mb-1.5 flex items-center gap-1.5">
+            <i data-lucide="alert-circle" class="w-4 h-4 text-amber-700"></i>
             Missing Fields Required:
           </p>
-          <div id="missing-fields-tags" class="flex flex-wrap gap-1"></div>
+          <div id="missing-fields-tags" class="flex flex-wrap gap-1.5"></div>
         </div>
 
         <!-- SAVED FARMS (PERSISTENT MEMORY) -->
-        <div id="saved-farms-box" class="mt-3 pt-3 border-t border-slate-200">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1">
-              <i data-lucide="database" class="w-3.5 h-3.5 text-brand-600"></i>
+        <div id="saved-farms-box" class="mt-4 pt-3.5 border-t border-slate-200">
+          <div class="flex items-center justify-between mb-2.5">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+              <i data-lucide="database" class="w-4 h-4 text-brand-700"></i>
               Saved Farm Profiles
             </span>
-            <span id="farmer-id-badge" class="text-[10px] text-slate-500 font-mono"></span>
+            <span id="farmer-id-badge" class="text-[11px] text-slate-500 font-mono font-semibold"></span>
           </div>
           <div id="saved-farms-list" class="space-y-2 text-xs">
             <div class="text-xs text-slate-500 italic">No saved farms yet for this user.</div>
@@ -179,28 +178,28 @@
 
       <!-- DIRECT TOOL SANDBOX -->
       <div class="p-4 border-b border-slate-200">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-3 flex items-center gap-1.5">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3 flex items-center gap-1.5">
           <i data-lucide="wrench" class="w-4 h-4 text-accent-600"></i>
           Direct Tool Sandbox
         </h2>
         <div class="space-y-1.5">
-          <button id="btn-tool-geocode" class="w-full py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs text-left font-medium text-slate-800 flex items-center justify-between transition">
+          <button id="btn-tool-geocode" class="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-left font-semibold text-slate-800 flex items-center justify-between transition shadow-sm">
             <span>geocode_location</span>
             <i data-lucide="play" class="w-3.5 h-3.5 text-slate-500"></i>
           </button>
-          <button id="btn-tool-weather" class="w-full py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs text-left font-medium text-slate-800 flex items-center justify-between transition">
+          <button id="btn-tool-weather" class="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-left font-semibold text-slate-800 flex items-center justify-between transition shadow-sm">
             <span>get_weather_forecast</span>
             <i data-lucide="play" class="w-3.5 h-3.5 text-slate-500"></i>
           </button>
-          <button id="btn-tool-rag" class="w-full py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs text-left font-medium text-slate-800 flex items-center justify-between transition">
+          <button id="btn-tool-rag" class="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-left font-semibold text-slate-800 flex items-center justify-between transition shadow-sm">
             <span>retrieve_agronomic_context</span>
             <i data-lucide="play" class="w-3.5 h-3.5 text-slate-500"></i>
           </button>
-          <button id="btn-tool-rank" class="w-full py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs text-left font-medium text-slate-800 flex items-center justify-between transition">
+          <button id="btn-tool-rank" class="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-left font-semibold text-slate-800 flex items-center justify-between transition shadow-sm">
             <span>rank_crop_candidates</span>
             <i data-lucide="play" class="w-3.5 h-3.5 text-slate-500"></i>
           </button>
-          <button id="btn-tool-catalog" class="w-full py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs text-left font-medium text-slate-800 flex items-center justify-between transition">
+          <button id="btn-tool-catalog" class="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-left font-semibold text-slate-800 flex items-center justify-between transition shadow-sm">
             <span>search_crop_catalog</span>
             <i data-lucide="search" class="w-3.5 h-3.5 text-slate-500"></i>
           </button>
@@ -210,16 +209,16 @@
       <!-- INTEGRATED CROP CATALOG -->
       <div class="p-4 border-b border-slate-200">
         <div class="flex items-center justify-between mb-3">
-          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
             <i data-lucide="database-zap" class="w-4 h-4 text-emerald-600"></i>
             Integrated Crop Catalog
           </h2>
-          <span id="catalog-count" class="text-[10px] px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">Loading</span>
+          <span id="catalog-count" class="text-xs px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold">Loading</span>
         </div>
         <input id="catalog-search" type="search" placeholder="Search rice, begun, বেগুন..."
-          class="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-brand-600 shadow-sm">
-        <label class="mt-2 flex items-center gap-2 text-[11px] text-slate-600 cursor-pointer">
-          <input id="catalog-include-synthetic" type="checkbox" class="accent-emerald-600">
+          class="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-900 font-medium placeholder-slate-400 focus:outline-none focus:border-brand-600 shadow-sm">
+        <label class="mt-2 flex items-center gap-2 text-xs text-slate-700 font-semibold cursor-pointer">
+          <input id="catalog-include-synthetic" type="checkbox" class="accent-emerald-600 w-3.5 h-3.5">
           Include synthetic test products
         </label>
         <div id="catalog-results" class="mt-3 space-y-1.5 max-h-48 overflow-y-auto pr-1">
@@ -229,20 +228,20 @@
 
       <!-- DEMO PROMPTS PACK -->
       <div class="p-4 flex-1">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-3 flex items-center gap-1.5">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3 flex items-center gap-1.5">
           <i data-lucide="sparkles" class="w-4 h-4 text-purple-600"></i>
           Sample Farmer Scenarios
         </h2>
         <div class="space-y-2">
-          <button class="sample-prompt w-full p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-left text-slate-800 transition shadow-sm"
+          <button class="sample-prompt w-full p-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-left text-slate-900 transition shadow-sm font-medium leading-relaxed"
             data-prompt="we have a plot of land in moulovibazar. it is 2 acre and has reliable irrigation and sandy-loamy soil. wehave a budget of 60 thousand taka. we are planing for the boro season.">
             🌾 <strong>Moulovibazar Boro Demo:</strong> 2 acres, BDT 60k, sandy-loam, reliable irrigation.
           </button>
-          <button class="sample-prompt w-full p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-left text-slate-800 transition shadow-sm"
+          <button class="sample-prompt w-full p-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-left text-slate-900 transition shadow-sm font-medium leading-relaxed"
             data-prompt="my farm is in rangpur. 1.5 bigha, loam soil, tubewell water. budget 25000 taka for rabi season wheat or maize.">
             🌽 <strong>Rangpur Rabi Demo:</strong> 1.5 bigha, BDT 25k, loam, tubewell.
           </button>
-          <button class="sample-prompt w-full p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-left text-slate-800 transition shadow-sm"
+          <button class="sample-prompt w-full p-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-left text-slate-900 transition shadow-sm font-medium leading-relaxed"
             data-prompt="আমার বাড়ি ময়মনসিংহে। ৩ একর জমি আছে, পলি মাটি, খাল থেকে পানি আনবো। ৪০ হাজার টাকা বাজেট।">
             🇧🇩 <strong>Mymensingh Bangla Demo:</strong> 3 acres, silt soil, canal water, BDT 40k.
           </button>
@@ -251,34 +250,34 @@
     </aside>
 
     <!-- CENTER COLUMN: CONVERSATIONAL CHAT INTERFACE -->
-    <main class="flex-1 flex flex-col bg-slate-50 min-w-0">
+    <main class="flex-1 flex flex-col bg-slate-100 min-w-0">
       
       <!-- CHAT MESSAGE LOG -->
       <div id="chat-container" class="flex-1 overflow-y-auto p-6 space-y-6">
         
         <!-- INITIAL WELCOME BANNER -->
         <div id="welcome-banner" class="max-w-2xl mx-auto p-6 rounded-2xl bg-white border border-slate-200 text-center shadow-sm">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 mx-auto flex items-center justify-center mb-3">
-            <i data-lucide="bot" class="w-7 h-7"></i>
+          <div class="w-14 h-14 rounded-2xl bg-emerald-100 border border-emerald-300 text-emerald-800 mx-auto flex items-center justify-center mb-3.5 shadow-sm">
+            <i data-lucide="bot" class="w-8 h-8"></i>
           </div>
-          <h3 class="font-bold text-lg text-slate-900 mb-1">Welcome to AgriSense Autonomous Agent</h3>
-          <p class="text-sm text-slate-600 leading-relaxed mb-5 max-w-lg mx-auto">
-            Describe your land location, area, soil texture, irrigation source, budget, or target season. The AI will autonomously geocode coordinates, pull live Open-Meteo weather forecasts, query the integrated 60/40 provenance-labelled crop catalog and official BARC/BAMIS/AIS evidence via hybrid RAG, rank crops, and generate a dated financial plan.
+          <h3 class="font-extrabold text-xl text-slate-900 mb-2">Welcome to AgriSense Autonomous Agent</h3>
+          <p class="text-sm text-slate-600 leading-relaxed mb-5 max-w-lg mx-auto font-medium">
+            Describe your land location, area, soil texture, irrigation source, budget, or target season. The AI will autonomously geocode coordinates, pull live Open-Meteo weather forecasts, query the integrated 60/40 crop catalog and official BARC/BAMIS/AIS evidence via hybrid RAG, rank crops, and generate a dated financial plan.
           </p>
-          <div class="flex items-center justify-center gap-2 text-xs text-slate-600">
-            <span class="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 font-medium">⚡ Live Geoapify</span>
-            <span class="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 font-medium">🌧️ Open-Meteo Weather</span>
-            <span class="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200 font-medium">📚 BARC FRG-2024 RAG</span>
+          <div class="flex items-center justify-center gap-2.5 text-xs text-slate-700 font-bold">
+            <span class="px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-300 shadow-sm">⚡ Live Geoapify</span>
+            <span class="px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-300 shadow-sm">🌧️ Open-Meteo Weather</span>
+            <span class="px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-300 shadow-sm">📚 BARC FRG-2024 RAG</span>
           </div>
         </div>
 
       </div>
 
       <!-- CROP RECOMMENDATION CARDS OVERLAY (DYNAMIC) -->
-      <div id="crop-recommendations-bar" class="px-6 py-4 border-t border-slate-200 bg-white/95 backdrop-blur hidden shadow-sm">
+      <div id="crop-recommendations-bar" class="px-6 py-4 border-t border-slate-200 bg-white backdrop-blur hidden shadow-sm">
         <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-            <i data-lucide="award" class="w-4 h-4 text-brand-600"></i>
+          <span class="text-xs font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+            <i data-lucide="award" class="w-4 h-4 text-brand-700"></i>
             Ranked Crop Candidates (Select one to generate dated plan):
           </span>
         </div>
@@ -288,11 +287,11 @@
       <!-- INPUT BAR -->
       <div class="p-4 border-t border-slate-200 bg-white shadow-sm">
         <form id="chat-form" class="max-w-4xl mx-auto flex items-end gap-3">
-          <div class="flex-1 bg-slate-50 border border-slate-300 rounded-xl focus-within:border-brand-600 transition shadow-inner">
+          <div class="flex-1 bg-slate-50 border border-slate-300 rounded-xl focus-within:border-brand-600 focus-within:bg-white transition shadow-inner">
             <textarea id="chat-input" rows="2" placeholder="Tell AgriSense about your plot (e.g. '2 acres in Moulovibazar with BDT 60k budget for boro season')..."
-              class="w-full bg-transparent px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none resize-none leading-relaxed"></textarea>
+              class="w-full bg-transparent px-4 py-3 text-base text-slate-900 font-medium placeholder-slate-400 focus:outline-none resize-none leading-relaxed"></textarea>
           </div>
-          <button type="submit" id="btn-send" class="h-11 px-6 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm flex items-center justify-center gap-2 transition shadow-md shadow-brand-600/20 shrink-0">
+          <button type="submit" id="btn-send" class="h-12 px-6 rounded-xl bg-brand-700 hover:bg-brand-800 text-white font-bold text-base flex items-center justify-center gap-2 transition shadow-md shadow-brand-700/20 shrink-0">
             <span>Send</span>
             <i data-lucide="send" class="w-4 h-4"></i>
           </button>
@@ -301,17 +300,17 @@
 
     </main>
 
-    <!-- RIGHT COLUMN: AGENT ACTIVITY PANEL -->
-    <aside class="w-[420px] border-l border-slate-200 bg-white flex flex-col shrink-0">
+    <!-- RIGHT COLUMN: AGENT ACTIVITY PANEL (HIGH LEGIBILITY FOR JUDGES) -->
+    <aside class="w-[450px] border-l border-slate-200 bg-slate-50 flex flex-col shrink-0">
       
       <!-- TABS HEADER -->
-      <div class="flex border-b border-slate-200 bg-slate-50">
-        <button id="tab-btn-traces" class="flex-1 py-3 text-xs font-bold uppercase tracking-wider text-brand-700 border-b-2 border-brand-600 flex items-center justify-center gap-2">
-          <i data-lucide="activity" class="w-4 h-4"></i>
+      <div class="flex border-b border-slate-200 bg-white shadow-sm">
+        <button id="tab-btn-traces" class="flex-1 py-3.5 text-xs font-extrabold uppercase tracking-wider text-brand-800 border-b-2 border-brand-700 flex items-center justify-center gap-2">
+          <i data-lucide="activity" class="w-4.5 h-4.5 text-brand-700"></i>
           Agent Activity (<span id="trace-count">0</span>)
         </button>
-        <button id="tab-btn-plan" class="flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-600 border-b-2 border-transparent hover:text-slate-900 flex items-center justify-center gap-2">
-          <i data-lucide="calendar" class="w-4 h-4"></i>
+        <button id="tab-btn-plan" class="flex-1 py-3.5 text-xs font-extrabold uppercase tracking-wider text-slate-600 border-b-2 border-transparent hover:text-slate-900 flex items-center justify-center gap-2">
+          <i data-lucide="calendar" class="w-4.5 h-4.5"></i>
           Dated Season Plan
         </button>
       </div>
@@ -319,261 +318,173 @@
       <!-- TAB CONTENT 1: AGENT ACTIVITY PANEL -->
       <div id="tab-content-traces" class="flex-1 overflow-y-auto p-4 space-y-4">
         <!-- CURRENT GOAL & WORKFLOW STAGE CARD -->
-        <div id="goal-card" class="p-4 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
+        <div id="goal-card" class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-bold uppercase tracking-wider text-brand-700 flex items-center gap-1.5">
-              <i data-lucide="target" class="w-4 h-4"></i>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-brand-800 flex items-center gap-1.5">
+              <i data-lucide="target" class="w-4 h-4 text-brand-700"></i>
               Current Goal
             </span>
-            <span id="goal-disclaimer" class="text-[10px] text-slate-500 font-mono">Operational evidence only</span>
+            <span id="goal-disclaimer" class="text-xs text-slate-500 font-mono font-semibold">Operational evidence only</span>
           </div>
-          <p class="text-xs sm:text-sm text-slate-800 font-semibold mb-3 leading-snug">
+          <p class="text-sm sm:text-base text-slate-900 font-bold mb-3 leading-snug">
             Produce a grounded, explained, costed season plan for this farm.
           </p>
 
-          <div class="space-y-2 text-xs">
-            <div class="flex justify-between items-center py-1.5 border-b border-slate-200">
-              <span class="text-slate-600 font-medium">Current Stage</span>
-              <span id="goal-stage" class="font-bold text-amber-700">Collecting Farm Facts</span>
+          <div class="space-y-2.5 text-xs sm:text-sm">
+            <div class="flex justify-between items-center py-1.5 border-b border-slate-100">
+              <span class="text-slate-600 font-semibold">Current Stage</span>
+              <span id="goal-stage" class="font-extrabold text-amber-800 text-sm">Collecting Farm Facts</span>
             </div>
             
-            <div class="py-1.5 border-b border-slate-200">
-              <span class="text-slate-600 font-medium block mb-1">Completed Milestones:</span>
-              <div id="goal-milestones" class="space-y-1 text-xs text-slate-700">
-                <div class="flex items-center gap-1.5"><i data-lucide="circle" class="w-3.5 h-3.5 text-slate-400"></i> Location resolved</div>
-                <div class="flex items-center gap-1.5"><i data-lucide="circle" class="w-3.5 h-3.5 text-slate-400"></i> Weather retrieved</div>
-                <div class="flex items-center gap-1.5"><i data-lucide="circle" class="w-3.5 h-3.5 text-slate-400"></i> RAG Evidence retrieved</div>
+            <div class="py-1.5 border-b border-slate-100">
+              <span class="text-slate-600 font-bold block mb-1.5">Completed Milestones:</span>
+              <div id="goal-milestones" class="space-y-1.5 text-xs font-semibold text-slate-800">
+                <div class="flex items-center gap-2"><i data-lucide="circle" class="w-4 h-4 text-slate-400"></i> Location resolved</div>
+                <div class="flex items-center gap-2"><i data-lucide="circle" class="w-4 h-4 text-slate-400"></i> Weather retrieved</div>
+                <div class="flex items-center gap-2"><i data-lucide="circle" class="w-4 h-4 text-slate-400"></i> RAG Evidence retrieved</div>
               </div>
             </div>
 
             <div class="pt-1">
-              <span class="text-slate-600 font-medium block mb-1">Next Action Required:</span>
-              <span id="goal-next-action" class="font-semibold text-slate-800 block text-xs">Provide location, land size, soil, water, budget & season.</span>
+              <span class="text-slate-600 font-bold block mb-1">Next Action Required:</span>
+              <span id="goal-next-action" class="font-bold text-slate-900 block text-xs sm:text-sm">Provide location, land size, soil, water, budget & season.</span>
             </div>
           </div>
         </div>
 
-        <div id="traces-empty" class="text-center py-10 text-slate-500 text-xs">
-          <i data-lucide="cpu" class="w-8 h-8 mx-auto mb-2 text-slate-400"></i>
+        <div id="traces-empty" class="text-center py-12 text-slate-500 text-xs sm:text-sm font-medium">
+          <i data-lucide="cpu" class="w-10 h-10 mx-auto mb-2 text-slate-400"></i>
           No tool calls recorded yet.<br>Send a prompt to observe live tool execution traces.
         </div>
-        <div id="traces-list" class="space-y-3.5"></div>
+        <div id="traces-list" class="space-y-4"></div>
       </div>
 
       <!-- TAB CONTENT 2: DATED SEASON PLAN & FINANCIAL PROJECTION -->
       <div id="tab-content-plan" class="flex-1 overflow-y-auto p-4 space-y-4 hidden">
-        <div id="plan-empty" class="text-center py-12 text-slate-500 text-xs">
-          <i data-lucide="calendar-off" class="w-8 h-8 mx-auto mb-2 text-slate-400"></i>
+        <div id="plan-empty" class="text-center py-14 text-slate-500 text-xs sm:text-sm font-medium">
+          <i data-lucide="calendar-off" class="w-10 h-10 mx-auto mb-2 text-slate-400"></i>
           No active season plan generated.<br>Select a recommended crop candidate to construct dated calendar & financials.
         </div>
         
         <div id="plan-details" class="space-y-4 hidden">
           <!-- PLAN SUMMARY CARD -->
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
-            <h3 id="plan-title" class="font-bold text-base text-slate-900 mb-1">Crop Plan</h3>
-            <p id="plan-subtitle" class="text-xs text-slate-600 mb-3 font-medium"></p>
-            <div class="grid grid-cols-2 gap-2 text-xs">
-              <div class="p-2.5 rounded-lg bg-white border border-slate-200 shadow-sm">
-                <span class="text-slate-500 block text-[10px] uppercase font-bold">TOTAL COST</span>
-                <span id="plan-cost" class="font-bold text-slate-900 text-sm">BDT 0</span>
+          <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+            <h3 id="plan-title" class="font-extrabold text-lg text-slate-900 mb-1">Crop Plan</h3>
+            <p id="plan-subtitle" class="text-xs sm:text-sm text-slate-600 mb-3 font-semibold"></p>
+            <div class="grid grid-cols-2 gap-2.5 text-xs sm:text-sm">
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <span class="text-slate-500 block text-[11px] uppercase font-bold">TOTAL COST</span>
+                <span id="plan-cost" class="font-extrabold text-slate-900 text-base">BDT 0</span>
               </div>
-              <div class="p-2.5 rounded-lg bg-white border border-slate-200 shadow-sm">
-                <span class="text-slate-500 block text-[10px] uppercase font-bold">NET PROFIT</span>
-                <span id="plan-profit" class="font-bold text-brand-700 text-sm">BDT 0</span>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <span class="text-slate-500 block text-[11px] uppercase font-bold">NET PROFIT</span>
+                <span id="plan-profit" class="font-extrabold text-brand-700 text-base">BDT 0</span>
               </div>
-              <div class="p-2.5 rounded-lg bg-white border border-slate-200 shadow-sm">
-                <span class="text-slate-500 block text-[10px] uppercase font-bold">EXPECTED YIELD</span>
-                <span id="plan-yield" class="font-semibold text-slate-800">0 kg</span>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <span class="text-slate-500 block text-[11px] uppercase font-bold">EXPECTED YIELD</span>
+                <span id="plan-yield" class="font-bold text-slate-900">0 kg</span>
               </div>
-              <div class="p-2.5 rounded-lg bg-white border border-slate-200 shadow-sm">
-                <span class="text-slate-500 block text-[10px] uppercase font-bold">PROJECTED ROI</span>
-                <span id="plan-roi" class="font-bold text-emerald-700">0%</span>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <span class="text-slate-500 block text-[11px] uppercase font-bold">PROJECTED ROI</span>
+                <span id="plan-roi" class="font-extrabold text-emerald-700 text-base">0%</span>
               </div>
             </div>
           </div>
 
           <!-- EVIDENCE-TO-DECISION AUDIT CARD -->
-          <div id="evidence-decision-box" class="p-4 rounded-xl bg-emerald-50/60 border border-emerald-200 space-y-3 shadow-sm">
-            <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
-              <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
-                <i data-lucide="file-check" class="w-4 h-4"></i>
+          <div id="evidence-decision-box" class="p-4 rounded-xl bg-white border border-emerald-300 space-y-3 shadow-sm">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
+              <h4 class="text-xs font-extrabold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
+                <i data-lucide="file-check" class="w-4 h-4 text-emerald-700"></i>
                 Evidence-to-Decision Audit Card
               </h4>
-              <span class="px-2 py-0.5 text-[9px] font-mono rounded bg-white text-emerald-800 border border-emerald-200 font-bold">Audit Card</span>
+              <span class="px-2.5 py-0.5 text-[10px] font-mono rounded bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold">Audit Card</span>
             </div>
 
-            <div class="space-y-2 text-xs">
-              <div class="p-2.5 rounded-lg bg-white border border-emerald-200">
-                <span class="text-slate-500 block text-[10px] uppercase font-bold">DECISION:</span>
-                <span id="ev-decision" class="font-bold text-slate-900 text-xs">Crop Selected</span>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <div class="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                <span class="text-slate-500 block text-xs uppercase font-bold">DECISION:</span>
+                <span id="ev-decision" class="font-bold text-slate-900 text-sm">Crop Selected</span>
               </div>
 
-              <div class="p-2.5 rounded-lg bg-white border border-emerald-200 space-y-1">
-                <span class="text-slate-500 block text-[10px] uppercase font-bold">FARM INPUTS:</span>
-                <ul id="ev-inputs" class="text-slate-700 space-y-0.5 pl-4 list-disc text-xs"></ul>
+              <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
+                <span class="text-slate-500 block text-xs uppercase font-bold">FARM INPUTS:</span>
+                <ul id="ev-inputs" class="text-slate-800 font-medium space-y-1 pl-4 list-disc text-xs sm:text-sm"></ul>
               </div>
 
-              <div class="p-2.5 rounded-lg bg-white border border-emerald-200 space-y-1">
-                <span class="text-slate-500 block text-[10px] uppercase font-bold">LIVE DATA:</span>
-                <div id="ev-livedata" class="text-slate-700 space-y-0.5 text-xs">
-                  <div>Weather Provider: <span class="text-emerald-700 font-mono font-semibold">Open-Meteo API</span></div>
-                  <div>Retrieved Timestamp: <span id="ev-time" class="text-slate-800 font-mono">—</span></div>
-                  <div>Rainfall & Temp: <span id="ev-weather" class="text-slate-800 font-mono">—</span></div>
-                  <div>Forecast Horizon: <span id="ev-horizon" class="text-amber-700 font-mono font-semibold">Provisional (Beyond 7-day)</span></div>
+              <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
+                <span class="text-slate-500 block text-xs uppercase font-bold">LIVE DATA:</span>
+                <div id="ev-livedata" class="text-slate-800 font-medium space-y-1 text-xs sm:text-sm">
+                  <div>Weather Provider: <span class="text-emerald-800 font-mono font-bold">Open-Meteo API</span></div>
+                  <div>Retrieved Timestamp: <span id="ev-time" class="text-slate-900 font-mono">—</span></div>
+                  <div>Rainfall & Temp: <span id="ev-weather" class="text-slate-900 font-mono">—</span></div>
+                  <div>Forecast Horizon: <span id="ev-horizon" class="text-amber-800 font-mono font-bold">Provisional (Beyond 7-day)</span></div>
                 </div>
               </div>
 
-              <div class="p-2.5 rounded-lg bg-white border border-emerald-200 space-y-1">
-                <span class="text-slate-500 block text-[10px] uppercase font-bold">REVIEWED EVIDENCE:</span>
-                <ul id="ev-evidence" class="text-slate-700 space-y-0.5 font-mono text-xs pl-4 list-disc"></ul>
+              <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
+                <span class="text-slate-500 block text-xs uppercase font-bold">REVIEWED EVIDENCE:</span>
+                <ul id="ev-evidence" class="text-slate-800 font-medium space-y-1 font-mono text-xs pl-4 list-disc"></ul>
               </div>
 
-              <div class="p-2.5 rounded-lg bg-white border border-emerald-200 space-y-1">
-                <span class="text-slate-500 block text-[10px] uppercase font-bold">CALCULATED RESULT:</span>
-                <div id="ev-result" class="grid grid-cols-2 gap-1.5 text-xs"></div>
+              <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
+                <span class="text-slate-500 block text-xs uppercase font-bold">CALCULATED RESULT:</span>
+                <div id="ev-result" class="grid grid-cols-2 gap-2 text-xs sm:text-sm font-semibold"></div>
               </div>
             </div>
           </div>
 
-          <!-- SCENARIO COMPARISON TABLE (DYNAMIC WHEN SCENARIO DETECTED) -->
-          <div id="scenario-box" class="p-4 rounded-xl bg-purple-50 border border-purple-200 space-y-2.5 hidden">
+          <!-- SCENARIO COMPARISON TABLE -->
+          <div id="scenario-box" class="p-4 rounded-xl bg-purple-50 border border-purple-300 space-y-3 hidden shadow-sm">
             <div class="flex items-center justify-between border-b border-purple-200 pb-2">
-              <h4 class="text-xs font-bold uppercase tracking-wider text-purple-800 flex items-center gap-1.5">
+              <h4 class="text-xs font-extrabold uppercase tracking-wider text-purple-900 flex items-center gap-1.5">
                 <i data-lucide="sliders" class="w-4 h-4"></i>
                 Scenario Simulation: Budget Override
               </h4>
-              <span class="px-2 py-0.5 text-[9px] font-mono rounded bg-white text-purple-800 border border-purple-200 font-bold">Memory Preserved</span>
+              <span class="px-2.5 py-0.5 text-[10px] font-mono rounded bg-white text-purple-900 border border-purple-300 font-bold">Memory Preserved</span>
             </div>
 
-            <p class="text-xs text-purple-900 leading-snug">
+            <p class="text-xs sm:text-sm text-purple-950 font-medium leading-relaxed">
               <strong>MEMORY POLICY:</strong> Base accepted budget remains <span id="scen-base-budget" class="font-mono font-bold text-slate-900">BDT 200,000</span>. Temporary scenario override evaluated at <span id="scen-override-budget" class="font-mono font-bold text-amber-800">BDT 120,000</span>. Base plan retained; scenario comparison generated below.
             </p>
 
-            <div class="overflow-x-auto rounded-lg border border-purple-200">
-              <table id="scenario-table" class="w-full text-left text-xs text-slate-800">
-                <thead class="bg-purple-100 text-purple-900 font-semibold">
+            <div class="overflow-x-auto rounded-xl border border-purple-200 bg-white">
+              <table id="scenario-table" class="w-full text-left text-xs sm:text-sm text-slate-900">
+                <thead class="bg-purple-100 text-purple-950 font-bold">
                   <tr>
-                    <th class="p-2">Metric</th>
-                    <th class="p-2 text-right">Base Plan</th>
-                    <th class="p-2 text-right">Scenario Cut</th>
-                    <th class="p-2 text-right">Delta</th>
+                    <th class="p-2.5">Metric</th>
+                    <th class="p-2.5 text-right">Base Plan</th>
+                    <th class="p-2.5 text-right">Scenario Cut</th>
+                    <th class="p-2.5 text-right">Delta</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-purple-100 font-mono text-xs"></tbody>
+                <tbody class="divide-y divide-purple-100 font-mono text-xs sm:text-sm font-medium"></tbody>
               </table>
             </div>
           </div>
 
           <!-- STAGE TIMELINE CHECKPOINTS -->
           <div>
-            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Stage Timeline & Checkpoints</h4>
+            <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-2">Stage Timeline & Checkpoints</h4>
             <div id="plan-timeline" class="space-y-2"></div>
           </div>
 
           <!-- FERTILIZER SPLIT TABLE -->
           <div>
-            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Fertilizer Application Schedule</h4>
-            <div class="overflow-x-auto rounded-lg border border-slate-200">
-              <table id="plan-fertilizer-table" class="w-full text-left text-xs text-slate-800">
-                <thead class="bg-slate-100 text-slate-700 font-semibold">
+            <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-2">Fertilizer Application Schedule</h4>
+            <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+              <table id="plan-fertilizer-table" class="w-full text-left text-xs sm:text-sm text-slate-900">
+                <thead class="bg-slate-100 text-slate-800 font-bold">
                   <tr>
-                    <th class="p-2.5">Stage</th>
-                    <th class="p-2.5">Fertilizer</th>
-                    <th class="p-2.5 text-right">Amount</th>
+                    <th class="p-3">Stage</th>
+                    <th class="p-3">Fertilizer</th>
+                    <th class="p-3 text-right">Amount</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-200"></tbody>
               </table>
             </div>
           </div>
-
-          <!-- EVIDENCE CLASSIFICATION BLOCK -->
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
-            <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-              <h4 class="text-xs font-bold uppercase tracking-wider text-brand-700 flex items-center gap-1.5">
-                <i data-lucide="shield-check" class="w-4 h-4"></i>
-                Evidence Classification & Authority
-              </h4>
-              <span class="px-2 py-0.5 text-[9px] font-mono rounded bg-white text-slate-700 border border-slate-200 font-bold">Audit</span>
-            </div>
-
-            <div class="space-y-2.5 text-xs">
-              <!-- REAL / REVIEWED -->
-              <div class="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200">
-                <span class="font-bold text-emerald-800 block mb-1 text-[10px] uppercase tracking-wider">🟢 REAL / REVIEWED</span>
-                <ul class="space-y-0.5 text-slate-700 text-xs list-disc pl-4">
-                  <li>farmer-provided farm facts</li>
-                  <li>geocoding provider result</li>
-                  <li>live weather values</li>
-                  <li>reviewed crop suitability evidence</li>
-                  <li>reviewed crop-calendar guidance</li>
-                  <li>reviewed fertilizer timing/guardrail evidence</li>
-                </ul>
-              </div>
-
-              <!-- SEEDED DEMONSTRATION ASSUMPTIONS -->
-              <div class="p-2.5 rounded-lg bg-amber-50 border border-amber-200">
-                <span class="font-bold text-amber-800 block mb-1 text-[10px] uppercase tracking-wider">🟡 SEEDED DEMONSTRATION ASSUMPTIONS</span>
-                <ul class="space-y-0.5 text-slate-700 text-xs list-disc pl-4">
-                  <li>exact fertilizer quantities where not backed by a soil test or AEZ-specific table</li>
-                  <li>expected yield</li>
-                  <li>input prices</li>
-                  <li>crop selling price</li>
-                  <li>pest-prevention cost</li>
-                  <li>some irrigation cost values</li>
-                </ul>
-              </div>
-
-              <!-- CALCULATED BY CODE -->
-              <div class="p-2.5 rounded-lg bg-blue-50 border border-blue-200">
-                <span class="font-bold text-blue-800 block mb-1 text-[10px] uppercase tracking-wider">🔵 CALCULATED BY CODE</span>
-                <ul class="space-y-0.5 text-slate-700 text-xs list-disc pl-4">
-                  <li>suitability components</li>
-                  <li>total cost</li>
-                  <li>expected revenue</li>
-                  <li>net profit</li>
-                  <li>ROI</li>
-                  <li>break-even price</li>
-                  <li>break-even yield</li>
-                  <li>scenario deltas</li>
-                  <li>validation status</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="pt-2 border-t border-slate-200 text-xs text-slate-500 italic leading-relaxed">
-              "AgriSense never promotes seeded demonstration assumptions into public evidence. Every output carries a classification so the farmer and judge can see its authority."
-            </div>
-          </div>
-
-          <!-- PART VIII FAILURE RECOVERY & FALLBACK DISCIPLINE -->
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-              <h4 class="text-xs font-bold uppercase tracking-wider text-amber-800 flex items-center gap-1.5">
-                <i data-lucide="life-buoy" class="w-4 h-4"></i>
-                Part VIII Failure Recovery Discipline
-              </h4>
-              <span class="px-2 py-0.5 text-[9px] font-mono rounded bg-white text-amber-800 border border-amber-200 font-bold">Fallback Model</span>
-            </div>
-            <div class="space-y-1.5 text-xs text-slate-700">
-              <div class="p-2.5 rounded-lg bg-white border border-slate-200 font-mono text-[11px]">
-                <span class="font-bold text-slate-900 font-sans block mb-0.5 text-xs">CONTROLLED GEOLOCATION FALLBACK:</span>
-                <div>1. TOOL CALL: Geoapify primary geocoding &rarr; Timeout / Failed</div>
-                <div>2. RECOVERY DECISION: Use approved Open-Meteo / Gazetteer fallback</div>
-                <div>3. TOOL CALL: Open-Meteo geocoding &rarr; Success</div>
-                <div>4. PLAN UPDATE: Continue weather retrieval with verified fallback coordinates</div>
-              </div>
-              <div class="p-2.5 rounded-lg bg-white border border-slate-200 font-mono text-[11px]">
-                <span class="font-bold text-slate-900 font-sans block mb-0.5 text-xs">HONEST FAILCLOSED PATH:</span>
-                <div>WEATHER TOOL FAILED: No recent verified response available</div>
-                <div>VALIDATION BLOCKED: Agent will not label plan as weather-grounded</div>
-              </div>
-            </div>
-            <div class="pt-1 text-xs text-slate-500 italic border-t border-slate-200">
-              "The agent does not convert provider failure into invented weather. It either uses an approved, visible fallback or blocks weather-grounded completion."
-            </div>
-          </div>
-
         </div>
       </div>
 
@@ -582,7 +493,7 @@
   </div>
 
   <!-- TOOL TRACE DETAIL MODAL -->
-  <div id="modal-trace" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+  <div id="modal-trace" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl">
       <div class="p-4 border-b border-slate-200 flex items-center justify-between">
         <h3 id="modal-trace-title" class="font-bold text-base text-slate-900 font-mono">Tool Trace Payload</h3>
@@ -590,25 +501,25 @@
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
-      <div class="p-4 overflow-y-auto font-mono text-xs text-slate-800 space-y-4">
+      <div class="p-4 overflow-y-auto font-mono text-xs sm:text-sm text-slate-800 space-y-4">
         <div>
-          <span class="text-slate-500 block mb-1 text-xs font-bold uppercase">Parameters</span>
-          <pre id="modal-trace-params" class="p-3 rounded-lg bg-slate-50 border border-slate-200 overflow-x-auto text-emerald-800 font-semibold"></pre>
+          <span class="text-slate-600 block mb-1 text-xs font-bold uppercase">Parameters</span>
+          <pre id="modal-trace-params" class="p-3 rounded-xl bg-slate-50 border border-slate-200 overflow-x-auto text-emerald-800 font-bold"></pre>
         </div>
         <div>
-          <span class="text-slate-500 block mb-1 text-xs font-bold uppercase">Raw Result</span>
-          <pre id="modal-trace-result" class="p-3 rounded-lg bg-slate-50 border border-slate-200 overflow-x-auto text-blue-900 font-semibold"></pre>
+          <span class="text-slate-600 block mb-1 text-xs font-bold uppercase">Raw Result</span>
+          <pre id="modal-trace-result" class="p-3 rounded-lg bg-slate-50 border border-slate-200 overflow-x-auto text-blue-900 font-bold"></pre>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- AUTHENTICATION MODAL (LOGIN & SIGNUP) -->
-  <div id="modal-auth" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+  <!-- AUTHENTICATION MODAL -->
+  <div id="modal-auth" class="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
       <div class="flex items-center justify-between border-b border-slate-200 pb-3">
         <h3 id="auth-modal-title" class="font-bold text-lg text-slate-900 flex items-center gap-2">
-          <i data-lucide="user" class="w-5 h-5 text-brand-600"></i>
+          <i data-lucide="user" class="w-5 h-5 text-brand-700"></i>
           Farmer Account Authentication
         </h3>
         <button id="modal-auth-close" class="text-slate-400 hover:text-slate-700 p-1">
@@ -616,40 +527,37 @@
         </button>
       </div>
 
-      <!-- Auth Mode Switcher -->
       <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
-        <button id="auth-tab-login" class="flex-1 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition shadow-sm">Log In</button>
-        <button id="auth-tab-signup" class="flex-1 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition">Sign Up</button>
+        <button id="auth-tab-login" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-brand-700 text-white transition shadow-sm">Log In</button>
+        <button id="auth-tab-signup" class="flex-1 py-1.5 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition">Sign Up</button>
       </div>
 
-      <!-- Login Form -->
-      <form id="form-login" class="space-y-3 text-xs">
+      <form id="form-login" class="space-y-3 text-xs sm:text-sm font-medium">
         <div>
-          <label class="block text-slate-700 font-semibold mb-1">Email Address</label>
-          <input type="email" id="login-email" required placeholder="farmer@agrisense.ai" class="w-full px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-brand-600 shadow-sm">
+          <label class="block text-slate-700 font-bold mb-1">Email Address</label>
+          <input type="email" id="login-email" required placeholder="farmer@agrisense.ai" class="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-brand-600 shadow-sm">
         </div>
         <div>
-          <label class="block text-slate-700 font-semibold mb-1">Password</label>
-          <input type="password" id="login-password" required placeholder="••••••••" class="w-full px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-brand-600 shadow-sm">
+          <label class="block text-slate-700 font-bold mb-1">Password</label>
+          <input type="password" id="login-password" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-brand-600 shadow-sm">
         </div>
-        <button type="submit" class="w-full py-2.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs shadow-md transition">Log In to Account</button>
+        <button type="submit" class="w-full py-3 rounded-lg bg-brand-700 hover:bg-brand-800 text-white font-bold text-sm shadow-md transition">Log In to Account</button>
       </form>
 
-      <!-- Signup Form -->
-      <form id="form-signup" class="space-y-3 text-xs hidden">
+      <form id="form-signup" class="space-y-3 text-xs sm:text-sm font-medium hidden">
         <div>
-          <label class="block text-slate-700 font-semibold mb-1">Full Name</label>
-          <input type="text" id="signup-name" required placeholder="Karim Hossain" class="w-full px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-brand-600 shadow-sm">
+          <label class="block text-slate-700 font-bold mb-1">Full Name</label>
+          <input type="text" id="signup-name" required placeholder="Karim Hossain" class="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-brand-600 shadow-sm">
         </div>
         <div>
-          <label class="block text-slate-700 font-semibold mb-1">Email Address</label>
-          <input type="email" id="signup-email" required placeholder="karim@agrisense.ai" class="w-full px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-brand-600 shadow-sm">
+          <label class="block text-slate-700 font-bold mb-1">Email Address</label>
+          <input type="email" id="signup-email" required placeholder="karim@agrisense.ai" class="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-brand-600 shadow-sm">
         </div>
         <div>
-          <label class="block text-slate-700 font-semibold mb-1">Password</label>
-          <input type="password" id="signup-password" required placeholder="••••••••" class="w-full px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-brand-600 shadow-sm">
+          <label class="block text-slate-700 font-bold mb-1">Password</label>
+          <input type="password" id="signup-password" required placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-brand-600 shadow-sm">
         </div>
-        <button type="submit" class="w-full py-2.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs shadow-md transition">Create Account & Subscribe</button>
+        <button type="submit" class="w-full py-3 rounded-lg bg-brand-700 hover:bg-brand-800 text-white font-bold text-sm shadow-md transition">Create Account & Subscribe</button>
       </form>
     </div>
   </div>

@@ -1,4 +1,4 @@
-// AgriSense Frontend Application Logic — Light Mode & Real-Time Agentic Traces
+// AgriSense Frontend Application Logic — Pristine Light Mode & Real-Time Agentic Traces
 document.addEventListener('DOMContentLoaded', () => {
   // Account Management State
   function getStoredAccount() {
@@ -86,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
     signupName: document.getElementById('signup-name'),
     signupEmail: document.getElementById('signup-email'),
     signupPassword: document.getElementById('signup-password'),
-    signupTier: document.getElementById('signup-tier'),
 
     // Profile
     profileStatus: document.getElementById('profile-status-badge'),
@@ -189,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderSavedChats() {
     if (!els.chatsList) return;
     if (!state.savedChats || state.savedChats.length === 0) {
-      els.chatsList.innerHTML = `<div class="text-xs text-slate-400 italic p-1">No saved chats yet.</div>`;
+      els.chatsList.innerHTML = `<div class="text-xs text-slate-500 italic p-1">No saved chats yet.</div>`;
       return;
     }
 
@@ -197,14 +196,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const isActive = state.sessionId === c.session_id;
       const title = escapeHtml(c.title || 'Farm Advisory Session');
       return `
-        <div class="chat-item group flex items-center justify-between p-2 rounded-lg border text-xs cursor-pointer transition ${
+        <div class="chat-item group flex items-center justify-between p-2.5 rounded-lg border text-xs cursor-pointer transition shadow-sm ${
           isActive
-            ? 'bg-emerald-50 border-emerald-500 text-emerald-950 font-bold shadow-sm'
-            : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+            ? 'bg-emerald-50 border-emerald-500 text-emerald-950 font-bold'
+            : 'bg-white border-slate-200 text-slate-800 hover:bg-slate-50'
         }" data-session-id="${c.session_id}">
           <div class="flex items-center gap-2 truncate flex-1 pointer-events-none">
-            <i data-lucide="${isActive ? 'message-square' : 'message-circle'}" class="w-4 h-4 ${isActive ? 'text-emerald-600' : 'text-slate-400'} shrink-0"></i>
-            <span class="truncate">${title}</span>
+            <i data-lucide="${isActive ? 'message-square' : 'message-circle'}" class="w-4 h-4 ${isActive ? 'text-emerald-700' : 'text-slate-400'} shrink-0"></i>
+            <span class="truncate font-semibold text-xs sm:text-sm">${title}</span>
           </div>
           <button class="chat-delete-btn p-1 text-slate-400 hover:text-red-600 rounded transition opacity-0 group-hover:opacity-100 ml-1" data-session-id="${c.session_id}" title="Delete Chat">
             <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
@@ -361,15 +360,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (els.authTabLogin && els.authTabSignup) {
     els.authTabLogin.addEventListener('click', () => {
-      els.authTabLogin.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition shadow-sm';
-      els.authTabSignup.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition';
+      els.authTabLogin.className = 'flex-1 py-1.5 text-xs font-bold rounded-lg bg-brand-700 text-white transition shadow-sm';
+      els.authTabSignup.className = 'flex-1 py-1.5 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition';
       els.formLogin.classList.remove('hidden');
       els.formSignup.classList.add('hidden');
     });
 
     els.authTabSignup.addEventListener('click', () => {
-      els.authTabSignup.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg bg-brand-600 text-white transition shadow-sm';
-      els.authTabLogin.className = 'flex-1 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition';
+      els.authTabSignup.className = 'flex-1 py-1.5 text-xs font-bold rounded-lg bg-brand-700 text-white transition shadow-sm';
+      els.authTabLogin.className = 'flex-1 py-1.5 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition';
       els.formSignup.classList.remove('hidden');
       els.formLogin.classList.add('hidden');
     });
@@ -461,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderSavedFarms() {
     if (!els.savedFarmsList) return;
     if (!state.savedFarms || state.savedFarms.length === 0) {
-      els.savedFarmsList.innerHTML = `<div class="text-xs text-slate-400 italic">No saved farms yet.</div>`;
+      els.savedFarmsList.innerHTML = `<div class="text-xs text-slate-500 italic">No saved farms yet.</div>`;
       return;
     }
 
@@ -469,27 +468,27 @@ document.addEventListener('DOMContentLoaded', () => {
       const p = f.profile || {};
       const isSelected = state.farmId === f.farm_id;
       return `
-        <div class="p-2.5 rounded-xl border transition shadow-sm ${
+        <div class="p-3 rounded-xl border transition shadow-sm ${
           isSelected
-            ? 'bg-emerald-50 border-emerald-500 text-emerald-950 font-medium'
-            : 'bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300'
+            ? 'bg-emerald-50 border-emerald-500 text-emerald-950 font-medium ring-2 ring-emerald-400/30'
+            : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300'
         }">
-          <div class="flex items-center justify-between font-bold text-xs mb-1">
+          <div class="flex items-center justify-between font-extrabold text-xs sm:text-sm mb-1">
             <span>🏡 ${escapeHtml(f.farm_name)}</span>
-            <span class="text-[10px] font-mono text-slate-500">v${f.profile_version}</span>
+            <span class="text-[11px] font-mono text-slate-500 font-semibold">v${f.profile_version}</span>
           </div>
-          <p class="text-xs text-slate-600 mb-2">
+          <p class="text-xs text-slate-600 mb-2.5 font-medium">
             ${p.farm_size_acre || 2} acres • ${p.soil_type || 'loam'} • ${p.water_availability || 'rainfed'}
           </p>
-          <div class="flex gap-1.5">
-            <button class="use-farm-btn flex-1 py-1 text-xs font-semibold rounded-lg transition ${
+          <div class="flex gap-2">
+            <button class="use-farm-btn flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
               isSelected
                 ? 'bg-emerald-700 text-white cursor-default'
-                : 'bg-brand-600 hover:bg-brand-700 text-white shadow-sm'
+                : 'bg-brand-700 hover:bg-brand-800 text-white shadow-sm'
             }" data-id="${f.farm_id}">
               ${isSelected ? 'Active Farm' : 'Use Farm'}
             </button>
-            <button class="forget-farm-btn px-2.5 py-1 text-xs font-medium rounded-lg bg-slate-200 hover:bg-red-600 text-slate-700 hover:text-white transition" data-id="${f.farm_id}">
+            <button class="forget-farm-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-red-600 text-slate-700 hover:text-white transition" data-id="${f.farm_id}">
               Forget
             </button>
           </div>
@@ -564,7 +563,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (els.catalogCount) {
           els.catalogCount.textContent = `${data.catalog?.authentic_products || 0} real / ${data.catalog?.synthetic_products || 0} synthetic`;
         }
-        els.backendStatus.className = 'flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium';
+        els.backendStatus.className = 'flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-300 text-xs text-emerald-900 font-bold';
       } else {
         els.backendText.textContent = 'Backend Error';
       }
@@ -586,17 +585,17 @@ document.addEventListener('DOMContentLoaded', () => {
     els.catalogResults.innerHTML = products.map(product => {
       const synthetic = product.is_synthetic;
       const originBadge = synthetic
-        ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300 font-semibold">Synthetic test</span>'
-        : '<span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300 font-semibold">Authentic</span>';
+        ? '<span class="text-[10px] px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300 font-extrabold">Synthetic test</span>'
+        : '<span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-300 font-extrabold">Authentic</span>';
       const plannerBadge = product.planner_supported
-        ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 border border-blue-300 font-semibold">Planner</span>'
-        : '<span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-300">Lookup</span>';
+        ? '<span class="text-[10px] px-2 py-0.5 rounded bg-blue-100 text-blue-900 border border-blue-300 font-extrabold">Planner</span>'
+        : '<span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-300 font-semibold">Lookup</span>';
       return `
-        <button class="catalog-product w-full text-left p-2.5 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 transition shadow-sm" data-product-id="${escapeHtml(product.product_id)}" data-product-name="${escapeHtml(product.canonical_name_en)}">
+        <button class="catalog-product w-full text-left p-2.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 transition shadow-sm" data-product-id="${escapeHtml(product.product_id)}" data-product-name="${escapeHtml(product.canonical_name_en)}">
           <div class="flex items-start justify-between gap-2">
             <div class="min-w-0">
-              <div class="text-xs font-semibold text-slate-900 truncate">${escapeHtml(product.canonical_name_en)}${product.canonical_name_bn ? ` · ${escapeHtml(product.canonical_name_bn)}` : ''}</div>
-              <div class="text-[11px] text-slate-500 truncate">${escapeHtml(product.category || 'Agricultural product')}</div>
+              <div class="text-xs font-bold text-slate-900 truncate">${escapeHtml(product.canonical_name_en)}${product.canonical_name_bn ? ` · ${escapeHtml(product.canonical_name_bn)}` : ''}</div>
+              <div class="text-[11px] text-slate-500 font-medium truncate">${escapeHtml(product.category || 'Agricultural product')}</div>
             </div>
             <div class="flex gap-1 shrink-0">${originBadge}${plannerBadge}</div>
           </div>
@@ -629,7 +628,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       renderCatalogProducts(data.products || []);
     } catch (error) {
-      els.catalogResults.innerHTML = `<div class="text-xs text-red-600">Catalog unavailable: ${escapeHtml(error.message)}</div>`;
+      els.catalogResults.innerHTML = `<div class="text-xs text-red-600 font-semibold">Catalog unavailable: ${escapeHtml(error.message)}</div>`;
     }
   }
 
@@ -648,24 +647,24 @@ document.addEventListener('DOMContentLoaded', () => {
   if (els.engineAgentic) {
     els.engineAgentic.addEventListener('click', () => {
       state.engine = 'agentic';
-      els.engineAgentic.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 bg-brand-600 text-white shadow-sm';
-      if (els.engineTier0) els.engineTier0.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5';
+      els.engineAgentic.className = 'px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-brand-700 text-white shadow-sm';
+      if (els.engineTier0) els.engineTier0.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-2';
     });
   }
 
   if (els.engineTier0) {
     els.engineTier0.addEventListener('click', () => {
       state.engine = 'tier0';
-      els.engineTier0.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 bg-brand-600 text-white shadow-sm';
-      if (els.engineAgentic) els.engineAgentic.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5';
+      els.engineTier0.className = 'px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-brand-700 text-white shadow-sm';
+      if (els.engineAgentic) els.engineAgentic.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-2';
     });
   }
 
   // Tab Switcher
   if (els.tabTracesBtn) {
     els.tabTracesBtn.addEventListener('click', () => {
-      els.tabTracesBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-brand-700 border-b-2 border-brand-600 flex items-center justify-center gap-2';
-      if (els.tabPlanBtn) els.tabPlanBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-600 border-b-2 border-transparent hover:text-slate-900 flex items-center justify-center gap-2';
+      els.tabTracesBtn.className = 'flex-1 py-3.5 text-xs font-extrabold uppercase tracking-wider text-brand-800 border-b-2 border-brand-700 flex items-center justify-center gap-2';
+      if (els.tabPlanBtn) els.tabPlanBtn.className = 'flex-1 py-3.5 text-xs font-extrabold uppercase tracking-wider text-slate-600 border-b-2 border-transparent hover:text-slate-900 flex items-center justify-center gap-2';
       if (els.tabTracesContent) els.tabTracesContent.classList.remove('hidden');
       if (els.tabPlanContent) els.tabPlanContent.classList.add('hidden');
     });
@@ -673,8 +672,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (els.tabPlanBtn) {
     els.tabPlanBtn.addEventListener('click', () => {
-      els.tabPlanBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-brand-700 border-b-2 border-brand-600 flex items-center justify-center gap-2';
-      if (els.tabTracesBtn) els.tabTracesBtn.className = 'flex-1 py-3 text-xs font-bold uppercase tracking-wider text-slate-600 border-b-2 border-transparent hover:text-slate-900 flex items-center justify-center gap-2';
+      els.tabPlanBtn.className = 'flex-1 py-3.5 text-xs font-extrabold uppercase tracking-wider text-brand-800 border-b-2 border-brand-700 flex items-center justify-center gap-2';
+      if (els.tabTracesBtn) els.tabTracesBtn.className = 'flex-1 py-3.5 text-xs font-extrabold uppercase tracking-wider text-slate-600 border-b-2 border-transparent hover:text-slate-900 flex items-center justify-center gap-2';
       if (els.tabPlanContent) els.tabPlanContent.classList.remove('hidden');
       if (els.tabTracesContent) els.tabTracesContent.classList.add('hidden');
     });
@@ -709,12 +708,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function startLiveTracePolling() {
     state.isTurnInFlight = true;
-    // Auto switch to Agent Activity tab so user sees reasoning happening in real-time!
     if (els.tabTracesBtn && typeof els.tabTracesBtn.click === 'function') {
       els.tabTracesBtn.click();
     }
     if (liveTraceInterval) clearInterval(liveTraceInterval);
-    liveTraceInterval = setInterval(fetchLiveTraces, 700);
+    liveTraceInterval = setInterval(fetchLiveTraces, 500);
     fetchLiveTraces();
   }
 
@@ -829,33 +827,33 @@ document.addEventListener('DOMContentLoaded', () => {
       const isSelected = state.selectedCropId === rec.crop_id;
       const isEligible = rec.eligible;
 
-      card.className = `p-3.5 rounded-xl border transition flex flex-col justify-between shadow-sm ${
+      card.className = `p-4 rounded-xl border transition flex flex-col justify-between shadow-sm ${
         isSelected 
           ? 'bg-emerald-50 border-emerald-500 text-slate-900 shadow-md ring-2 ring-emerald-500/20' 
           : isEligible 
-            ? 'bg-white border-slate-200 hover:border-slate-300 text-slate-800' 
+            ? 'bg-white border-slate-200 hover:border-slate-300 text-slate-900' 
             : 'bg-slate-100 border-slate-200 text-slate-400 opacity-75'
       }`;
 
       card.innerHTML = `
         <div>
-          <div class="flex items-center justify-between mb-1.5">
-            <span class="font-bold text-sm text-slate-900 flex items-center gap-1">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-bold text-base text-slate-900 flex items-center gap-1">
               #${idx + 1} ${rec.crop_name}
             </span>
-            <span class="px-2 py-0.5 text-xs font-mono font-bold rounded ${
-              isEligible ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-red-100 text-red-800 border border-red-300'
+            <span class="px-2.5 py-1 text-xs font-mono font-bold rounded ${
+              isEligible ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' : 'bg-red-100 text-red-900 border border-red-300'
             }">
               Score: ${rec.suitability_score_0_100}/100
             </span>
           </div>
-          <p class="text-xs text-slate-600 line-clamp-2 mb-3 leading-relaxed">${rec.hard_eligibility_reasons?.join(' ') || rec.summary}</p>
+          <p class="text-xs sm:text-sm text-slate-700 font-medium line-clamp-2 mb-3 leading-relaxed">${rec.hard_eligibility_reasons?.join(' ') || rec.summary}</p>
         </div>
-        <button class="select-crop-btn w-full py-2 text-xs font-semibold rounded-lg transition ${
+        <button class="select-crop-btn w-full py-2.5 text-xs font-bold rounded-lg transition ${
           isSelected 
             ? 'bg-emerald-700 text-white cursor-default' 
             : isEligible 
-              ? 'bg-brand-600 hover:bg-brand-700 text-white shadow-sm' 
+              ? 'bg-brand-700 hover:bg-brand-800 text-white shadow-sm' 
               : 'bg-slate-200 text-slate-400 cursor-not-allowed'
         }" ${!isEligible ? 'disabled' : ''} data-crop="${rec.crop_id}">
           ${isSelected ? 'Selected' : isEligible ? 'Select Crop' : 'Ineligible'}
@@ -913,12 +911,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (state.missingFields && state.missingFields.length > 0) {
       els.profileStatus.textContent = 'Collecting';
-      els.profileStatus.className = 'px-2 py-0.5 text-[10px] font-semibold rounded bg-amber-100 text-amber-800 border border-amber-300';
+      els.profileStatus.className = 'px-2.5 py-0.5 text-xs font-bold rounded bg-amber-100 text-amber-900 border border-amber-300';
       els.missingBox.classList.remove('hidden');
-      els.missingTags.innerHTML = state.missingFields.map(f => `<span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 text-xs font-semibold border border-amber-300">${f}</span>`).join('');
+      els.missingTags.innerHTML = state.missingFields.map(f => `<span class="px-2 py-0.5 rounded bg-amber-100 text-amber-950 text-xs font-bold border border-amber-300">${f}</span>`).join('');
     } else {
       els.profileStatus.textContent = 'Complete';
-      els.profileStatus.className = 'px-2 py-0.5 text-[10px] font-semibold rounded bg-emerald-100 text-emerald-800 border border-emerald-300';
+      els.profileStatus.className = 'px-2.5 py-0.5 text-xs font-bold rounded bg-emerald-100 text-emerald-900 border border-emerald-300';
       els.missingBox.classList.add('hidden');
     }
   }
@@ -929,6 +927,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (toolName === 'geocode_location') return 'Location resolved';
     if (toolName === 'get_live_weather_forecast' || toolName === 'get_weather_forecast') return 'Weather retrieved';
     if (toolName === 'retrieve_agronomic_context' || toolName === 'retrieve_agronomy') return 'Evidence retrieved';
+    if (toolName === 'search_crop_catalog') return 'Catalog searched';
     if (toolName === 'rank_crop_candidates') return 'Crop ranking calculated';
     if (toolName === 'calculate_financial_projection') return 'Finance calculated';
     if (toolName === 'generate_dated_season_plan' || toolName === 'generate_season_plan') return 'Completion validation';
@@ -945,61 +944,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (name.includes('geocode')) {
       return {
-        what: 'TOOL EXECUTED — Location Geocoding',
-        why: 'Spatial coordinates are required to query location-specific weather & soil records.',
-        data: `Input: ${p.location_text || p.district || 'Location text'}; Result: ${r.formatted || 'Coordinates resolved'} (${r.latitude?.toFixed(4) || ''}, ${r.longitude?.toFixed(4) || ''})`,
+        what: 'TOOL EXECUTED — Geocode Location',
+        why: 'Convert location text to spatial coordinates for weather & soil querying.',
+        data: `Input: "${p.location_text || p.district || 'location'}"; Result: ${r.formatted || 'Coordinates resolved'} (${r.latitude?.toFixed(4) || ''}, ${r.longitude?.toFixed(4) || ''})`,
         next: 'Retrieve live meteorological forecast from Open-Meteo API.'
       };
     }
     if (name.includes('weather')) {
       const summary = r.summary || {};
       return {
-        what: 'TOOL EXECUTED — Live Weather Ingestion',
-        why: 'Crop suitability and near-term farm actions require verified rainfall and temperature values.',
-        data: `Input: lat ${p.latitude || 0}, lon ${p.longitude || 0}; Result: ${summary.temperature_avg_c || 26}°C mean temp, ${summary.rainfall_forecast_total_mm || 0}mm 7-day rainfall`,
-        next: 'Query hybrid RAG store for reviewed extension guidelines.'
+        what: 'TOOL EXECUTED — Open-Meteo Live Weather',
+        why: 'Ingest live rainfall, temperature, and humidity for crop suitability & calendar dates.',
+        data: `Input: lat ${p.latitude || 0}, lon ${p.longitude || 0}; Result: ${summary.temperature_avg_c || 26}°C mean temp, ${summary.rainfall_forecast_total_mm || 0}mm total rainfall`,
+        next: 'Search BARC/BAMIS/AIS extension database for agronomic guidelines.'
       };
     }
     if (name.includes('agronom') || name.includes('rag')) {
       const count = Array.isArray(r) ? r.length : (r.results ? r.results.length : 1);
       return {
         what: 'EVIDENCE RETRIEVED — Hybrid RAG Search',
-        why: 'Verify BARC/BAMIS extension rules, soil compatibility, and fertilizer schedules.',
-        data: `Input: query "${p.query || p.crop_id || 'agronomy'}"; Result: ${count} evidence document chunks retrieved`,
-        next: 'Calculate multi-criteria candidate crop suitability scores.'
+        why: 'Query BARC FRG-2024 extension rules, soil suitability, and fertilizer requirements.',
+        data: `Input: query "${p.query || p.crop_id || 'agronomy'}"; Result: ${count} verified evidence document chunks`,
+        next: 'Rank crop suitability or construct financial model.'
       };
     }
     if (name.includes('catalog')) {
       const count = Array.isArray(r) ? r.length : (r.products ? r.products.length : 1);
       return {
-        what: 'CATALOG SEARCH — Integrated Product Lookup',
-        why: 'Check product availability, provenance, and planner support in 60/40 database.',
-        data: `Input: query "${p.query || 'product'}"; Result: ${count} product matches returned`,
-        next: 'Proceed to agronomic compatibility and financial modeling.'
+        what: 'CATALOG SEARCH — Integrated 60/40 Database',
+        why: 'Verify product authenticity, category, and planner compatibility.',
+        data: `Input: query "${p.query || 'product'}"; Result: ${count} product matches`,
+        next: 'Incorporate catalog product data into farm planning.'
       };
     }
     if (name.includes('rank')) {
       return {
-        what: 'CALCULATOR — Multi-Criteria Crop Ranking',
-        why: 'Score eligible crops against season fit, soil type, water access, and ROI.',
+        what: 'CALCULATOR — Crop Suitability Ranking',
+        why: 'Score candidate crops against season fit, soil type, water access, and expected ROI.',
         data: `Input: Farm profile & weather context; Result: 3 ranked crop candidates with suitability scores`,
-        next: 'Present ranked candidates to farmer and await human selection.'
+        next: 'Present ranked candidates to farmer for selection.'
       };
     }
     if (name.includes('finance')) {
       return {
         what: 'CALCULATOR — Financial Projection Ledger',
-        why: 'Compute inspectable cost components, gross revenue, net profit, ROI %, and break-even points.',
-        data: `Input: crop_id "${p.crop_id || 'crop'}", budget BDT ${(p.profile?.budget_bdt || 0).toLocaleString()}; Result: Net profit & ROI % calculated`,
+        why: 'Compute total input cost, gross revenue, net profit, ROI %, and break-even points.',
+        data: `Input: crop "${p.crop_id || 'crop'}", budget BDT ${(p.profile?.budget_bdt || 0).toLocaleString()}; Result: Net profit & ROI % calculated`,
         next: 'Construct stage-by-stage dated season calendar.'
       };
     }
     if (name.includes('plan')) {
       return {
         what: 'VALIDATION — Season Plan Construction',
-        why: 'Generate stage-by-stage calendar dates, fertilizer splits, and pest checkpoints with forecast horizon checks.',
-        data: `Input: chosen_crop_id "${p.crop_id || 'crop'}"; Result: Reconciled dated calendar & validation pass`,
-        next: 'Plan complete. Schedule weather horizon refreshes before future tasks.'
+        why: 'Generate stage-by-stage calendar dates, fertilizer splits, and pest checkpoints.',
+        data: `Input: crop_id "${p.crop_id || 'crop'}"; Result: Reconciled dated calendar & validation pass`,
+        next: 'Plan complete. Ready for field execution.'
       };
     }
 
@@ -1026,34 +1025,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (hasPlan) {
       els.goalStage.textContent = 'Plan Built & Validated';
-      els.goalStage.className = 'font-bold text-emerald-700';
+      els.goalStage.className = 'font-extrabold text-emerald-800 text-sm';
       els.goalNextAction.textContent = 'Plan complete. Ready for field execution or scenario testing.';
     } else if (hasRankings) {
       els.goalStage.textContent = 'Crop Selection Required';
-      els.goalStage.className = 'font-bold text-amber-700';
+      els.goalStage.className = 'font-extrabold text-amber-800 text-sm';
       els.goalNextAction.textContent = 'Rank three crops → Select candidate → Construct season plan';
     } else {
       els.goalStage.textContent = 'Collecting Farm Facts';
-      els.goalStage.className = 'font-bold text-amber-700';
+      els.goalStage.className = 'font-extrabold text-amber-800 text-sm';
       els.goalNextAction.textContent = 'Provide location, land size, soil, water, budget & season.';
     }
 
     els.goalMilestones.innerHTML = `
-      <div class="flex items-center gap-1.5">${hasLocation ? '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> <span class="text-slate-900 font-semibold">Location resolved</span>' : '<i data-lucide="circle" class="w-4 h-4 text-slate-400"></i> Location pending'}</div>
-      <div class="flex items-center gap-1.5">${hasWeather ? '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> <span class="text-slate-900 font-semibold">Weather retrieved</span>' : '<i data-lucide="circle" class="w-4 h-4 text-slate-400"></i> Weather pending'}</div>
-      <div class="flex items-center gap-1.5">${hasEvidence ? '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> <span class="text-slate-900 font-semibold">Evidence retrieved</span>' : '<i data-lucide="circle" class="w-4 h-4 text-slate-400"></i> Evidence pending'}</div>
+      <div class="flex items-center gap-2">${hasLocation ? '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-700"></i> <span class="text-slate-900 font-bold">Location resolved</span>' : '<i data-lucide="circle" class="w-4 h-4 text-slate-400"></i> Location pending'}</div>
+      <div class="flex items-center gap-2">${hasWeather ? '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-700"></i> <span class="text-slate-900 font-bold">Weather retrieved</span>' : '<i data-lucide="circle" class="w-4 h-4 text-slate-400"></i> Weather pending'}</div>
+      <div class="flex items-center gap-2">${hasEvidence ? '<i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-700"></i> <span class="text-slate-900 font-bold">Evidence retrieved</span>' : '<i data-lucide="circle" class="w-4 h-4 text-slate-400"></i> Evidence pending'}</div>
     `;
 
     let liveStatusBanner = '';
     if (state.isTurnInFlight) {
       liveStatusBanner = `
-        <div class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 space-y-1 mb-3 animate-live-pulse shadow-sm">
+        <div class="p-4 rounded-xl bg-emerald-50 border-2 border-emerald-400 text-emerald-950 space-y-1 mb-3.5 animate-live-pulse shadow-md">
           <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping"></span>
-            <span class="text-xs font-bold uppercase tracking-wider text-emerald-800">⚡ Reasoning & Tool Execution in Progress...</span>
+            <span class="w-3 h-3 rounded-full bg-emerald-600 animate-ping"></span>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-900">⚡ AGENT REASONING IN PROGRESS...</span>
           </div>
-          <p class="text-xs text-emerald-950 font-medium">
-            Gemini is invoking tools in real-time. Traces appear below as executed.
+          <p class="text-xs sm:text-sm text-emerald-950 font-bold">
+            Gemini is executing live tool calls. Real-time traces update below as completed.
           </p>
         </div>
       `;
@@ -1062,17 +1061,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let blockedCardsHtml = '';
     if (state.missingFields && state.missingFields.length > 0) {
       blockedCardsHtml = `
-        <div class="p-4 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 space-y-2 mb-3.5 shadow-sm">
+        <div class="p-4 rounded-xl bg-amber-50 border border-amber-300 text-amber-950 space-y-2 mb-3.5 shadow-sm">
           <div class="flex items-center justify-between">
-            <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded bg-amber-100 text-amber-900 border border-amber-300">
+            <span class="px-2.5 py-0.5 text-xs font-extrabold uppercase tracking-wider rounded bg-amber-100 text-amber-950 border border-amber-300">
               Information Gap Detected
             </span>
-            <span class="text-xs text-amber-800 font-bold">NO TOOL CALL</span>
+            <span class="text-xs text-amber-900 font-extrabold">NO TOOL CALL</span>
           </div>
-          <p class="text-xs font-bold text-slate-900">
-            Missing required farm facts: <span class="text-amber-900 font-mono font-bold">${state.missingFields.join(', ')}</span>
+          <p class="text-xs sm:text-sm font-extrabold text-slate-900">
+            Missing required farm facts: <span class="text-amber-950 font-mono font-bold">${state.missingFields.join(', ')}</span>
           </p>
-          <p class="text-xs text-slate-800 leading-relaxed">
+          <p class="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
             <strong>DECISION:</strong> Crop ranking and season planning are BLOCKED until remaining farm facts are collected.
           </p>
         </div>
@@ -1084,19 +1083,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (state.isScenarioDetected || (pProfile.budget_bdt && pProfile.budget_bdt !== 200000)) {
       const currentBgt = pProfile.budget_bdt || 120000;
       scenarioCardHtml = `
-        <div class="p-4 rounded-xl bg-purple-50 border border-purple-300 text-purple-900 space-y-2 mb-3.5 shadow-sm">
+        <div class="p-4 rounded-xl bg-purple-50 border border-purple-300 text-purple-950 space-y-2 mb-3.5 shadow-sm">
           <div class="flex items-center justify-between">
-            <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded bg-purple-100 text-purple-900 border border-purple-300">
+            <span class="px-2.5 py-0.5 text-xs font-extrabold uppercase tracking-wider rounded bg-purple-100 text-purple-950 border border-purple-300">
               SCENARIO DETECTED
             </span>
-            <span class="text-xs text-purple-800 font-mono font-bold">Memory Preserved</span>
+            <span class="text-xs text-purple-900 font-mono font-bold">Memory Preserved</span>
           </div>
-          <p class="text-xs font-bold text-slate-900">
-            Temporary budget override: <span class="text-purple-900 font-mono font-bold">BDT ${currentBgt.toLocaleString()}</span>
+          <p class="text-xs sm:text-sm font-extrabold text-slate-900">
+            Temporary budget override: <span class="text-purple-950 font-mono font-bold">BDT ${currentBgt.toLocaleString()}</span>
           </p>
-          <div class="text-xs text-slate-800 space-y-1 leading-snug">
+          <div class="text-xs sm:text-sm text-slate-800 space-y-1 leading-snug font-medium">
             <p><strong>MEMORY POLICY:</strong> Base farm budget remains <span class="font-mono font-bold">BDT 200,000</span>.</p>
-            <p><strong>RECALCULATION:</strong> Budget-dependent outputs updated for what-if comparison.</p>
+            <p><strong>RECALCULATION:</strong> Budget-dependent outputs updated for scenario comparison.</p>
           </div>
         </div>
       `;
@@ -1116,42 +1115,42 @@ document.addEventListener('DOMContentLoaded', () => {
       const q = getOperationalFourQuestions(t);
 
       return `
-        <div class="p-4 sm:p-4.5 rounded-xl bg-white border border-slate-200 hover:border-brand-500 transition cursor-pointer trace-item group space-y-3 shadow-sm hover:shadow-md" data-idx="${idx}">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-            <span class="font-mono text-xs sm:text-sm font-bold text-brand-700 flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-brand-600"></span>
+        <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 hover:border-brand-600 transition cursor-pointer trace-item group space-y-3 shadow-sm hover:shadow-md" data-idx="${idx}">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+            <span class="font-mono text-sm sm:text-base font-extrabold text-brand-800 flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-brand-600"></span>
               #${t.step_no} ${t.tool_name}
             </span>
-            <span class="font-mono text-xs font-semibold text-slate-500">${t.duration_ms ? t.duration_ms.toFixed(1) + 'ms' : ''}</span>
+            <span class="font-mono text-xs font-bold text-slate-500">${t.duration_ms ? t.duration_ms.toFixed(1) + 'ms' : ''}</span>
           </div>
           
           <div class="flex items-center justify-between">
-            <span class="px-2.5 py-0.5 text-xs font-bold rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200">${judgeLabel}</span>
-            <span class="text-xs text-slate-500 font-mono font-medium">${t.source_kind}</span>
+            <span class="px-3 py-1 text-xs font-extrabold rounded-md bg-emerald-100 text-emerald-900 border border-emerald-300">${judgeLabel}</span>
+            <span class="text-xs text-slate-600 font-mono font-bold">${t.source_kind}</span>
           </div>
 
-          <!-- 4-QUESTION OPERATIONAL BREAKDOWN FOR HIGH LEGIBILITY -->
-          <div class="space-y-2.5 text-xs pt-1 border-t border-slate-100">
+          <!-- 4-QUESTION OPERATIONAL BREAKDOWN (HIGH LEGIBILITY FOR JUDGES) -->
+          <div class="space-y-3 text-xs sm:text-sm pt-1 border-t border-slate-100">
             <div>
-              <span class="text-slate-500 font-bold block text-[11px] uppercase tracking-wider mb-0.5">1. WHAT HAPPENED?</span>
-              <span class="text-slate-900 font-bold text-xs sm:text-sm leading-relaxed">${escapeHtml(q.what)}</span>
+              <span class="text-slate-500 font-extrabold block text-xs uppercase tracking-wider mb-1">1. WHAT HAPPENED?</span>
+              <span class="text-slate-900 font-bold text-sm sm:text-base leading-relaxed">${escapeHtml(q.what)}</span>
             </div>
             <div>
-              <span class="text-slate-500 font-bold block text-[11px] uppercase tracking-wider mb-0.5">2. WHY WAS IT NEEDED?</span>
-              <span class="text-slate-700 font-medium text-xs sm:text-sm leading-relaxed">${escapeHtml(q.why)}</span>
+              <span class="text-slate-500 font-extrabold block text-xs uppercase tracking-wider mb-1">2. WHY WAS IT NEEDED?</span>
+              <span class="text-slate-800 font-medium text-xs sm:text-sm leading-relaxed">${escapeHtml(q.why)}</span>
             </div>
             <div>
-              <span class="text-slate-500 font-bold block text-[11px] uppercase tracking-wider mb-0.5">3. DATA ENTERED / RETURNED:</span>
-              <span class="text-emerald-800 font-mono text-xs block bg-emerald-50/80 p-2 rounded-md border border-emerald-200/80 overflow-x-auto font-semibold">${escapeHtml(q.data)}</span>
+              <span class="text-slate-500 font-extrabold block text-xs uppercase tracking-wider mb-1">3. DATA ENTERED / RETURNED:</span>
+              <span class="text-emerald-950 font-mono text-xs sm:text-sm block bg-emerald-50 p-2.5 rounded-lg border border-emerald-200 overflow-x-auto font-bold leading-normal">${escapeHtml(q.data)}</span>
             </div>
             <div>
-              <span class="text-slate-500 font-bold block text-[11px] uppercase tracking-wider mb-0.5">4. WHAT HAPPENS NEXT?</span>
-              <span class="text-brand-800 font-semibold text-xs sm:text-sm leading-relaxed">${escapeHtml(q.next)}</span>
+              <span class="text-slate-500 font-extrabold block text-xs uppercase tracking-wider mb-1">4. WHAT HAPPENS NEXT?</span>
+              <span class="text-brand-900 font-bold text-xs sm:text-sm leading-relaxed">${escapeHtml(q.next)}</span>
             </div>
           </div>
 
           <div class="pt-2 text-right border-t border-slate-100">
-            <span class="text-xs text-brand-700 group-hover:underline font-bold flex items-center justify-end gap-1">
+            <span class="text-xs sm:text-sm text-brand-800 group-hover:underline font-extrabold flex items-center justify-end gap-1">
               Inspect Raw JSON Payload &rarr;
             </span>
           </div>
@@ -1229,24 +1228,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     els.evResult.innerHTML = `
-      <div><span class="text-slate-500 font-medium">Validation Status:</span> <span class="font-bold font-mono ${plan.validation_status?.passed ? 'text-emerald-700' : 'text-amber-700'}">${plan.validation_status?.passed ? 'Verified' : 'Draft / Unverified'}</span></div>
-      <div><span class="text-slate-500 font-medium">Seasonal Water Need:</span> <span class="text-slate-800 font-mono font-semibold">${plan.irrigation_summary?.seasonal_water_requirement_mm_mock || '—'}mm</span></div>
-      <div><span class="text-slate-500 font-medium">Projected Total Cost:</span> <span class="text-slate-800 font-mono font-semibold">BDT ${(fin.total_cost_bdt || 0).toLocaleString()}</span></div>
-      <div><span class="text-slate-500 font-bold">Projected Net Profit:</span> <span class="text-brand-700 font-bold font-mono">BDT ${(fin.net_profit_bdt || 0).toLocaleString()}</span></div>
-      <div><span class="text-slate-500 font-medium">Projected ROI:</span> <span class="text-emerald-700 font-bold font-mono">${(fin.roi_percent || 0).toFixed(1)}%</span></div>
+      <div><span class="text-slate-500 font-medium">Validation Status:</span> <span class="font-bold font-mono ${plan.validation_status?.passed ? 'text-emerald-800' : 'text-amber-800'}">${plan.validation_status?.passed ? 'Verified' : 'Draft / Unverified'}</span></div>
+      <div><span class="text-slate-500 font-medium">Seasonal Water Need:</span> <span class="text-slate-900 font-mono font-bold">${plan.irrigation_summary?.seasonal_water_requirement_mm_mock || '—'}mm</span></div>
+      <div><span class="text-slate-500 font-medium">Projected Total Cost:</span> <span class="text-slate-900 font-mono font-bold">BDT ${(fin.total_cost_bdt || 0).toLocaleString()}</span></div>
+      <div><span class="text-slate-500 font-bold">Projected Net Profit:</span> <span class="text-brand-800 font-extrabold font-mono">BDT ${(fin.net_profit_bdt || 0).toLocaleString()}</span></div>
+      <div><span class="text-slate-500 font-medium">Projected ROI:</span> <span class="text-emerald-800 font-extrabold font-mono">${(fin.roi_percent || 0).toFixed(1)}%</span></div>
     `;
 
-    // Populate Scenario Comparison Table if scenario result returned
+    // Populate Scenario Comparison Table
     const scenario = state.scenario;
     if (scenario && scenario.deltas) {
       els.scenarioBox.classList.remove('hidden');
       const tbodyScen = els.scenarioTable.querySelector('tbody');
       tbodyScen.innerHTML = Object.entries(scenario.deltas).map(([k, v]) => `
         <tr>
-          <td class="p-2 font-medium text-slate-800 capitalize">${k.replace('_', ' ')}</td>
-          <td class="p-2 text-right text-slate-600">${v.baseline ?? '—'}</td>
-          <td class="p-2 text-right text-amber-800 font-bold">${v.scenario ?? '—'}</td>
-          <td class="p-2 text-right text-brand-700 font-bold">${v.delta ?? '—'}</td>
+          <td class="p-2.5 font-semibold text-slate-900 capitalize">${k.replace('_', ' ')}</td>
+          <td class="p-2.5 text-right text-slate-700 font-medium">${v.baseline ?? '—'}</td>
+          <td class="p-2.5 text-right text-amber-900 font-bold">${v.scenario ?? '—'}</td>
+          <td class="p-2.5 text-right text-brand-800 font-bold">${v.delta ?? '—'}</td>
         </tr>
       `).join('');
     } else {
@@ -1260,12 +1259,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const taskDate = t.start_date ? `${t.start_date}${t.end_date ? ' → ' + t.end_date : ''}` : 'Scheduled';
       const detail = t.description || t.stage_purpose || (t.quantity ? `${t.quantity.value} ${t.quantity.unit}` : '');
       return `
-        <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 shadow-sm">
-          <div class="flex items-center justify-between text-xs font-bold text-slate-900 mb-1">
+        <div class="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between text-xs sm:text-sm font-bold text-slate-900 mb-1">
             <span>${escapeHtml(taskName)}</span>
-            <span class="font-mono text-xs text-brand-700">${escapeHtml(taskDate)}</span>
+            <span class="font-mono text-xs sm:text-sm text-brand-800 font-bold">${escapeHtml(taskDate)}</span>
           </div>
-          ${detail ? `<p class="text-xs text-slate-600 leading-relaxed">${escapeHtml(detail)}</p>` : ''}
+          ${detail ? `<p class="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">${escapeHtml(detail)}</p>` : ''}
         </div>
       `;
     }).join('');
@@ -1287,13 +1286,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (fertilizerList.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-slate-500 italic">No split fertilizer applications recorded.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-slate-500 italic font-medium">No split fertilizer applications recorded.</td></tr>`;
     } else {
       tbody.innerHTML = fertilizerList.map(item => `
         <tr>
-          <td class="p-2.5 font-medium text-slate-800">${item.stage}</td>
-          <td class="p-2.5 text-slate-600">${item.product}</td>
-          <td class="p-2.5 text-right font-mono font-bold text-brand-700">${item.kg} kg</td>
+          <td class="p-3 font-semibold text-slate-900">${item.stage}</td>
+          <td class="p-3 text-slate-700 font-medium">${item.product}</td>
+          <td class="p-3 text-right font-mono font-bold text-brand-800">${item.kg} kg</td>
         </tr>
       `).join('');
     }
@@ -1326,7 +1325,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const msg = document.createElement('div');
     msg.className = 'flex justify-end animate-fade-in';
     msg.innerHTML = `
-      <div class="max-w-xl p-4 rounded-2xl bg-brand-600 text-white text-sm sm:text-base font-medium shadow-sm rounded-tr-none markdown-content leading-relaxed">
+      <div class="max-w-xl p-4 sm:p-5 rounded-2xl bg-brand-700 text-white text-base sm:text-lg font-medium shadow-md rounded-tr-none markdown-content leading-relaxed">
         ${renderMarkdown(text)}
       </div>
     `;
@@ -1338,16 +1337,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const welcome = document.getElementById('welcome-banner');
     if (welcome) welcome.remove();
     const msg = document.createElement('div');
-    msg.className = 'flex items-start gap-3 animate-fade-in';
+    msg.className = 'flex items-start gap-3.5 animate-fade-in';
 
     let summaryHtml = '';
     if (decisionSummary && decisionSummary.length > 0) {
       summaryHtml = `
-        <details class="mb-3 rounded-xl bg-slate-50 border border-slate-200 p-2.5 text-xs">
-          <summary class="font-bold text-brand-700 cursor-pointer flex items-center gap-1.5 select-none">
+        <details class="mb-3 rounded-xl bg-slate-50 border border-slate-200 p-3 text-xs sm:text-sm">
+          <summary class="font-extrabold text-brand-800 cursor-pointer flex items-center gap-1.5 select-none">
             <span>🧠 Proof of Thinking & Decision Process</span>
           </summary>
-          <ul class="mt-2 space-y-1 text-slate-700 pl-4 list-disc text-xs leading-relaxed">
+          <ul class="mt-2 space-y-1.5 text-slate-800 pl-4 list-disc text-xs sm:text-sm font-medium leading-relaxed">
             ${decisionSummary.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
           </ul>
         </details>
@@ -1359,13 +1358,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const topCand = memoryContext?.saved_farms?.[0];
       const farmId = topCand?.farm_id;
       memoryActionControlsHtml = `
-        <div class="mt-3 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex flex-col gap-2 shadow-sm">
-          <p class="text-xs text-emerald-900 font-bold">Persistent Memory Confirmation Required:</p>
+        <div class="mt-4 p-4 rounded-xl bg-emerald-50 border border-emerald-300 flex flex-col gap-2.5 shadow-sm">
+          <p class="text-xs sm:text-sm text-emerald-950 font-extrabold">Persistent Memory Confirmation Required:</p>
           <div class="flex gap-2">
-            <button class="mem-action-btn flex-1 py-2 px-3 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold shadow transition" data-action="apply" data-farm-id="${farmId || ''}">
+            <button class="mem-action-btn flex-1 py-2.5 px-4 rounded-lg bg-brand-700 hover:bg-brand-800 text-white text-xs sm:text-sm font-bold shadow transition" data-action="apply" data-farm-id="${farmId || ''}">
               ✓ Use Saved Farm
             </button>
-            <button class="mem-action-btn flex-1 py-2 px-3 rounded-lg bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-300 transition shadow-sm" data-action="decline">
+            <button class="mem-action-btn flex-1 py-2.5 px-4 rounded-lg bg-white hover:bg-slate-50 text-slate-800 text-xs sm:text-sm font-bold border border-slate-300 transition shadow-sm" data-action="decline">
               ✕ Start Fresh
             </button>
           </div>
@@ -1373,16 +1372,16 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     } else if (status === 'needs_memory_conflict_resolution') {
       memoryActionControlsHtml = `
-        <div class="mt-3 p-3.5 rounded-xl bg-amber-50 border border-amber-200 flex flex-col gap-2 shadow-sm">
-          <p class="text-xs text-amber-900 font-bold">Memory Conflict Resolution Required:</p>
+        <div class="mt-4 p-4 rounded-xl bg-amber-50 border border-amber-300 flex flex-col gap-2.5 shadow-sm">
+          <p class="text-xs sm:text-sm text-amber-950 font-extrabold">Memory Conflict Resolution Required:</p>
           <div class="flex flex-wrap gap-2">
-            <button class="mem-action-btn py-2 px-3 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold transition shadow-sm" data-action="confirm_update">
+            <button class="mem-action-btn py-2.5 px-4 rounded-lg bg-brand-700 hover:bg-brand-800 text-white text-xs sm:text-sm font-bold transition shadow" data-action="confirm_update">
               Permanent Update
             </button>
-            <button class="mem-action-btn py-2 px-3 rounded-lg bg-white hover:bg-slate-100 text-slate-800 text-xs font-semibold border border-slate-300 transition shadow-sm" data-action="use_temporarily">
+            <button class="mem-action-btn py-2.5 px-4 rounded-lg bg-white hover:bg-slate-50 text-slate-900 text-xs sm:text-sm font-bold border border-slate-300 transition shadow-sm" data-action="use_temporarily">
               Use Temporarily
             </button>
-            <button class="mem-action-btn py-2 px-3 rounded-lg bg-purple-100 hover:bg-purple-200 text-purple-900 text-xs font-semibold border border-purple-300 transition shadow-sm" data-action="create_new">
+            <button class="mem-action-btn py-2.5 px-4 rounded-lg bg-purple-100 hover:bg-purple-200 text-purple-950 text-xs sm:text-sm font-bold border border-purple-300 transition shadow-sm" data-action="create_new">
               Create Another Farm
             </button>
           </div>
@@ -1391,12 +1390,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     msg.innerHTML = `
-      <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
-        <i data-lucide="bot" class="w-5 h-5"></i>
+      <div class="w-10 h-10 rounded-xl bg-emerald-100 border border-emerald-300 text-emerald-800 flex items-center justify-center shrink-0 mt-1 shadow-sm">
+        <i data-lucide="bot" class="w-6 h-6"></i>
       </div>
-      <div class="max-w-2xl p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 text-sm sm:text-base text-slate-800 shadow-sm rounded-tl-none space-y-2">
+      <div class="max-w-2xl p-5 sm:p-6 rounded-2xl bg-white border border-slate-200 text-base sm:text-lg text-slate-900 shadow-md rounded-tl-none space-y-3">
         ${summaryHtml}
-        <div class="leading-relaxed markdown-content">${renderMarkdown(text)}</div>
+        <div class="leading-relaxed markdown-content font-normal">${renderMarkdown(text)}</div>
         ${memoryActionControlsHtml}
       </div>
     `;
