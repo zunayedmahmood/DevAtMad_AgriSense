@@ -20,6 +20,9 @@ class AgentController:
         self.repair_service = RepairService()
         self.scenario_simulator = ScenarioSimulator(self.verifier)
 
+    async def handle_turn(self, request: AgentTurnRequest) -> AgentTurnResponse:
+        return await self.execute_turn(request)
+
     async def execute_turn(self, request: AgentTurnRequest) -> AgentTurnResponse:
         budget = RunBudget()
         session_id = self.services.database.ensure_session(
