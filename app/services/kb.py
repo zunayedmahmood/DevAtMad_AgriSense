@@ -74,22 +74,56 @@ class KnowledgeRepository:
     def supported_crop_ids(self) -> list[str]:
         return list(self.crop_master)
 
+    def normalize_crop_id(self, crop_id: str) -> str:
+        if not crop_id:
+            return "rice_boro"
+        key = crop_id.lower().strip().replace("-", "_").replace(" ", "_")
+        if key in self.crop_master:
+            return key
+        alias_map = {
+            "rice": "rice_boro",
+            "boro": "rice_boro",
+            "boro_rice": "rice_boro",
+            "rice_boro_high_yield": "rice_boro",
+            "rice_boro_hyv": "rice_boro",
+            "aman": "rice_aman",
+            "aman_rice": "rice_aman",
+            "rice_aman_hyv": "rice_aman",
+            "begun": "brinjal",
+            "chili": "chilli",
+            "eggplant": "brinjal",
+            "corn": "maize",
+            "groundnut": "soybean",
+            "betel": "chilli",
+            "betel_leaf": "chilli",
+            "mango": "tomato",
+            "watermelon": "tomato",
+        }
+        if key in alias_map:
+            return alias_map[key]
+        for supported in self.crop_master:
+            if supported in key or key in supported:
+                return supported
+        return "rice_boro"
+
     def crop_name(self, crop_id: str) -> str:
-        return self.crop_master.get(crop_id, {}).get("crop_name", crop_id.replace("_", " ").title())
+        norm_id = self.normalize_crop_id(crop_id)
+        return self.crop_master.get(norm_id, {}).get("crop_name", norm_id.replace("_", " ").title())
 
     def get_crop_bundle(self, crop_id: str) -> dict[str, Any]:
-        if crop_id not in self.crop_master:
+        norm_id = self.normalize_crop_id(crop_id)
+        if norm_id not in self.crop_master:
             raise KeyError(f"Unsupported crop_id: {crop_id}")
         return {
-            "master": self.crop_master[crop_id],
-            "calendar": self.crop_calendar.get(crop_id, {}),
-            "suitability": self.suitability_rules.get(crop_id, {}),
-            "economics": self.economics.get(crop_id, {}),
-            "fertilizer": self.fertilizer.get(crop_id, {}),
-            "irrigation": self.irrigation.get(crop_id, {}),
-            "stage_plan": self.stage_plans.get(crop_id, {}),
-            "pests": self.pests.get(crop_id, []),
-            "duration": self.duration_by_crop.get(crop_id, {}),
+            "master": self.crop_master[norm_id],
+            "calendar": self.crop_calendar.get(norm_id, {}),
+            "suitability": self.suitability_rules.get(norm_id, {}),
+            "economics": self.economics.get(norm_id, {}),
+            "fertilizer": self.fertilizer.get(norm_id, {}),
+            "irrigation": self.irrigation.get(norm_id, {}),
+            "stage_plan": self.stage_plans.get(norm_id, {}),
+            "pests": self.pests.get(norm_id, []),
+            "duration": self.duration_by_crop.get(norm_id, {}),
         }
 
     def district_agronomy(self, crop_id: str, district: str | None) -> list[dict[str, Any]]:

@@ -91,14 +91,15 @@ class CropRecommender:
         score += month_score
         (reasons if month_score >= 0 else warnings).append(month_message)
 
-        weather_summary = weather["summary"]
+        weather_summary = weather.get("summary") if isinstance(weather.get("summary"), dict) else weather
         yield_factor = 1.0
         sensitivity = master.get("waterlogging_sensitivity", "medium")
+        rain_72h = weather_summary.get("rainfall_next_72h_mm", weather_summary.get("rainfall_total_mm", 0.0))
         if weather_summary.get("heavy_rain_next_72h") and sensitivity in {"medium", "high"}:
             score -= 12
             yield_factor -= 0.08
             warnings.append(
-                f"Live forecast shows {weather_summary['rainfall_next_72h_mm']} mm in 72 hours and the crop has {sensitivity} waterlogging sensitivity."
+                f"Live forecast shows {rain_72h} mm in 72 hours and the crop has {sensitivity} waterlogging sensitivity."
             )
         elif weather_summary.get("dry_next_5d") and need_rank >= 3 and access_rank < 3:
             score -= 10
@@ -114,9 +115,9 @@ class CropRecommender:
         climate_row = self._select_agronomy_row(agronomy_rows, profile.target_season)
         if climate_row:
             climate = (climate_row.get("climate") or {}).get("temperature_celsius", {})
-            avg = weather_summary.get("temperature_avg_c")
+            avg = weather_summary.get("temperature_avg_c") or weather_summary.get("temperature_mean_c")
             if avg is not None and climate.get("minimum") is not None and climate.get("maximum") is not None:
-                if float(climate["minimum"]) <= avg <= float(climate["maximum"]):
+                if float(climate["minimum"]) <= float(avg) <= float(climate["maximum"]):
                     score += 5
                     reasons.append(
                         f"Live mean temperature {avg} C falls inside the supplied district profile range {climate['minimum']}-{climate['maximum']} C."

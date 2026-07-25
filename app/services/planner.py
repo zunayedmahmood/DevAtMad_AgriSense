@@ -29,9 +29,10 @@ class SeasonPlanner:
         bundle = self.kb.get_crop_bundle(crop_id)
         sowing_date = self._choose_sowing_date(profile, bundle["calendar"])
         today = datetime.now(UTC).date()
+        weather_sum = weather.get("summary") if isinstance(weather.get("summary"), dict) else weather
         if (
             0 <= (sowing_date - today).days <= 7
-            and weather["summary"].get("heavy_rain_next_72h")
+            and weather_sum.get("heavy_rain_next_72h")
             and bundle["master"].get("waterlogging_sensitivity") in {"medium", "high"}
         ):
             sowing_date += timedelta(days=3)
