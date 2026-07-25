@@ -39,6 +39,8 @@ async def lifespan(app: FastAPI):
     yield
 
 
+from app.api.testing_routes import testing_router
+
 app = FastAPI(
     title="AgriSense Tier-0 Sandbox",
     version="1.0.0",
@@ -56,6 +58,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.include_router(router)
+app.include_router(testing_router)
 
 
 @app.middleware("http")

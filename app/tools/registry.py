@@ -164,9 +164,19 @@ class ToolRegistry:
         }
         if name not in functions:
             raise KeyError(f"Unknown tool: {name}")
+
+        # Check for simulated failure injection
+        sim_failure = arguments.get("simulated_failure")
+        from app.services.failure_injection import global_failure_service
+        global_failure_service.maybe_inject_tool_failure(name, sim_failure)
+
         result = functions[name](arguments)
         if hasattr(result, "__await__"):
             result = await result
+
+        if name == "calculate_financial_projection" and isinstance(result, dict):
+            result = global_failure_service.transform_finance_result(result, sim_failure)
+
         return result
 
     async def _geocode(self, args: dict[str, Any]) -> Any:

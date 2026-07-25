@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgriSense AI — Part VIII Failure Recovery & Audit Log</title>
+  <title>AgriSense AI — Controlled Failures & Recovery Testing</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -39,19 +39,19 @@
       </a>
       <div>
         <div class="flex items-center gap-2">
-          <h1 class="font-extrabold text-lg text-slate-900">AgriSense Failure Recovery & Audit Dashboard</h1>
-          <span class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">Part VIII Compliant</span>
+          <h1 class="font-extrabold text-lg text-slate-900">Controlled Failures & Recovery Testing Studio</h1>
+          <span class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-amber-100 text-amber-900 border border-amber-300">5 Simulated Scenarios</span>
         </div>
-        <p class="text-xs text-slate-500 font-medium">Controlled Geolocation Fallbacks, Failclosed Paths, & Provenance Classification</p>
+        <p class="text-xs text-slate-500 font-medium">On-Demand Failure Injection & Failclosed Path Auditing for Judges</p>
       </div>
     </div>
 
     <div class="flex items-center gap-3">
-      <a href="/ui/" class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-800 border border-slate-300 transition">
-        ← Back to Main Advisory UI
+      <a href="/ui/" class="px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-800 border border-slate-300 transition">
+        Main Advisory UI
       </a>
-      <a href="/ui/testing.html" class="px-3.5 py-1.5 rounded-lg bg-brand-700 hover:bg-brand-800 text-xs font-bold text-white shadow-sm transition">
-        View Automated Tests Dashboard →
+      <a href="/ui/testing.html" class="px-3.5 py-2 rounded-lg bg-brand-700 hover:bg-brand-800 text-xs font-bold text-white shadow-sm transition">
+        Automated Testing Dashboard →
       </a>
     </div>
   </header>
@@ -63,14 +63,98 @@
     <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2">
       <h2 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
         <i data-lucide="life-buoy" class="w-5 h-5 text-amber-700"></i>
-        Part VIII Failure Recovery & Audit Discipline
+        On-Demand Controlled Failure Simulation
       </h2>
       <p class="text-sm text-slate-700 font-medium leading-relaxed">
-        AgriSense strictly enforces controlled fallback mechanisms and failclosed paths. If an external API fails (such as Geoapify geocoding or rate-limited Gemini LLM keys), the system uses explicit, approved fallbacks without inventing data or hallucinating unverified weather.
+        Judges can test: <em>"What if the weather call fails right now?"</em> or <em>"What if Gemini hits a rate limit?"</em>. Select any controlled failure scenario below to run a test prompt and observe how AgriSense handles failclosed paths, approved fallbacks, and math re-computations without inventing unverified data.
       </p>
     </div>
 
-    <!-- RECOVERY DISCIPLINE CARDS -->
+    <!-- CONTROLLED FAILURE TEST EXECUTION PANEL -->
+    <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-5">
+      <h3 class="text-base font-extrabold text-slate-900 border-b border-slate-200 pb-3 flex items-center gap-2">
+        <i data-lucide="sliders" class="w-5 h-5 text-brand-700"></i>
+        Select & Run Controlled Failure Scenario
+      </h3>
+
+      <div class="grid grid-cols-5 gap-3 text-xs font-bold" id="failure-selector-group">
+        
+        <button class="fail-select-btn p-3.5 rounded-xl border-2 transition text-left space-y-1 bg-amber-50 border-amber-500 text-amber-950" data-mode="weather_failure">
+          <div class="flex items-center gap-1.5 text-xs font-extrabold">
+            <span>🌧️ Weather Outage</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-normal leading-tight">Simulates Open-Meteo connection failure (HTTP 503).</p>
+        </button>
+
+        <button class="fail-select-btn p-3.5 rounded-xl border-2 transition text-left space-y-1 bg-white border-slate-200 text-slate-800 hover:border-slate-300" data-mode="geocode_failure">
+          <div class="flex items-center gap-1.5 text-xs font-extrabold">
+            <span>📍 Geocode Outage</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-normal leading-tight">Simulates Geoapify API failure & gazetteer fallback.</p>
+        </button>
+
+        <button class="fail-select-btn p-3.5 rounded-xl border-2 transition text-left space-y-1 bg-white border-slate-200 text-slate-800 hover:border-slate-300" data-mode="rag_failure">
+          <div class="flex items-center gap-1.5 text-xs font-extrabold">
+            <span>📚 RAG Timeout</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-normal leading-tight">Simulates vector store timeout / 0 docs returned.</p>
+        </button>
+
+        <button class="fail-select-btn p-3.5 rounded-xl border-2 transition text-left space-y-1 bg-white border-slate-200 text-slate-800 hover:border-slate-300" data-mode="rate_limit_failure">
+          <div class="flex items-center gap-1.5 text-xs font-extrabold">
+            <span>⚡ LLM Rate Limit</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-normal leading-tight">Simulates 429 error & 4-key pool failover.</p>
+        </button>
+
+        <button class="fail-select-btn p-3.5 rounded-xl border-2 transition text-left space-y-1 bg-white border-slate-200 text-slate-800 hover:border-slate-300" data-mode="finance_discrepancy">
+          <div class="flex items-center gap-1.5 text-xs font-extrabold">
+            <span>🧮 Math Tampering</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-normal leading-tight">Tampers net profit math to test PlanVerifier repair.</p>
+        </button>
+
+      </div>
+
+      <!-- TEST PROMPT INPUT -->
+      <div class="space-y-2">
+        <label class="block text-xs font-bold text-slate-800">Test Prompt Utterance:</label>
+        <div class="flex gap-3">
+          <input type="text" id="input-test-prompt" value="we have 2 acres in Shibchar Madaripur with sandy loam soil and BDT 50000 budget for garlic."
+            class="flex-1 px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-sm font-semibold text-slate-900 focus:outline-none focus:border-brand-600 shadow-sm">
+          <button id="btn-run-test" class="px-6 py-2.5 rounded-xl bg-brand-700 hover:bg-brand-800 text-white font-bold text-sm shadow-md transition flex items-center gap-2 shrink-0">
+            <i data-lucide="play" class="w-4 h-4"></i> Run Controlled Failure Test
+          </button>
+        </div>
+      </div>
+
+      <!-- SIMULATION RESULT DISPLAY -->
+      <div id="sim-result-box" class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4 hidden">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
+          <h4 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+            <i data-lucide="activity" class="w-4.5 h-4.5 text-brand-700"></i>
+            Simulation Execution Log
+          </h4>
+          <span id="sim-status-badge" class="px-2.5 py-0.5 text-xs font-mono font-bold rounded bg-emerald-100 text-emerald-900 border border-emerald-300">
+            COMPLETED
+          </span>
+        </div>
+
+        <div class="space-y-3 text-xs font-mono">
+          <div>
+            <span class="text-slate-500 font-bold block mb-1 uppercase">AI Assistant Response</span>
+            <div id="sim-reply-text" class="p-3.5 rounded-xl bg-white border border-slate-200 font-sans text-sm text-slate-900 leading-relaxed font-medium shadow-sm"></div>
+          </div>
+
+          <div>
+            <span class="text-slate-500 font-bold block mb-1 uppercase">Executed Tool Traces & Failure Handling</span>
+            <pre id="sim-traces-text" class="p-3.5 rounded-xl bg-white border border-slate-200 overflow-x-auto text-emerald-800 font-bold shadow-sm"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECOVERY DISCIPLINE AUDIT REFERENCE CARDS -->
     <div class="grid grid-cols-2 gap-6">
       
       <!-- CARD 1: GEOLOCATION FALLBACK -->
@@ -92,7 +176,7 @@
             <span class="text-slate-600">Lookup: mock_location_centroids.json → Centroid (23.3500°, 90.1500°)</span>
           </div>
           <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200">
-            <strong class="text-emerald-900 block mb-1 font-sans">3. RESULT: Plan Weather Weather Grounded</strong>
+            <strong class="text-emerald-900 block mb-1 font-sans">3. RESULT: Plan Weather Grounded</strong>
             <span class="text-emerald-800">Weather API called with verified centroid coordinates. Plan remains grounded.</span>
           </div>
         </div>
@@ -124,54 +208,80 @@
       </div>
 
     </div>
-
-    <!-- PROVENANCE EVIDENCE CLASSIFICATION AUDIT -->
-    <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
-      <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2 border-b border-slate-200 pb-3">
-        <i data-lucide="shield-alert" class="w-5 h-5 text-emerald-700"></i>
-        Three-Tier Evidence Provenance Classification
-      </h2>
-
-      <div class="grid grid-cols-3 gap-4 text-xs font-medium">
-        <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-300 space-y-2">
-          <span class="font-extrabold text-emerald-900 text-sm block">🟢 REAL / REVIEWED</span>
-          <ul class="space-y-1 text-slate-800 list-disc pl-4">
-            <li>Farmer profile inputs</li>
-            <li>Geoapify spatial coordinates</li>
-            <li>Open-Meteo live weather data</li>
-            <li>BARC FRG-2024 extension evidence</li>
-            <li>BAMIS crop calendar guidance</li>
-          </ul>
-        </div>
-
-        <div class="p-4 rounded-xl bg-amber-50 border border-amber-300 space-y-2">
-          <span class="font-extrabold text-amber-900 text-sm block">🟡 SEEDED DEMO ASSUMPTIONS</span>
-          <ul class="space-y-1 text-slate-800 list-disc pl-4">
-            <li>Fertilizer rates without soil test</li>
-            <li>Baseline yield expectations</li>
-            <li>Input market prices</li>
-            <li>Crop selling price defaults</li>
-            <li>Pest prevention costs</li>
-          </ul>
-        </div>
-
-        <div class="p-4 rounded-xl bg-blue-50 border border-blue-300 space-y-2">
-          <span class="font-extrabold text-blue-900 text-sm block">🔵 CALCULATED BY CODE</span>
-          <ul class="space-y-1 text-slate-800 list-disc pl-4">
-            <li>Suitability score components</li>
-            <li>Total input costs</li>
-            <li>Gross revenue & net profit</li>
-            <li>ROI % & break-even price</li>
-            <li>Scenario delta comparisons</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
   </main>
 
   <script>
-    if (window.lucide) window.lucide.createIcons();
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) window.lucide.createIcons();
+
+      let activeFailureMode = 'weather_failure';
+      const btns = document.querySelectorAll('.fail-select-btn');
+      const inputPrompt = document.getElementById('input-test-prompt');
+      const btnRun = document.getElementById('btn-run-test');
+      const boxResult = document.getElementById('sim-result-box');
+      const replyText = document.getElementById('sim-reply-text');
+      const tracesText = document.getElementById('sim-traces-text');
+      const statusBadge = document.getElementById('sim-status-badge');
+
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          btns.forEach(b => {
+            b.className = 'fail-select-btn p-3.5 rounded-xl border-2 transition text-left space-y-1 bg-white border-slate-200 text-slate-800 hover:border-slate-300';
+          });
+          btn.className = 'fail-select-btn p-3.5 rounded-xl border-2 transition text-left space-y-1 bg-amber-50 border-amber-500 text-amber-950 shadow-sm';
+          activeFailureMode = btn.getAttribute('data-mode');
+        });
+      });
+
+      btnRun.addEventListener('click', async () => {
+        const message = inputPrompt.value.trim();
+        if (!message) return;
+
+        btnRun.disabled = true;
+        btnRun.style.opacity = '0.6';
+        boxResult.classList.remove('hidden');
+        replyText.textContent = 'Running test turn with simulated failure...';
+        tracesText.textContent = 'Executing...';
+
+        try {
+          // Update global failure mode
+          await fetch('/v1/testing/set-failure-mode', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ failure_mode: activeFailureMode })
+          });
+
+          // Run turn
+          const sid = `sim_session_${Date.now()}`;
+          const res = await fetch('/v1/agent/agentic-turn', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              session_id: sid,
+              farmer_id: 'judge_evaluator',
+              message: message
+            })
+          });
+
+          const turn = await res.json();
+          statusBadge.textContent = turn.status || 'COMPLETED';
+          replyText.textContent = turn.message || 'Turn completed.';
+          tracesText.textContent = JSON.stringify(turn.trace || [], null, 2);
+        } catch (e) {
+          replyText.textContent = `Simulation Error: ${e.message}`;
+          tracesText.textContent = e.stack || String(e);
+        } finally {
+          // Reset failure mode
+          await fetch('/v1/testing/set-failure-mode', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ failure_mode: null })
+          });
+          btnRun.disabled = false;
+          btnRun.style.opacity = '1';
+        }
+      });
+    });
   </script>
 </body>
 </html>

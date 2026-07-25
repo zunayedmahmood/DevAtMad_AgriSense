@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgriSense AI — Automated Testing & Key Pool Dashboard</title>
+  <title>AgriSense AI — Automated Batch Testing Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -39,173 +39,389 @@
       </a>
       <div>
         <div class="flex items-center gap-2">
-          <h1 class="font-extrabold text-lg text-slate-900">AgriSense Automated Testing Dashboard</h1>
-          <span class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">44 Tests Passing</span>
+          <h1 class="font-extrabold text-lg text-slate-900">Automated Batch Testing Control Panel</h1>
+          <span class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">1200 Prompts Capacity</span>
         </div>
-        <p class="text-xs text-slate-500 font-medium">4-Key Gemini Rate Limiter Pool (45+ req/min, max 14 req/min/key)</p>
+        <p class="text-xs text-slate-500 font-medium">4-Key Gemini Rate Limiter Pool (45+ req/min aggregate, max 14 req/min/key)</p>
       </div>
     </div>
 
     <div class="flex items-center gap-3">
-      <a href="/ui/" class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-800 border border-slate-300 transition">
-        ← Back to Main Advisory UI
+      <!-- COPY ACTIVE CHAT & TRACE BUTTON -->
+      <button id="btn-copy-trace" class="px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-800 border border-slate-300 transition flex items-center gap-1.5 shadow-sm">
+        <i data-lucide="copy" class="w-4 h-4 text-slate-700"></i>
+        <span>Copy Active Chat & Trace JSON</span>
+      </button>
+
+      <!-- DOWNLOAD LARGE JSON EXPORT BUTTON -->
+      <a id="btn-download-json" href="/v1/testing/export-json" download="agrisense_batch_test_results.json"
+        class="px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-xs font-bold text-white shadow-md transition flex items-center gap-1.5">
+        <i data-lucide="download" class="w-4 h-4"></i>
+        <span>Download Full Execution JSON</span>
       </a>
-      <a href="/ui/failures.html" class="px-3.5 py-1.5 rounded-lg bg-brand-700 hover:bg-brand-800 text-xs font-bold text-white shadow-sm transition">
-        View Failures & Recovery Audit →
+
+      <a href="/ui/" class="px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 border border-slate-300 transition">
+        Main Advisory UI
+      </a>
+      <a href="/ui/failures.html" class="px-3.5 py-2 rounded-lg bg-brand-700 hover:bg-brand-800 text-xs font-bold text-white shadow-sm transition">
+        Failures & Recovery Audit →
       </a>
     </div>
   </header>
 
   <!-- MAIN CONTAINER -->
-  <main class="max-w-6xl mx-auto w-full p-6 space-y-6 flex-1">
-    
-    <!-- STATS OVERVIEW -->
-    <div class="grid grid-cols-4 gap-4">
-      <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-1">Total Unit Tests</span>
-        <span class="text-2xl font-extrabold text-slate-900">44 / 44</span>
-        <span class="text-xs font-bold text-emerald-700 block mt-1">100% Pass Rate</span>
-      </div>
+  <main class="max-w-7xl mx-auto w-full p-6 space-y-6 flex-1">
 
-      <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-1">Configured Gemini Keys</span>
-        <span class="text-2xl font-extrabold text-brand-700">4 Keys Active</span>
-        <span class="text-xs font-bold text-slate-600 block mt-1">Key Rotation Enabled</span>
-      </div>
-
-      <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-1">Per-Key Ceiling</span>
-        <span class="text-2xl font-extrabold text-amber-800">14 req/min</span>
-        <span class="text-xs font-bold text-slate-600 block mt-1">Strict Rate Limit Guard</span>
-      </div>
-
-      <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm">
-        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-1">Target Throughput</span>
-        <span class="text-2xl font-extrabold text-emerald-800">45+ req/min</span>
-        <span class="text-xs font-bold text-emerald-700 block mt-1">Multi-Key Load Balancing</span>
-      </div>
-    </div>
-
-    <!-- GEMINI KEY POOL HEALTH MONITOR -->
+    <!-- BATCH TEST RUNNER CONTROL BAR -->
     <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
       <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-        <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-          <i data-lucide="cpu" class="w-5 h-5 text-brand-700"></i>
-          Gemini 4-Key Rate Limiter Pool Monitor
-        </h2>
-        <span class="px-3 py-1 text-xs font-bold rounded-md bg-emerald-100 text-emerald-900 border border-emerald-300">
-          Max 14 req/min/key • 56 req/min Peak Capacity
-        </span>
+        <div>
+          <h2 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+            <i data-lucide="play-circle" class="w-6 h-6 text-brand-700"></i>
+            Automated Prompt Benchmark Engine
+          </h2>
+          <p class="text-xs text-slate-600 font-medium mt-0.5">Run up to 1200 prompts in sequence or parallel across the 4-key Gemini pool.</p>
+        </div>
+
+        <!-- CONTROL BUTTONS -->
+        <div class="flex items-center gap-2">
+          <button id="btn-start" class="px-5 py-2.5 rounded-xl bg-brand-700 hover:bg-brand-800 text-white font-bold text-sm shadow-md transition flex items-center gap-2">
+            <i data-lucide="play" class="w-4 h-4"></i> Start Automated Testing
+          </button>
+          <button id="btn-pause" class="px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm shadow-md transition flex items-center gap-1.5 hidden">
+            <i data-lucide="pause" class="w-4 h-4"></i> Pause
+          </button>
+          <button id="btn-resume" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition flex items-center gap-1.5 hidden">
+            <i data-lucide="play" class="w-4 h-4"></i> Resume
+          </button>
+          <button id="btn-cancel" class="px-4 py-2.5 rounded-xl bg-slate-200 hover:bg-red-600 text-slate-800 hover:text-white font-bold text-sm border border-slate-300 transition flex items-center gap-1.5 hidden">
+            <i data-lucide="square" class="w-4 h-4"></i> Cancel
+          </button>
+        </div>
       </div>
 
-      <div class="grid grid-cols-4 gap-4 font-mono text-xs">
-        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-          <div class="flex justify-between font-bold text-slate-900">
-            <span>KEY #1 (Primary)</span>
-            <span class="text-emerald-700 font-extrabold">READY</span>
-          </div>
-          <div class="text-slate-600 text-[11px]">Usage: <strong class="text-slate-900 font-bold">2 / 14</strong> req in last 60s</div>
-          <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-            <div class="bg-emerald-600 h-2 rounded-full" style="width: 14%"></div>
+      <!-- TEST CONFIGURATION INPUTS -->
+      <div class="grid grid-cols-3 gap-4 text-xs font-medium bg-slate-50 p-4 rounded-xl border border-slate-200">
+        <div>
+          <label class="block text-slate-700 font-bold mb-1">Target Prompt Count (Up to 1200):</label>
+          <input type="number" id="input-count" value="100" min="1" max="1200"
+            class="w-full px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 font-bold focus:outline-none focus:border-brand-600 shadow-sm">
+        </div>
+        <div>
+          <label class="block text-slate-700 font-bold mb-1">Failure Injection Mode:</label>
+          <select id="select-failure-mode" class="w-full px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 font-bold focus:outline-none focus:border-brand-600 shadow-sm">
+            <option value="none">None (Clean Benchmark)</option>
+            <option value="mixed" selected>Mixed Controlled Failures (Rotates all 5 modes)</option>
+            <option value="weather_failure">Open-Meteo Weather Failure</option>
+            <option value="geocode_failure">Geoapify Geocoding Failure</option>
+            <option value="rag_failure">RAG Vector Search Failure</option>
+            <option value="rate_limit_failure">Gemini 429 Rate Limit</option>
+            <option value="finance_discrepancy">Financial Math Discrepancy</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-slate-700 font-bold mb-1">Gemini Key Pool Throughput:</label>
+          <div class="px-3 py-2 rounded-lg bg-white border border-slate-300 text-emerald-800 font-extrabold flex items-center justify-between">
+            <span>4 Keys Configured</span>
+            <span class="text-xs text-slate-600 font-normal">Max 14 req/min/key</span>
           </div>
         </div>
+      </div>
 
-        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-          <div class="flex justify-between font-bold text-slate-900">
-            <span>KEY #2 (Pool B)</span>
-            <span class="text-emerald-700 font-extrabold">READY</span>
-          </div>
-          <div class="text-slate-600 text-[11px]">Usage: <strong class="text-slate-900 font-bold">1 / 14</strong> req in last 60s</div>
-          <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-            <div class="bg-emerald-600 h-2 rounded-full" style="width: 7%"></div>
-          </div>
+      <!-- LIVE PROGRESS BAR -->
+      <div class="space-y-2">
+        <div class="flex justify-between text-xs font-bold text-slate-800">
+          <span id="progress-text">Progress: 0 / 0 prompts (0%)</span>
+          <span id="status-text" class="text-emerald-700">Idle / Ready</span>
         </div>
-
-        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-          <div class="flex justify-between font-bold text-slate-900">
-            <span>KEY #3 (Pool C)</span>
-            <span class="text-emerald-700 font-extrabold">READY</span>
-          </div>
-          <div class="text-slate-600 text-[11px]">Usage: <strong class="text-slate-900 font-bold">0 / 14</strong> req in last 60s</div>
-          <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-            <div class="bg-emerald-600 h-2 rounded-full" style="width: 0%"></div>
-          </div>
-        </div>
-
-        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-          <div class="flex justify-between font-bold text-slate-900">
-            <span>KEY #4 (Pool D)</span>
-            <span class="text-emerald-700 font-extrabold">READY</span>
-          </div>
-          <div class="text-slate-600 text-[11px]">Usage: <strong class="text-slate-900 font-bold">0 / 14</strong> req in last 60s</div>
-          <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-            <div class="bg-emerald-600 h-2 rounded-full" style="width: 0%"></div>
-          </div>
+        <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+          <div id="progress-bar" class="bg-brand-700 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
         </div>
       </div>
     </div>
 
-    <!-- TEST SUITE MODULES -->
+    <!-- METRICS CARDS -->
+    <div class="grid grid-cols-5 gap-4">
+      <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Completed Prompts</span>
+        <span id="stat-completed" class="text-2xl font-extrabold text-slate-900">0</span>
+      </div>
+      <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Successful Plans</span>
+        <span id="stat-success" class="text-2xl font-extrabold text-emerald-800">0</span>
+      </div>
+      <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Failures Handled</span>
+        <span id="stat-handled" class="text-2xl font-extrabold text-amber-800">0</span>
+      </div>
+      <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Avg Latency / Prompt</span>
+        <span id="stat-latency" class="text-2xl font-extrabold text-slate-900">0ms</span>
+      </div>
+      <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">JSON Export Size</span>
+        <span id="stat-export-size" class="text-2xl font-extrabold text-brand-700">0 KB</span>
+      </div>
+    </div>
+
+    <!-- LIVE PROMPT EXECUTION STREAM TABLE -->
     <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
-      <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2 border-b border-slate-200 pb-3">
-        <i data-lucide="check-square" class="w-5 h-5 text-brand-700"></i>
-        Automated Test Modules (44 Tests Passing)
-      </h2>
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+          <i data-lucide="list" class="w-5 h-5 text-brand-700"></i>
+          Live Execution Stream & Traces
+        </h3>
+        <span id="live-active-prompt" class="text-xs font-mono font-semibold text-slate-600 truncate max-w-md"></span>
+      </div>
 
-      <div class="space-y-3 text-sm">
-        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-          <div>
-            <span class="font-bold text-slate-900 block">test_key_pool.py (4 tests)</span>
-            <span class="text-xs text-slate-600">Verifies 4-key rotation, 14 req/min ceiling, and instant 429 rate limit failover.</span>
-          </div>
-          <span class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-900 font-bold text-xs border border-emerald-300">PASSED (0.12s)</span>
-        </div>
-
-        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-          <div>
-            <span class="font-bold text-slate-900 block">test_agent_flow.py (5 tests)</span>
-            <span class="text-xs text-slate-600">Verifies intake parsing, tool calling pipeline, crop selection, and turn execution.</span>
-          </div>
-          <span class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-900 font-bold text-xs border border-emerald-300">PASSED (2.41s)</span>
-        </div>
-
-        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-          <div>
-            <span class="font-bold text-slate-900 block">test_verifier_and_scenario.py (3 tests)</span>
-            <span class="text-xs text-slate-600">Verifies math error detection in plan verifier, repair service, and budget cut scenario.</span>
-          </div>
-          <span class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-900 font-bold text-xs border border-emerald-300">PASSED (0.14s)</span>
-        </div>
-
-        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-          <div>
-            <span class="font-bold text-slate-900 block">test_mixed_catalog.py (6 tests)</span>
-            <span class="text-xs text-slate-600">Verifies 60/40 database integration, safety filters, and synthetic product isolation.</span>
-          </div>
-          <span class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-900 font-bold text-xs border border-emerald-300">PASSED (0.35s)</span>
-        </div>
-
-        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-          <div>
-            <span class="font-bold text-slate-900 block">test_memory.py (10 tests)</span>
-            <span class="text-xs text-slate-600">Verifies cross-chat farm candidate matching, memory persistence, and conflict resolution.</span>
-          </div>
-          <span class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-900 font-bold text-xs border border-emerald-300">PASSED (0.42s)</span>
-        </div>
-
-        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-          <div>
-            <span class="font-bold text-slate-900 block">test_weather.py & test_geocoding.py (4 tests)</span>
-            <span class="text-xs text-slate-600">Verifies live Open-Meteo weather ingestion, Geoapify geocoding, and offline fallback mode.</span>
-          </div>
-          <span class="px-3 py-1 rounded-md bg-emerald-100 text-emerald-900 font-bold text-xs border border-emerald-300">PASSED (0.28s)</span>
-        </div>
+      <div class="overflow-x-auto rounded-xl border border-slate-200">
+        <table id="batch-table" class="w-full text-left text-xs font-medium text-slate-800">
+          <thead class="bg-slate-100 text-slate-900 font-bold border-b border-slate-200">
+            <tr>
+              <th class="p-3">#</th>
+              <th class="p-3">Prompt Utterance</th>
+              <th class="p-3">Simulated Failure</th>
+              <th class="p-3">Status</th>
+              <th class="p-3">Tool Calls</th>
+              <th class="p-3 text-right">Duration</th>
+              <th class="p-3 text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody id="batch-table-body" class="divide-y divide-slate-200">
+            <tr>
+              <td colspan="7" class="p-6 text-center text-slate-500 italic">No batch test executed yet. Click "Start Automated Testing" to run prompts.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
+
   </main>
 
+  <!-- TRACE INSPECTION MODAL -->
+  <div id="modal-inspect" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl">
+      <div class="p-4 border-b border-slate-200 flex items-center justify-between">
+        <h3 id="modal-inspect-title" class="font-bold text-base text-slate-900 font-mono">Prompt Execution Detail & Traces</h3>
+        <button id="modal-inspect-close" class="text-slate-400 hover:text-slate-700 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="p-5 overflow-y-auto space-y-4 text-xs font-mono">
+        <div>
+          <span class="text-slate-500 font-bold block mb-1 uppercase">Response Output</span>
+          <div id="modal-inspect-reply" class="p-3 rounded-lg bg-slate-50 border border-slate-200 font-sans text-sm text-slate-900 leading-relaxed"></div>
+        </div>
+        <div>
+          <span class="text-slate-500 font-bold block mb-1 uppercase">Tool Traces & Parameters</span>
+          <pre id="modal-inspect-traces" class="p-3 rounded-lg bg-slate-50 border border-slate-200 overflow-x-auto text-emerald-800 font-semibold"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    if (window.lucide) window.lucide.createIcons();
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) window.lucide.createIcons();
+
+      const els = {
+        btnStart: document.getElementById('btn-start'),
+        btnPause: document.getElementById('btn-pause'),
+        btnResume: document.getElementById('btn-resume'),
+        btnCancel: document.getElementById('btn-cancel'),
+        btnCopyTrace: document.getElementById('btn-copy-trace'),
+        inputCount: document.getElementById('input-count'),
+        selectFailureMode: document.getElementById('select-failure-mode'),
+        progressText: document.getElementById('progress-text'),
+        statusText: document.getElementById('status-text'),
+        progressBar: document.getElementById('progress-bar'),
+        statCompleted: document.getElementById('stat-completed'),
+        statSuccess: document.getElementById('stat-success'),
+        statHandled: document.getElementById('stat-handled'),
+        statLatency: document.getElementById('stat-latency'),
+        statExportSize: document.getElementById('stat-export-size'),
+        liveActivePrompt: document.getElementById('live-active-prompt'),
+        batchTableBody: document.getElementById('batch-table-body'),
+        modalInspect: document.getElementById('modal-inspect'),
+        modalInspectTitle: document.getElementById('modal-inspect-title'),
+        modalInspectReply: document.getElementById('modal-inspect-reply'),
+        modalInspectTraces: document.getElementById('modal-inspect-traces'),
+        modalInspectClose: document.getElementById('modal-inspect-close')
+      };
+
+      let statusPollInterval = null;
+      let latestResults = [];
+
+      async function updateStatus() {
+        try {
+          const res = await fetch('/v1/testing/status');
+          if (!res.ok) return;
+          const data = await res.json();
+          latestResults = data.results || [];
+
+          els.statCompleted.textContent = data.completed_count || 0;
+          els.statSuccess.textContent = data.success_count || 0;
+          els.statHandled.textContent = data.fallback_handled_count || 0;
+          els.statLatency.textContent = `${data.avg_latency_ms || 0}ms`;
+
+          const total = data.total_count || 1;
+          const done = data.completed_count || 0;
+          const pct = Math.min(100, Math.round((done / total) * 100));
+          els.progressText.textContent = `Progress: ${done} / ${total} prompts (${pct}%)`;
+          els.progressBar.style.width = `${pct}%`;
+
+          if (data.is_running) {
+            els.btnStart.classList.add('hidden');
+            els.btnCancel.classList.remove('hidden');
+            if (data.is_paused) {
+              els.btnPause.classList.add('hidden');
+              els.btnResume.classList.remove('hidden');
+              els.statusText.textContent = 'PAUSED';
+              els.statusText.className = 'text-amber-800 font-bold';
+            } else {
+              els.btnPause.classList.remove('hidden');
+              els.btnResume.classList.add('hidden');
+              els.statusText.textContent = 'RUNNING...';
+              els.statusText.className = 'text-emerald-700 font-bold animate-pulse';
+            }
+          } else {
+            els.btnStart.classList.remove('hidden');
+            els.btnPause.classList.add('hidden');
+            els.btnResume.classList.add('hidden');
+            els.btnCancel.classList.add('hidden');
+            els.statusText.textContent = done > 0 ? 'COMPLETED' : 'Idle / Ready';
+            els.statusText.className = 'text-slate-700 font-bold';
+          }
+
+          if (data.current_prompt) {
+            els.liveActivePrompt.textContent = `Active: ${data.current_prompt}`;
+          }
+
+          // Update size estimate
+          const approxBytes = JSON.stringify(latestResults).length;
+          els.statExportSize.textContent = `${Math.round(approxBytes / 1024)} KB`;
+
+          renderTable(latestResults);
+        } catch (e) {
+          console.warn('Status poll error:', e);
+        }
+      }
+
+      function renderTable(results) {
+        if (!results || results.length === 0) return;
+        els.batchTableBody.innerHTML = results.slice(-30).reverse().map(r => `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="p-3 font-mono font-bold text-slate-900">#${r.test_id}</td>
+            <td class="p-3 font-medium text-slate-900 max-w-xs truncate" title="${escapeHtml(r.prompt)}">${escapeHtml(r.prompt)}</td>
+            <td class="p-3">
+              <span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded ${r.simulated_failure !== 'none' ? 'bg-amber-100 text-amber-900 border border-amber-300' : 'bg-slate-100 text-slate-600'}">
+                ${r.simulated_failure}
+              </span>
+            </td>
+            <td class="p-3 font-bold text-xs">
+              <span class="px-2 py-0.5 rounded ${r.status === 'plan_ready' ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' : 'bg-amber-100 text-amber-900 border border-amber-300'}">
+                ${r.status}
+              </span>
+            </td>
+            <td class="p-3 font-mono font-bold text-slate-700">${(r.trace || []).length} tools</td>
+            <td class="p-3 font-mono text-right font-semibold text-slate-900">${r.duration_ms}ms</td>
+            <td class="p-3 text-center">
+              <button class="inspect-btn px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-100 hover:bg-slate-200 text-brand-800 border border-slate-300 transition" data-idx="${r.test_id}">
+                Inspect
+              </button>
+            </td>
+          </tr>
+        `).join('');
+
+        els.batchTableBody.querySelectorAll('.inspect-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const tid = parseInt(btn.getAttribute('data-idx'));
+            const found = results.find(x => x.test_id === tid);
+            if (found) showInspectModal(found);
+          });
+        });
+      }
+
+      function showInspectModal(item) {
+        els.modalInspectTitle.textContent = `Test #${item.test_id}: ${item.prompt.slice(0, 40)}...`;
+        els.modalInspectReply.textContent = item.response_message || 'No response message';
+        els.modalInspectTraces.textContent = JSON.stringify(item.trace, null, 2);
+        els.modalInspect.classList.remove('hidden');
+      }
+
+      if (els.modalInspectClose) {
+        els.modalInspectClose.addEventListener('click', () => els.modalInspect.classList.add('hidden'));
+      }
+
+      // Button Event Listeners
+      els.btnStart.addEventListener('click', async () => {
+        const count = parseInt(els.inputCount.value) || 100;
+        const failMode = els.selectFailureMode.value;
+        try {
+          await fetch('/v1/testing/start-batch', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ target_count: count, failure_mode: failMode })
+          });
+          if (statusPollInterval) clearInterval(statusPollInterval);
+          statusPollInterval = setInterval(updateStatus, 500);
+          updateStatus();
+        } catch (e) {
+          alert(`Failed to start batch: ${e.message}`);
+        }
+      });
+
+      els.btnPause.addEventListener('click', async () => {
+        await fetch('/v1/testing/control', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'pause' })
+        });
+        updateStatus();
+      });
+
+      els.btnResume.addEventListener('click', async () => {
+        await fetch('/v1/testing/control', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'resume' })
+        });
+        updateStatus();
+      });
+
+      els.btnCancel.addEventListener('click', async () => {
+        await fetch('/v1/testing/control', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'cancel' })
+        });
+        updateStatus();
+      });
+
+      // COPY ACTIVE CHAT & TRACE TO CLIPBOARD
+      els.btnCopyTrace.addEventListener('click', async () => {
+        try {
+          const exportData = {
+            summary: "AgriSense Active Chat & Tool Trace Export",
+            timestamp: new Date().toISOString(),
+            test_results: latestResults
+          };
+          await navigator.clipboard.writeText(JSON.stringify(exportData, null, 2));
+          alert("✓ Active chat history & tool traces copied to clipboard as JSON!");
+        } catch (e) {
+          alert(`Could not copy to clipboard: ${e.message}`);
+        }
+      });
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+      }
+
+      // Initial status fetch
+      updateStatus();
+      statusPollInterval = setInterval(updateStatus, 1500);
+    });
   </script>
 </body>
 </html>
