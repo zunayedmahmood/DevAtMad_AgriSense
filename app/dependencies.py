@@ -10,6 +10,7 @@ from app.services.finance import FinancialCalculator
 from app.services.geocoding import GeoapifyClient, LocationNormalizer
 from app.services.kb import KnowledgeRepository
 from app.services.memory import MemoryService
+from app.services.mixed_catalog import MixedCatalogRepository
 from app.services.planner import SeasonPlanner
 from app.services.rag import HybridRAGStore
 from app.services.recommendation import CropRecommender
@@ -35,6 +36,7 @@ class Services:
     verifier: PlanVerifier | None = None
     repair: RepairService | None = None
     scenario: ScenarioSimulator | None = None
+    catalog: MixedCatalogRepository | None = None
     controller: Any = None
     fallback_agent: Any = None
 
@@ -45,6 +47,7 @@ def get_services() -> Services:
     database = AppDatabase(settings.app_db_path)
     kb = KnowledgeRepository(settings)
     rag = HybridRAGStore(settings.rag_db_path)
+    catalog = MixedCatalogRepository(settings.mixed_catalog_db_path)
     normalizer = LocationNormalizer(kb)
     finance = FinancialCalculator(kb)
     memory = MemoryService(database)
@@ -67,6 +70,7 @@ def get_services() -> Services:
         verifier=verifier,
         repair=repair,
         scenario=scenario,
+        catalog=catalog,
     )
 
     from app.services.agent import TierZeroAgent

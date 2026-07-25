@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from app.config import Settings, get_settings
+from app.services.mixed_catalog import MixedCatalogRepository
 from app.services.rag import initialize_rag_schema, insert_documents
 from app.utils import json_dumps, slugify, utc_now_iso
 
@@ -443,6 +444,8 @@ def build_rag(settings: Settings, force: bool = False) -> dict[str, Any]:
         source_count = insert_documents(connection, (unified_document(record) for record in unified["records"]))
         mock_count = insert_documents(connection, mock_documents(settings))
         generated_count = insert_documents(connection, generated_documents(settings))
+        mixed_catalog = MixedCatalogRepository(settings.mixed_catalog_db_path)
+        mixed_catalog_count = insert_documents(connection, mixed_catalog.iter_rag_documents())
         metadata = {
             "built_at": utc_now_iso(),
             "embedding": "deterministic_blake2b_hash_384",
@@ -450,6 +453,8 @@ def build_rag(settings: Settings, force: bool = False) -> dict[str, Any]:
             "provided_source_documents": str(source_count),
             "provided_mock_documents": str(mock_count),
             "generated_mock_gap_documents": str(generated_count),
+            "mixed_catalog_documents": str(mixed_catalog_count),
+            "mixed_catalog_db_path": str(settings.mixed_catalog_db_path),
         }
         connection.executemany("INSERT INTO rag_metadata(key,value) VALUES(?,?)", metadata.items())
         connection.commit()
@@ -463,4 +468,5 @@ def build_rag(settings: Settings, force: bool = False) -> dict[str, Any]:
         "provided_source_documents": source_count,
         "provided_mock_documents": mock_count,
         "generated_mock_gap_documents": generated_count,
+        "mixed_catalog_documents": mixed_catalog_count,
     }

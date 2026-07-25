@@ -36,6 +36,7 @@ data/runtime/*.db*
 *.sqlite3
 *.sqlite3-wal
 *.sqlite3-shm
+!data/raw/mixed_60_40/bangladesh_agri_60_40.db
 
 # Archives & Large zip files
 *.zip

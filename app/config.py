@@ -40,6 +40,7 @@ class Settings(BaseSettings):
     rag_db_path: Path = BASE_DIR / "data/processed/rag.sqlite3"
     app_db_path: Path = BASE_DIR / "data/runtime/agrisense.sqlite3"
     raw_unified_kb_path: Path = BASE_DIR / "data/raw/bangladesh_agriculture_unified_knowledge.json"
+    mixed_catalog_db_path: Path = BASE_DIR / "data/raw/mixed_60_40/bangladesh_agri_60_40.db"
     raw_mock_kb_dir: Path = BASE_DIR / "data/raw/mock_agri_kb"
     generated_kb_path: Path = BASE_DIR / "data/generated/generated_gap_kb.jsonl"
     generated_gazetteer_path: Path = BASE_DIR / "data/generated/mock_location_centroids.json"

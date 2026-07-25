@@ -31,9 +31,10 @@ async def lifespan(app: FastAPI):
         build_rag(settings, force=True)
     services = get_services()
     logger.info(
-        "AgriSense ready: external_mode=%s rag_documents=%s",
+        "AgriSense ready: external_mode=%s rag_documents=%s catalog_products=%s",
         settings.external_mode,
         services.rag.stats()["documents"],
+        services.catalog.stats()["products"] if getattr(services, "catalog", None) else 0,
     )
     yield
 
@@ -86,7 +87,7 @@ if frontend_dir.exists():
             "health": "/health",
             "agent": "/v1/agent/agentic-turn",
             "tools": "/v1/tools/catalog",
-            "warning": "Mock agronomic/economic values are for hackathon demonstration only.",
+            "warning": "Synthetic records are explicitly labelled, hidden by default, and blocked from recommendations.",
         }
 else:
     @app.get("/")
@@ -97,7 +98,7 @@ else:
             "health": "/health",
             "agent": "/v1/agent/turn",
             "tools": "/v1/tools/catalog",
-            "warning": "Mock agronomic/economic values are for hackathon demonstration only.",
+            "warning": "Synthetic records are explicitly labelled, hidden by default, and blocked from recommendations.",
         }
 
 

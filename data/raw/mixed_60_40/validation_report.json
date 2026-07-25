@@ -1,0 +1,17 @@
+{
+  "generated_at_utc": "2026-07-24T21:50:50.288472+00:00",
+  "sqlite_integrity": "ok",
+  "foreign_key_violations": 0,
+  "products_total": 100,
+  "real_authentic_products": 60,
+  "synthetic_made_up_products": 40,
+  "real_percent": 60.0,
+  "synthetic_percent": 40.0,
+  "rag_real_documents": 180,
+  "rag_synthetic_documents": 120,
+  "rag_real_percent": 60.0,
+  "synthetic_safety_violations": 0,
+  "real_named_synthetic_overlap": 0,
+  "products_mapped_to_existing_planner": 15,
+  "status": "PASS"
+}

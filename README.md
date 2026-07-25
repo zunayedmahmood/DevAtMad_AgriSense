@@ -1,13 +1,14 @@
-# AgriSense Tier-0 Sandbox Backend
+# AgriSense Tier-0 Agentic Agriculture Platform
 
 A runnable Python/FastAPI backend for the required AgriSense path:
 
 **short farmer conversation -> missing-field recovery -> cleaned geocoding -> live weather -> RAG retrieval -> at least three crop recommendations -> chosen crop -> dated season plan -> inspectable financial projection -> persisted memory and visible tool trace**
 
-This repository is deliberately backend-only. A frontend or an external LLM can use it in two ways:
+This repository includes a FastAPI backend and a browser frontend. The UI or an external LLM can use it in these ways:
 
 1. `POST /v1/agent/turn` - deterministic Tier-0 state machine that already performs the tool sequence safely.
 2. `GET /v1/tools/catalog` + `POST /v1/tools/invoke` - OpenAI-compatible function schemas and direct tool execution for another agent runtime.
+3. `GET /v1/catalog/products` - multilingual English, Banglish, and Bangla lookup over the integrated 60/40 catalog.
 
 ## Key behavior
 
@@ -18,6 +19,9 @@ This repository is deliberately backend-only. A frontend or an external LLM can 
 - Calls Open-Meteo for current/daily rainfall, temperature, humidity, probability, and ET0 values.
 - Stores every operational call with sanitized parameters, returned values, duration, status, and source kind.
 - Uses a persistent SQLite hybrid RAG database: FTS5 lexical retrieval plus deterministic 384-dimensional local hash embeddings and cosine similarity.
+- Integrates a separate read-only 100-product Bangladesh agricultural catalog with 60 authentic and 40 explicitly synthetic test products.
+- Imports 300 provenance-labelled catalog documents into RAG while preserving exact 60/40 origin ratios.
+- Excludes synthetic catalog products and mock RAG evidence by default unless the caller explicitly opts in.
 - Separates source-derived, supplied mock, generated mock-gap, live external, and fallback data.
 - Computes financial math deterministically. Changing area, budget, yield factor, or price factor changes the result.
 - Marks calendar tasks outside the weather horizon for a future weather refresh instead of inventing forecasts.
@@ -29,6 +33,7 @@ This repository is deliberately backend-only. A frontend or an external LLM can 
 | `bangladesh_agriculture_unified_knowledge.json` | Supplied source-derived data | 11,598 district agronomy and upazila suitability records |
 | `mock_agri_kb/` | Supplied synthetic data | 16 supported crops; calendars, fertilizer, irrigation, pests, costs, yields, prices |
 | `generated_gap_kb.jsonl` | Generated synthetic data | Missing stage durations, stage offsets, season aliases, safeguards, conversions |
+| `mixed_60_40/bangladesh_agri_60_40.db` | Integrated read-only catalog | 100 products: 60 authentic, 40 synthetic; aliases, varieties, agronomy, fertilizer context, regional profiles, safety flags |
 | Geoapify | Live external API | Farm location -> coordinates |
 | Open-Meteo | Live external API | Actual returned weather values |
 
@@ -43,7 +48,7 @@ Boro rice, Aman rice, maize, wheat, potato, jute, sugarcane, mustard, soybean, l
 ### Option A: local Python
 
 ```bash
-cd agrisense_tier0_sandbox
+cd sandbox
 python -m venv .venv
 source .venv/bin/activate                 # Windows: .venv\Scripts\activate
 python -m pip install -r requirements-dev.txt
@@ -74,6 +79,8 @@ Open:
 - Swagger: `http://localhost:8000/docs`
 - Health/RAG stats: `http://localhost:8000/health`
 - Tool catalog: `http://localhost:8000/v1/tools/catalog`
+- Crop catalog: `http://localhost:8000/v1/catalog/products`
+- Browser UI: `http://localhost:8000/ui/`
 
 ### Option B: Docker
 
@@ -186,6 +193,30 @@ curl -sS -X POST http://localhost:8000/v1/tools/invoke \
 
 The actual Geoapify `text` parameter is cleaned before the request.
 
+## Integrated crop catalog
+
+Authentic-only lookup is the default:
+
+```bash
+curl 'http://localhost:8000/v1/catalog/products?query=begun&limit=10'
+curl 'http://localhost:8000/v1/catalog/products?query=%E0%A6%AC%E0%A7%87%E0%A6%97%E0%A7%81%E0%A6%A8&limit=10'
+```
+
+Synthetic test records require explicit opt-in:
+
+```bash
+curl 'http://localhost:8000/v1/catalog/products?query=synthetic&include_synthetic=true&limit=10'
+```
+
+Dataset status and full product detail:
+
+```bash
+curl http://localhost:8000/v1/catalog/stats
+curl http://localhost:8000/v1/catalog/products/brinjal
+```
+
+See `docs/MIXED_DATABASE_INTEGRATION.md` for the architecture, safety gates, update process, and verification checklist.
+
 ## RAG search
 
 ```bash
@@ -196,7 +227,7 @@ curl -sS -X POST http://localhost:8000/v1/rag/search \
     "crop_id": "lentil",
     "district": "Moulvibazar",
     "top_k": 8,
-    "include_mock": true
+    "include_mock": false
   }'
 ```
 
@@ -226,20 +257,23 @@ FastAPI
   │     ├── IntakeParser + ambiguity safeguards
   │     ├── GeoapifyClient
   │     ├── OpenMeteoClient
-  │     ├── HybridRAGStore (SQLite FTS5 + vector cosine)
+  │     ├── MixedCatalogRepository (read-only 60/40 SQLite catalog)
+  │     ├── HybridRAGStore (SQLite FTS5 + vector cosine, including 300 catalog documents)
   │     ├── CropRecommender
   │     ├── FinancialCalculator
   │     ├── SeasonPlanner
   │     └── TraceRecorder
   ├── App SQLite: sessions, messages, plans, cache, traces
+  ├── Catalog SQLite: products, aliases, varieties, agronomy, provenance, safety gates
   └── ToolRegistry: schemas and direct invocation
 ```
 
-See `docs/API_FLOW.md`, `docs/REAL_VS_MOCK.md`, and `docs/ARCHITECTURE.md`.
+See `docs/API_FLOW.md`, `docs/REAL_VS_MOCK.md`, `docs/ARCHITECTURE.md`, and `docs/MIXED_DATABASE_INTEGRATION.md`.
 
 ## Tests
 
 ```bash
+python scripts/verify_database_integration.py
 pytest -q
 ```
 
@@ -250,6 +284,10 @@ The test suite checks:
 - single-pump capacity clarification
 - financial arithmetic consistency
 - source/mock RAG retrieval
+- exact catalog 60/40 ratios and SQLite integrity
+- English, Banglish, and Bangla catalog aliases
+- authentic-only default lookup and synthetic opt-in
+- catalog-to-RAG ingestion and planner safety mapping
 - weather normalization and fallback labels
 - cross-turn session memory
 - end-to-end Tier-0 plan generation

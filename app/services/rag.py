@@ -13,7 +13,12 @@ from app.schemas import SourceEvidence
 from app.utils import json_loads
 
 
-_TOKEN_RE = re.compile(r"[a-z0-9_]+", re.IGNORECASE)
+_TOKEN_RE = re.compile(r"[a-z0-9_\u0980-\u09ff]+", re.IGNORECASE)
+
+_CROP_FILTER_ALIASES = {
+    "rice_boro": ("rice_boro", "rice"),
+    "rice_aman": ("rice_aman", "rice"),
+}
 
 
 def hashed_embedding(text: str, dimensions: int = 384) -> np.ndarray:
@@ -86,8 +91,13 @@ class HybridRAGStore:
         filters: list[str] = []
         params: list[Any] = []
         if crop_id:
-            filters.append("(d.crop_id = ? OR d.crop_group = ?)")
-            params.extend([crop_id, crop_id])
+            crop_values = _CROP_FILTER_ALIASES.get(crop_id, (crop_id,))
+            placeholders = ",".join("?" for _ in crop_values)
+            filters.append(
+                f"(d.crop_id IN ({placeholders}) OR d.crop_group IN ({placeholders}))"
+            )
+            params.extend(crop_values)
+            params.extend(crop_values)
         if district:
             filters.append("LOWER(d.district) = LOWER(?)")
             params.append(district)
@@ -185,6 +195,7 @@ def initialize_rag_schema(connection: sqlite3.Connection) -> None:
             upazila TEXT,
             knowledge_type TEXT,
             metadata_json TEXT NOT NULL,
+            safe_for_prescriptive_advice INTEGER NOT NULL DEFAULT 0,
             embedding BLOB NOT NULL
         );
         CREATE INDEX idx_docs_crop_id ON documents(crop_id);
@@ -220,14 +231,15 @@ def insert_documents(connection: sqlite3.Connection, documents: Iterable[dict[st
             document.get("upazila"),
             document.get("knowledge_type"),
             document.get("metadata_json", "{}"),
+            1 if document.get("safe_for_prescriptive_advice") else 0,
             embedding,
         )
         connection.execute(
             """
             INSERT INTO documents(
                 document_id,title,content,source,source_kind,is_mock,crop_id,crop_group,
-                district,upazila,knowledge_type,metadata_json,embedding
-            ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)
+                district,upazila,knowledge_type,metadata_json,safe_for_prescriptive_advice,embedding
+            ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
             """,
             values,
         )

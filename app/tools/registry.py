@@ -54,7 +54,38 @@ TOOL_CATALOG = [
                     "crop_id": {"type": "string", "nullable": True},
                     "district": {"type": "string", "nullable": True},
                     "upazila": {"type": "string", "nullable": True},
-                    "include_mock": {"type": "boolean", "default": True},
+                    "include_mock": {"type": "boolean", "default": False},
+                },
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "search_crop_catalog",
+            "description": "Search the integrated Bangladesh crop catalog by English, Bangla, or Banglish name. Authentic products are returned by default; synthetic test products require explicit opt-in.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "default": ""},
+                    "include_synthetic": {"type": "boolean", "default": False},
+                    "eligible_only": {"type": "boolean", "default": False},
+                    "limit": {"type": "integer", "minimum": 1, "maximum": 100, "default": 20},
+                },
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_crop_catalog_product",
+            "description": "Read one catalog product with aliases, varieties, agronomy, contextual fertilizer evidence, regional profiles, provenance, and safety flags.",
+            "parameters": {
+                "type": "object",
+                "required": ["product_id"],
+                "properties": {
+                    "product_id": {"type": "string"},
+                    "include_synthetic": {"type": "boolean", "default": False},
                 },
             },
         },
@@ -125,6 +156,8 @@ class ToolRegistry:
             "geocode_location": self._geocode,
             "get_weather_forecast": self._weather,
             "retrieve_agronomy": self._rag,
+            "search_crop_catalog": self._catalog_search,
+            "get_crop_catalog_product": self._catalog_product,
             "rank_crop_candidates": self._rank,
             "calculate_financial_projection": self._finance,
             "generate_season_plan": self._plan,
@@ -165,9 +198,30 @@ class ToolRegistry:
                 crop_id=args.get("crop_id"),
                 district=args.get("district"),
                 upazila=args.get("upazila"),
-                include_mock=bool(args.get("include_mock", True)),
+                include_mock=bool(args.get("include_mock", False)),
             )
         ]
+
+    def _catalog_search(self, args: dict[str, Any]) -> Any:
+        if not self.services.catalog:
+            raise RuntimeError("Mixed agricultural catalog is unavailable")
+        return self.services.catalog.search_products(
+            args.get("query", ""),
+            include_synthetic=bool(args.get("include_synthetic", False)),
+            eligible_only=bool(args.get("eligible_only", False)),
+            limit=int(args.get("limit", 20)),
+        )
+
+    def _catalog_product(self, args: dict[str, Any]) -> Any:
+        if not self.services.catalog:
+            raise RuntimeError("Mixed agricultural catalog is unavailable")
+        product = self.services.catalog.get_product(
+            args["product_id"],
+            include_synthetic=bool(args.get("include_synthetic", False)),
+        )
+        if not product:
+            raise KeyError("Product not found under the current safety filter")
+        return product
 
     def _rank(self, args: dict[str, Any]) -> Any:
         profile = FarmProfile.model_validate(args["profile"])

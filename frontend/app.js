@@ -59,6 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
     backendText: document.getElementById('backend-text'),
     farmerIdBadge: document.getElementById('farmer-id-badge'),
     savedFarmsList: document.getElementById('saved-farms-list'),
+    catalogCount: document.getElementById('catalog-count'),
+    catalogSearch: document.getElementById('catalog-search'),
+    catalogIncludeSynthetic: document.getElementById('catalog-include-synthetic'),
+    catalogResults: document.getElementById('catalog-results'),
 
     // Account & Subscription UI
     userSubscriptionBadge: document.getElementById('btn-subscription-badge'),
@@ -557,7 +561,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const res = await fetch('/health');
       if (res.ok) {
         const data = await res.json();
-        els.backendText.textContent = `${data.external_mode.toUpperCase()} Mode (${data.llm_provider})`;
+        const productCount = data.catalog?.products || 0;
+        els.backendText.textContent = `${data.external_mode.toUpperCase()} · ${productCount} catalog products`;
+        if (els.catalogCount) {
+          els.catalogCount.textContent = `${data.catalog?.authentic_products || 0} real / ${data.catalog?.synthetic_products || 0} synthetic`;
+        }
         els.backendStatus.classList.remove('bg-slate-800');
         els.backendStatus.classList.add('bg-emerald-950', 'border-emerald-700/60');
       } else {
@@ -568,6 +576,76 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   checkHealth();
+
+  // Integrated crop catalog lookup (authentic-only by default)
+  let catalogSearchTimer = null;
+
+  function renderCatalogProducts(products) {
+    if (!els.catalogResults) return;
+    if (!products || products.length === 0) {
+      els.catalogResults.innerHTML = '<div class="text-[11px] text-slate-500 italic">No products found under the current safety filter.</div>';
+      return;
+    }
+    els.catalogResults.innerHTML = products.map(product => {
+      const synthetic = product.is_synthetic;
+      const originBadge = synthetic
+        ? '<span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">Synthetic test</span>'
+        : '<span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Authentic</span>';
+      const plannerBadge = product.planner_supported
+        ? '<span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">Planner</span>'
+        : '<span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-700/50 text-slate-400 border border-slate-700">Lookup</span>';
+      return `
+        <button class="catalog-product w-full text-left p-2 rounded-lg bg-slate-800/70 hover:bg-slate-800 border border-slate-700/60 transition" data-product-id="${escapeHtml(product.product_id)}" data-product-name="${escapeHtml(product.canonical_name_en)}">
+          <div class="flex items-start justify-between gap-2">
+            <div class="min-w-0">
+              <div class="text-[11px] font-semibold text-slate-200 truncate">${escapeHtml(product.canonical_name_en)}${product.canonical_name_bn ? ` · ${escapeHtml(product.canonical_name_bn)}` : ''}</div>
+              <div class="text-[9px] text-slate-500 truncate">${escapeHtml(product.category || 'Agricultural product')}</div>
+            </div>
+            <div class="flex gap-1 shrink-0">${originBadge}${plannerBadge}</div>
+          </div>
+        </button>`;
+    }).join('');
+
+    els.catalogResults.querySelectorAll('.catalog-product').forEach(button => {
+      button.addEventListener('click', () => {
+        const name = button.getAttribute('data-product-name');
+        if (els.chatInput && name) {
+          els.chatInput.value = `Tell me whether ${name} is suitable for my farm and use authentic evidence only.`;
+          els.chatInput.focus();
+        }
+      });
+    });
+  }
+
+  async function searchCatalog() {
+    if (!els.catalogResults) return;
+    const query = els.catalogSearch ? els.catalogSearch.value.trim() : '';
+    const includeSynthetic = Boolean(els.catalogIncludeSynthetic?.checked);
+    const params = new URLSearchParams({
+      query,
+      include_synthetic: String(includeSynthetic),
+      limit: '10'
+    });
+    try {
+      const res = await fetch(`/v1/catalog/products?${params.toString()}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      renderCatalogProducts(data.products || []);
+    } catch (error) {
+      els.catalogResults.innerHTML = `<div class="text-[11px] text-red-400">Catalog unavailable: ${escapeHtml(error.message)}</div>`;
+    }
+  }
+
+  if (els.catalogSearch) {
+    els.catalogSearch.addEventListener('input', () => {
+      window.clearTimeout(catalogSearchTimer);
+      catalogSearchTimer = window.setTimeout(searchCatalog, 250);
+    });
+  }
+  if (els.catalogIncludeSynthetic) {
+    els.catalogIncludeSynthetic.addEventListener('change', searchCatalog);
+  }
+  searchCatalog();
 
   // Engine Switcher
   if (els.engineAgentic) {
@@ -1304,20 +1382,26 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('btn-tool-weather').addEventListener('click', async () => {
-    invokeDirectTool('get_live_weather_forecast', { latitude: 24.488, longitude: 91.763, forecast_days: 7 });
+    invokeDirectTool('get_weather_forecast', { latitude: 24.488, longitude: 91.763, days: 7 });
   });
 
   document.getElementById('btn-tool-rag').addEventListener('click', async () => {
     const query = prompt("Enter RAG search query:", "Boro rice fertilizer application timing Moulovibazar");
     if (!query) return;
-    invokeDirectTool('retrieve_agronomic_context', { query, district: 'Moulovibazar', top_k: 5 });
+    invokeDirectTool('retrieve_agronomy', { query, district: 'Moulovibazar', top_k: 5, include_mock: false });
+  });
+
+  document.getElementById('btn-tool-catalog').addEventListener('click', async () => {
+    const query = prompt("Search crop catalog (English, Banglish, or Bangla):", "begun");
+    if (!query) return;
+    invokeDirectTool('search_crop_catalog', { query, include_synthetic: false, limit: 10 });
   });
 
   document.getElementById('btn-tool-rank').addEventListener('click', async () => {
     invokeDirectTool('rank_crop_candidates', {
       profile: state.profile,
-      weather_summary: { temperature_avg_c: 28.5, rainfall_forecast_total_mm: 22.4 },
-      minimum_candidates: 3
+      weather: { summary: { temperature_avg_c: 28.5, rainfall_forecast_total_mm: 22.4 } },
+      top_k: 3
     });
   });
 

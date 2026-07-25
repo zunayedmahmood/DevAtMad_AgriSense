@@ -250,7 +250,7 @@ class RAGSearchRequest(StrictModel):
     district: str | None = None
     upazila: str | None = None
     source_kind: str | None = None
-    include_mock: bool = True
+    include_mock: bool = False
 
 
 class SignUpRequest(StrictModel):
