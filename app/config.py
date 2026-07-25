@@ -32,6 +32,10 @@ class Settings(BaseSettings):
     # LLM Provider Configuration
     llm_provider: str = "gemini"
     gemini_api_key: str | None = None
+    gemini_api_key_2: str | None = None
+    gemini_api_key_3: str | None = None
+    gemini_api_key_4: str | None = None
+    gemini_api_keys: str | None = None
     gemini_model: str = "gemini-2.0-flash"
     openai_api_key: str | None = None
     openai_model: str = "gpt-4o-mini"
