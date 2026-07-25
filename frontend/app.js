@@ -1,3 +1,83 @@
+// Minimal Web Audio API Sound Effects Synthesizer
+class SoundFXManager {
+  constructor() {
+    this.enabled = true;
+    this.ctx = null;
+  }
+
+  initContext() {
+    if (!this.ctx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) this.ctx = new AudioCtx();
+    }
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+  }
+
+  playSend() {
+    if (!this.enabled) return;
+    this.initContext();
+    if (!this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(440, now);
+      osc.frequency.exponentialRampToValueAtTime(880, now + 0.08);
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.08);
+    } catch (e) {}
+  }
+
+  playReceive() {
+    if (!this.enabled) return;
+    this.initContext();
+    if (!this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      [523.25, 659.25].forEach((freq, i) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + i * 0.09);
+        gain.gain.setValueAtTime(0.06, now + i * 0.09);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.09 + 0.12);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now + i * 0.09);
+        osc.stop(now + i * 0.09 + 0.12);
+      });
+    } catch (e) {}
+  }
+
+  playClick() {
+    if (!this.enabled) return;
+    this.initContext();
+    if (!this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(320, now);
+      gain.gain.setValueAtTime(0.03, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.025);
+    } catch (e) {}
+  }
+}
+
+const soundFx = new SoundFXManager();
+
 // AgriSense Frontend Application Logic — Pristine Light Mode & Real-Time Agentic Traces
 document.addEventListener('DOMContentLoaded', () => {
   // Account Management State
@@ -1354,6 +1434,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Add Messages to Chat UI
   function addUserMessage(text) {
+    soundFx.playSend();
     const welcome = document.getElementById('welcome-banner');
     if (welcome) welcome.remove();
     const msg = document.createElement('div');
@@ -1370,6 +1451,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function addAssistantMessage(text, decisionSummary, status = null, memoryContext = null) {
     removeThinkingAnimation();
+    soundFx.playReceive();
     const welcome = document.getElementById('welcome-banner');
     if (welcome) welcome.remove();
     const msg = document.createElement('div');
@@ -1463,6 +1545,23 @@ document.addEventListener('DOMContentLoaded', () => {
   function escapeHtml(str) {
     if (!str) return '';
     return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+
+  // Sound Effects Toggle Button
+  const btnToggleSound = document.getElementById('btn-toggle-sound');
+  const soundIcon = document.getElementById('sound-icon');
+  if (btnToggleSound) {
+    btnToggleSound.addEventListener('click', () => {
+      soundFx.enabled = !soundFx.enabled;
+      if (soundFx.enabled) {
+        soundFx.playClick();
+        if (soundIcon) soundIcon.className = 'w-4 h-4 text-emerald-700';
+        btnToggleSound.title = 'Sound Effects On (Click to Mute)';
+      } else {
+        if (soundIcon) soundIcon.className = 'w-4 h-4 text-slate-400';
+        btnToggleSound.title = 'Sound Effects Muted (Click to Unmute)';
+      }
+    });
   }
 
   // Sandbox Buttons
