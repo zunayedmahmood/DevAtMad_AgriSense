@@ -161,7 +161,6 @@ class OpenAIAgenticEngine:
                     messages=messages,
                     tools=openai_tools,
                     tool_choice="auto",
-                    temperature=0.2,
                 )
 
             response = await self.key_pool.execute_with_retry(_call_openai)
